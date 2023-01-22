@@ -2,7 +2,6 @@
     <meta charset="UTF-8">
     <meta name="color" content="blue">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="PHP Motors">
     <meta name="author" content="Scott LeFoll">
     <meta name="description" content="PHP Motors is a website that sells cars.">
 
@@ -17,16 +16,12 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href='https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap'>;
 
     <?php 
         $currentPage= $_SERVER['SCRIPT_NAME'];
         $currentPage = substr($currentPage, 1);
-
-        if ($currentPage == "phpmotors/template.php"){
-            echo "<title>php Motors | Template.</title>";
-        } else {
-            echo "<title>php Motors | Home.</title>";
-        } 
+        echo "<title>php Motors</title>";
     ?>
 
   </head>

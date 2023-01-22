@@ -1,6 +1,7 @@
 <!DOCTYPE html>
+<meta name="title" content="PHP Motors">
 <html lang="en">
-
+<meta name="title" content="PHP Motors">
     <?php require $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php'; ?>
 
     <!-- Head -->

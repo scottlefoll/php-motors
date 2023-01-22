@@ -15,7 +15,7 @@
     class="auto1-img"
     src="/phpmotors/images/delorean.png"
     alt="Delorean Big Photo"
-/>
+>
 
 
 <div class="review">
@@ -36,16 +36,16 @@
     <h2 class="upgrade1-title">Delorean Upgrades</h2>
 
     <div class="container1">
-        <div id="flux-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/flux-cap.png" alt="Flux Capacitor" /></div>        
-        <div id="flame-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/flame.jpg" alt="Flame Decals" /></div>
-        <a id="flux-title" >Flux Capacitor</a>
-        <div id="flame-title" >Flame Decals</a>
+        <div id="flux-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/flux-cap.png" alt="Flux Capacitor" ></div>        
+        <div id="flame-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/flame.jpg" alt="Flame Decals" ></div>
+        <div id="flux-title" >Flux Capacitor</div>
+        <div id="flame-title" >Flame Decals</div>
     </div>
 
     <div class="container2">
-        <div id="sticker-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/sticker.jpg" alt="Bumper Stickers" /></div>
-        <div id="hub-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/hub-cap.jpg" alt="Hub Cap" /></div>
-        <div id="sticker-title" >Bumper Stickers</a>
-        <div id="hub-title" >Hub Caps </a>
+        <div id="sticker-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/sticker.jpg" alt="Bumper Stickers" ></div>
+        <div id="hub-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/hub-cap.jpg" alt="Hub Cap" ></div>
+        <div id="sticker-title" >Bumper Stickers</div>
+        <div id="hub-title" >Hub Caps </div>
     </div>
 </div>

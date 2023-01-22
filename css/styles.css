@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap'); */
 
     *{
         margin:0;
@@ -512,7 +512,7 @@
         
         .container2{
             margin-top: 1rem;
-            margin-left: 0;
+            margin-left: 15%;
             width:25vw;
             height:5vw;
             background-color: #ffffff;
@@ -551,7 +551,7 @@
             align-items: bottom;
             width: 12vw;
             height: 1vw;
-            margin-top: 4.25vw;
+            margin-top: 4vw;
             margin-bottom: 1vw;
             }
 
@@ -579,7 +579,7 @@
             align-items: bottom;
             width: 12vw;
             height: 1vw;
-            margin-top: 4.25vw;
+            margin-top: 4vw;
             margin-bottom: 1vw;
         }
 
@@ -600,16 +600,15 @@
         #sticker-title{
             margin-top: 0;
             grid-column: 1;
-            grid-row: 1;
+            grid-row: 2;
             display: flex;
             justify-content: center;
             align-items: bottom;
-            width: 24vw;
+            width: 12vw;
             height: 1vw;
-            margin-top: 4.25vw;
-            margin-left: 13%;
+            margin-top: 0;
+            margin-left: 0;
             margin-bottom: 1vw;
-    ;
         }
 
         #hub-box{
@@ -628,14 +627,14 @@
         #hub-title{
             margin-top: 0;
             grid-column: 2;
-            grid-row: 1;
+            grid-row: 2;
             display: flex;
             justify-content: center;
             align-items: bottom;
             text-align: center;
             width: 12vw;
             height: 1vw;
-            margin-left: 3vw;
+            margin-left: 0;
             margin-top: 0;
             margin-bottom: 1vw;
 
