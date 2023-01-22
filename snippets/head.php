@@ -1,11 +1,7 @@
 <head>
-    <meta 
-        charset="UTF-8" 
-        http-equiv="X-UA-Compatible"
-        content="width=device-width, initial-scale=1.0, IE=edge"
-        name="viewport" 
-    />
+    <meta charset="UTF-8">
     <meta name="color" content="blue">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="PHP Motors">
     <meta name="author" content="Scott LeFoll">
     <meta name="description" content="PHP Motors is a website that sells cars.">
@@ -29,7 +25,7 @@
         if ($currentPage == "phpmotors/template.php"){
             echo "<title>php Motors | Template.</title>";
         } else {
-            echo "<title>php Motors | Home.</title></p>";
+            echo "<title>php Motors | Home.</title>";
         } 
     ?>
 

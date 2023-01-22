@@ -1,6 +1,6 @@
 <h1>Welcome to PHP Motors!</h1>
 
-<h3 class="auto1-title" >DMC Delorean</h3>
+<h2 class="auto1-title" >DMC Delorean</h2>
 
 
 <ul class="auto1-ul" >
@@ -14,12 +14,12 @@
 <img
     class="auto1-img"
     src="/phpmotors/images/delorean.png"
-    alt="Delorean"
+    alt="Delorean Big Photo"
 />
 
 
 <div class="review">
-    <h3 class="review1-title">DMC Delorean Reviews</h3>
+    <h2 class="review1-title">DMC Delorean Reviews</h2>
     <div class="review1-list">
         <ul class="review1-ul">
             <li class="review1-li">"So fast it's almost like traveling through time." (4/5)</li>
@@ -33,7 +33,7 @@
 </div>
 
 <div id="detail-box">
-    <h3 class="upgrade1-title">Delorean Upgrades</h3>
+    <h2 class="upgrade1-title">Delorean Upgrades</h2>
 
     <div class="container1">
         <div id="flux-box"><img class="upgrade-img" src="/phpmotors/images/upgrades/flux-cap.png" alt="Flux Capacitor" /></div>        
