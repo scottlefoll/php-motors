@@ -27,8 +27,9 @@ function phpConnect()
 {
     $server = 'localhost';
     $dbname = 'phpmotors';
-    $username = 'iClient2';
-    $password = 'goNit3xc*pX.d3Q*'; 
+    $username = 'iClient';
+    // to error out the connection and test the error page, change the password to something incorrect
+    $password = '5[oPh9Fjt4kpfOHd'; 
     $dsn = "mysql:host=$server;dbname=$dbname";
     $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 
@@ -40,8 +41,8 @@ function phpConnect()
         }
     } catch (PDOException $e) {
         // header('Location: /phpmotors/view/500.php');
-        // header('Location: /phpmotors/home.php?page=500');
-        header('Location: /phpmotors/home.php');
+        header('Location: /phpmotors/home.php?page=500');
+        // header('Location: /phpmotors/home.php');
     exit;
     }
 }
