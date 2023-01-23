@@ -14,7 +14,7 @@
 
             <!-- Main -->
             <main>
-
+            <br>
             <?php
                     if(isset($_GET['page'])){
                         $current_page = $_GET['page'];

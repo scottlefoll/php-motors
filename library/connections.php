@@ -4,46 +4,49 @@
  * Proxy connection to the phpmotors database
  */
 
-function phpmotorsConnect(){
- $server = 'localhost';
- $dbname= 'phpmotors';
- $username = 'iClient';
- $password = 'thePassword'; 
- $dsn = "mysql:host=$server;dbname=$dbname";
- $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+// function phpmotorsConnect(){
+//  $server = 'localhost';
+//  $dbname= 'phpmotors';
+//  $username = 'iClient';
+//  $password = 'thePassword'; 
+//  $dsn = "mysql:host=$server;dbname=$dbname";
+//  $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 
- // Create the actual connection object and assign it to a variable
- try {
-  $link = new PDO($dsn, $username, $password, $options);
-  return $link;
- } catch(PDOException $e) {
-  header('Location: /phpmotors/view/500.php');
-  exit;
- }
-}
-
-// function phpConnect()
-// {
-//     $server = 'localhost';
-//     $dbname = 'phpmotors';
-//     $username = 'iClient';
-//     $password = 'H31z8PWv_4SGZtlzZZ';
-//     $dsn = "mysql:host=$server;dbname=$dbname";
-//     $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-
-//     // Create the actual connection object and assign it to a variable
-//     try {
-//         $link = new PDO($dsn, $username, $password, $options);
-//         if (is_object($link)) {
-//             echo 'It worked!';
-//         }
-//     } catch (PDOException $e) {
-//     header('Location: /phpmotors/view/500.php');
-//     exit;
-//     }
+//  // Create the actual connection object and assign it to a variable
+//  try {
+//   $link = new PDO($dsn, $username, $password, $options);
+//   return $link;
+//  } catch(PDOException $e) {
+//     header('Location: /phpmotors/home.php?page=500');
+//     // header('Location: /phpmotors/view/500.php');
+//   exit;
+//  }
 // }
 
-// phpConnect();
+function phpConnect()
+{
+    $server = 'localhost';
+    $dbname = 'phpmotors';
+    $username = 'iClient2';
+    $password = 'goNit3xc*pX.d3Q*'; 
+    $dsn = "mysql:host=$server;dbname=$dbname";
+    $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+
+    // Create the actual connection object and assign it to a variable
+    try {
+        $link = new PDO($dsn, $username, $password, $options);
+        if (is_object($link)) {
+            echo 'It worked!';
+        }
+    } catch (PDOException $e) {
+        // header('Location: /phpmotors/view/500.php');
+        // header('Location: /phpmotors/home.php?page=500');
+        header('Location: /phpmotors/home.php');
+    exit;
+    }
+}
+
+phpConnect();
 
 ?>
 
