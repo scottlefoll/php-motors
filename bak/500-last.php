@@ -1,14 +1,11 @@
+<!DOCTYPE html>
+
 <html lang="en">
 
-<<<<<<< HEAD
-<?php
+
+<?php   
     if (isset($_GET['page'])) {
         $current_page = $_GET['page'];
-=======
-<?php   
-    if (isset($_GET['action'])) {
-        $current_page = $_GET['action'];
->>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
         if ($current_page != '500') {
             require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
         }
@@ -20,20 +17,14 @@
     <body class="body1">
         <div id="content-box">
             <!-- Header -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
-            <nav class="nav"><?php echo $navList; ?></nav>
+            <img src="/phpmotors/images/logo.png" alt="PHP Motors logo" class="img-logo">
+            <!-- <a href='' class="account-link" style="text-align:right;float:right;padding-right:50px;padding-top:25px;";>My Account</a> -->
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/navigation.php'; ?>
 
             <!-- Main -->
             <main>
             <br>
-            <?php
-                    if(isset($_GET['action'])){
-                        $current_action = $_GET['action'];
-                        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $current_action . '_content.php';
-                    }else{
-                        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
-                    }
-            ?>
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/500_content.php'; ?>
             
                 <p><br><br><br><br><br><br><br></p>
             </main> 
@@ -42,4 +33,5 @@
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
         </div>
     </body>
+</html>body>
 </html>

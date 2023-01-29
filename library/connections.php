@@ -2,6 +2,7 @@
 
     /* Proxy connection to the phpmotors database */
 
+<<<<<<< HEAD
 
     function phConnect()
     {
@@ -21,6 +22,24 @@
             }
         } catch (PDOException $e) {
             header('Location: /phpmotors/home.php?page=500');
+=======
+    function phConnect()
+    {
+        $server = 'localhost';
+        $dbname = 'phpmotors';
+        $username = 'iClient';
+        // to error out the connection and test the error page, change the password to something incorrect
+        $password = '5[oPh9Fjt4kpfOHd'; 
+        $dsn = "mysql:host=$server;dbname=$dbname";
+        $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+
+        // Create the actual connection object and assign it to a variable
+        try {
+            $link = new PDO($dsn, $username, $password, $options);
+            return $link;
+        } catch (PDOException $e) {
+            header('Location: /phpmotors/snippets/500_content.php');
+>>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
         exit;
         }
     }
