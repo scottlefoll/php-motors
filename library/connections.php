@@ -8,7 +8,7 @@
         $dbname = 'phpmotors';
         $username = 'iClient';
         // to error out the connection and test the error page, change the password to something incorrect
-        $password = '5[oPh9Fjt4kpfOHd'; 
+        $password = '5[oPh9Fjt4kpfOHdZZZ'; 
         $dsn = "mysql:host=$server;dbname=$dbname";
         $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 
