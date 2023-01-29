@@ -3,8 +3,13 @@
 <html lang="en">
 
 <?php   
+<<<<<<< HEAD
+    if (isset($_GET['page'])) {
+        $current_page = $_GET['page'];
+=======
     if (isset($_GET['action'])) {
         $current_page = $_GET['action'];
+>>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
         if ($current_page != '500') {
             require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
         }

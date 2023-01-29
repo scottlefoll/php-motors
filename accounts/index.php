@@ -1,5 +1,18 @@
 <?php
     // This is the accounts controller
+<<<<<<< HEAD
+    $action = filter_input(INPUT_POST, 'action');
+        if ($action == NULL){
+            $action = filter_input(INPUT_GET, 'action');
+    }
+
+    switch ($action){
+        case 'something':
+            break;
+        default:
+            include $_SERVER['DOCUMENT_ROOT'] . '/library/connections.php';
+            include $_SERVER['DOCUMENT_ROOT'] . '/model/main-model.php';
+=======
 
     // Get the database connection file
     // require_once 'library/connections.php';
@@ -37,6 +50,7 @@
         default:
             break;
             // include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
+>>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
     }
 
 ?>
