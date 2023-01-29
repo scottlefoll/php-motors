@@ -25,7 +25,7 @@
         }
     }
 
-    phConnect();
+    // phConnect();
 
 ?>
 
