@@ -2,7 +2,6 @@
 
     /* Proxy connection to the phpmotors database */
 
-
     function phConnect()
     {
         $server = 'localhost';
@@ -16,16 +15,14 @@
         // Create the actual connection object and assign it to a variable
         try {
             $link = new PDO($dsn, $username, $password, $options);
-            if (is_object($link)) {
-                echo '';
-            }
+            return $link;
         } catch (PDOException $e) {
-            header('Location: /phpmotors/home.php?page=500');
+            header('Location: /phpmotors/snippets/500_content.php');
         exit;
         }
     }
 
-    phConnect();
+    // phConnect();
 
 ?>
 

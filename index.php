@@ -1,5 +1,5 @@
 <?php
-    // This is the accounts controller
+    // This is the main controller for the site
 
     // Get the database connection file
     // require_once 'library/connections.php';
@@ -32,10 +32,10 @@
     }
 
     switch ($action){
-        case '':
-            break;
+        case 'template':
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
         default:
-            break;
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
             // include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
     }
 
