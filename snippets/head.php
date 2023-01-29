@@ -17,11 +17,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href='https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap'>;
-
+    <title>php Motors</title>
     <?php 
         $currentPage= $_SERVER['SCRIPT_NAME'];
         $currentPage = substr($currentPage, 1);
-        echo "<title>php Motors</title>";
     ?>
 
   </head>

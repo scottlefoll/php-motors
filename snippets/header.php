@@ -1,6 +1,6 @@
 <header>
     <!-- Header -->
     <img src="/phpmotors/images/logo.png" alt="PHP Motors logo" class="img-logo">
-    <a href='' class="account-link" style="text-align:right;float:right;padding-right:50px;padding-top:25px;";>My Account</a>
+    <a href='/phpmotors/accounts/index.php?action=login' class="account-link" >My Account</a>
     
 </header>

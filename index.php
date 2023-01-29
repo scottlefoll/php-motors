@@ -1,8 +1,5 @@
 <?php
-<<<<<<< HEAD
-=======
     // This is the main controller for the site
->>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
 
     // Get the database connection file
     // require_once 'library/connections.php';
@@ -13,10 +10,6 @@
 
     // Get the array of classifications
 	$classifications = getClassifications();
-<<<<<<< HEAD
-    var_dump($classifications);
-	exit;
-=======
     // var_dump($classifications);
 	// exit;
 
@@ -30,7 +23,6 @@
     
     // echo $navList;
     // exit;
->>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
 
     // This is the main controller for the site
 
@@ -40,18 +32,13 @@
     }
 
     switch ($action){
-<<<<<<< HEAD
-        case 'something':
-            break;
-        default:
-            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
-=======
         case 'template':
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
+        case '500':
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/500.php';
         default:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
             // include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
->>>>>>> bb8d81e22b93458e733066709e615d8868b0a729
     }
 
 ?>
