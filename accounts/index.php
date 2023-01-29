@@ -24,19 +24,20 @@
 
     $action = filter_input(INPUT_POST, 'action');
     if ($action == NULL){
-        $action = 'login';
+        $action = filter_input(INPUT_GET, 'action');
     }
 
     switch ($action){
         case 'login':
             require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
         case 'register':
-            if ($action != 'login'){
+            if ($action = 'register'){
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/register.php';
             }
         default:
-            break;
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
     }
+
 
 ?>
 
