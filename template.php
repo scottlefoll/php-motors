@@ -2,16 +2,6 @@
 
 <html lang="en">
 
-<?php   
-        if(isset($_GET['page'])){
-            $current_page = $_GET['page'];
-            if ($current_page != '500') {
-                require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
-            }
-        } else {
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
-        }
-    ?>
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
 
