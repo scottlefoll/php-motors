@@ -34,11 +34,13 @@
     switch ($action){
         case 'template':
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
+            break;
         case '500':
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/500.php';
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/500.php';
+            break;
         default:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
-            // include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
+            break;
     }
 
 ?>

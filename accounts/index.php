@@ -6,6 +6,9 @@
     // Get the PHP Motors model for use as needed
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/model/main-model.php';
 
+    // Display the alert box 
+    // echo "<script>alert('Accounts: index.php');</script>";
+
     // Get the array of classifications
 	$classifications = getClassifications();
     // var_dump($classifications);
@@ -26,16 +29,27 @@
     if ($action == NULL){
         $action = filter_input(INPUT_GET, 'action');
     }
+     
+    // if (isset($_GET["action"])) {
+        // $action = filter_input(INPUT_GET, "action");
+        // Display the alert box 
+        // echo "<script type='text/javascript'>alert('{$action}');</script>";    
+    // }
+ 
 
     switch ($action){
         case 'login':
             require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
+                // Display the alert box 
+                // echo "<script>alert('Load Login page');</script>";
+            break;
         case 'register':
-            if ($action = 'register'){
-                require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/register.php';
-            }
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/register.php';
+                // Display the alert box 
+                // echo "<script>alert('Load Register page');</script>";
+            break;
         default:
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
+            break;
     }
 
 

@@ -1,4 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap'); */
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap');
 
     *{
         margin:0;
@@ -16,7 +16,7 @@
         font-family: 'Share Tech Mono', sans-serif;
         margin: 0;
         font-size: 1rem;
-        background: "/phpmotors/images/checkerboard.jpg"
+        /* background: "/phpmotors/images/checkerboard.jpg" */
     }
 
     #content-box {
@@ -274,7 +274,7 @@
         grid-row: 1;
         display: flex;
         justify-content: center;
-        align-items: bottom;
+        /* align-items: bottom; */
         width: 9rem;
         height: 1rem;
         margin-top: 4.25rem;
@@ -301,7 +301,7 @@
         grid-row: 1;
         display: flex;
         justify-content: center;
-        align-items: bottom;
+        /* align-items: bottom; */
         margin: 0 auto;
         width: 18rem;
         height: 1rem;
@@ -330,7 +330,7 @@
         grid-row: 1;
         display: flex;
         justify-content: center;
-        align-items: bottom;
+        /* align-items: bottom; */
         width: 9rem;
         height: 1rem;
         margin-top: 0;
@@ -550,7 +550,7 @@
             grid-row: 1;
             display: flex;
             justify-content: center;
-            align-items: bottom;
+            /* align-items: bottom; */
             width: 12vw;
             height: 1vw;
             margin-top: 4vw;
@@ -578,7 +578,7 @@
             grid-row: 1;
             display: flex;
             justify-content: center;
-            align-items: bottom;
+            /* align-items: bottom; */
             width: 12vw;
             height: 1vw;
             margin-top: 4vw;
@@ -605,7 +605,7 @@
             grid-row: 2;
             display: flex;
             justify-content: center;
-            align-items: bottom;
+            /* align-items: bottom; */
             width: 12vw;
             height: 1vw;
             margin-top: 0;
@@ -632,7 +632,7 @@
             grid-row: 2;
             display: flex;
             justify-content: center;
-            align-items: bottom;
+            /* align-items: bottom; */
             text-align: center;
             width: 12vw;
             height: 1vw;

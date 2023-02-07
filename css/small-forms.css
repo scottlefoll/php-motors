@@ -14,6 +14,9 @@ button:hover {
   text-align: center;
   justify-content: center;
   margin: left;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9c2c13;
 }
 
 .submitBtn:hover {

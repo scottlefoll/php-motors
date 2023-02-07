@@ -23,16 +23,6 @@
         }
     }
 
-    // phConnect();
-
 ?>
 
-<!-- 
-In the code above you will see an arrow symbol (e.g. =>) and a double colon (e.g. PDO::ATTR_ERRMODE). You may ask, "What do those mean?"
-
-The arrow symbol - =>
-The arrow is a means of assigning a "key" to a "value" within an array. If you look at the entire line, 
-
-Double Colon - ::
-The double colon in this code is a way in Object Oriented Programming to directly access a method within the class.-->
 

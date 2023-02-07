@@ -2,18 +2,10 @@
 
 <html lang="en">
 
-<?php   
-    if (isset($_GET['action'])) {
-        $current_page = $_GET['action'];
-        if ($current_page != '500') {
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
-        }
-    }
-    ?>
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
 
-    <body class="body1">
+    <!-- <body class="body1"> -->
         <div id="content-box">
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
