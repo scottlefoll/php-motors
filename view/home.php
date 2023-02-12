@@ -1,3 +1,10 @@
+<?php
+    if(!isset($_SESSION)) 
+        { 
+            session_start(); 
+        }
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -13,10 +20,19 @@
 
             <!-- Main -->
             <main>
+            
             <br>
+            <?php
+                    if (isset($message)) {
+                    echo $message;
+                    }
+            ?>
+            <br>
+
             <?php
                     if(isset($_GET['action']) and $_GET['action'] != 'template'){
                         $current_action = $_GET['action'];
+                        // echo "<script>alert('home.php: action = $action ');</script>";
                         require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $current_action . '_content.php';
                     }else{
                         require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
