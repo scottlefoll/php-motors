@@ -1,8 +1,8 @@
 <header>
     <!-- Header -->
     <img src="/phpmotors/images/logo.png" alt="PHP Motors logo" class="img-logo">
-    <a href='/phpmotors/index.php?action=login_view' class="account-link" >My Account</a>                        
-    <a href='/phpmotors/index.php?action=vehicle_man' class="account-link" >Vehicle Management</a>
+    <a href='/phpmotors/accounts/index.php' class="account-link" >My Account</a>                        
+    <a href='/phpmotors/vehicles/index.php' class="account-link" >Vehicle Management</a>
     
     <?php
         // if ($_SESSION["login"] = "true")

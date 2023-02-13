@@ -89,16 +89,23 @@
                     $contentStr = "<p>Trucks  Page Content</p>";
                     fwrite($contentfile, $contentStr);
                     fclose($contentfile);
-                    $message = "<p>The new $classificationName class was added to the database, and the content.php file created.</p>";
-                } catch (PDOException $e) {
+                    // $message = "<p>The new $classificationName class was added to the database, and the content.php file created.</p>";
+                    $message = "";
+                    // Redirect the browser
+                    header('Location: http://localhost/phpmotors/vehicles/index.php');
+                    exit;                    
+
+                } catch (Exception $e) {
                     $message = "<p>The $classificationName class was added to the database, but there was an error creating the content.php file.</p>";
+                    // Redirect the browser
+                    header('Location: http://localhost/phpmotors/vehicles/index.php');
+                    exit;
                 } 
             } else {
                 $message = "<p>Sorry, but the attempt to add the $classificationName class to the database failed.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
+                exit;    
             }
-
-            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
-            exit;
         case 'add_vehicle_view':
             // Case to display the add vehicle view
             // Display the alert box 
@@ -130,14 +137,16 @@
             // Check and report the result
             if($addOutcome === TRUE){
                 $message = "<p>Success - $invMake $invModel has been added to inventory.</p>";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
-                exit;
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
+                exit; 
             } else {
                 $message = "<p>The attempt to add the $invMake $invModel to inventory has failed.</p>";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
                 exit;
             }   
         default:
+            # vehicle_man view:
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
             exit;
 }
 

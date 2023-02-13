@@ -77,7 +77,7 @@
                 $_SESSION["email"] = $clientEmail;
                 $message = "<p>Thank you. You are now logged in as $clientEmail.</p>";
                 # PROBLEM - shouldn't this be going through the controller?
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/index.php';
                 exit;
             } else {
                 $message = "<p>Sorry $clientEmail, but the login failed. Please try again.</p>";
@@ -140,8 +140,9 @@
         //         exit;
         //     }
         default:
-            // Display the alert box 
-            // echo "<script>alert('Accounts Controller: Default Case');</script>";
+            // Display the login view by default
+            // echo "<script>alert('Accounts Controller: login view');</script>";
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
             exit;
     }
 

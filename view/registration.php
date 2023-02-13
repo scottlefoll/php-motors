@@ -29,7 +29,7 @@
             <!-- Main -->
             <main>
                 <br>
-                <h1>PHP Motors Registration</h1>
+                <h1>PHP Motors Account Registration</h1>
                 <br>
                 <?php
                     if (isset($message)) {

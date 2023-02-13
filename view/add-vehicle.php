@@ -40,6 +40,11 @@
                     echo $message;
                     }
                 ?>
+
+                <?php 
+                    $imgFile_str = $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/images/no-image.png';
+                ?>
+
                 <br>
                 <h4>*Please note: all fields are required.</h4>
 
@@ -50,8 +55,8 @@
                         <label class="top" for="invMake">Make* <input type="text" id="invMake" name="invMake" value="" required></label>
                         <label class="top" for="invModel">Model*  <input type="text" id="invModel" name="invModel" value="" required></label>
                         <label class="top" for="invDescription">Description* <input type="invDescription" id="invDescription" name="invDescription" value="" required></label>
-                        <label class="top" for="invImage">Image*  <input type="text" id="invImage" name="invImage" value="" required></label>
-                        <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="invThumbnail" name="invThumbnail" value="" required></label>
+                        <label class="top" for="invImage">Image*  <input type="text" id="invImage" name="invImage" value="<?php echo $imgFile_str; ?>" required></label>
+                        <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="invThumbnail" name="invThumbnail" value="<?php echo $imgFile_str; ?>" required></label>
                         <label class="top" for="invPrice">Price*  <input type="number" id="invPrice" placeholder="25000" name="invPrice" value="" required></label>
                         <label class="top" for="invStock">In Stock* <input type="number" id="invStock" name="invStock" value="" required></label>
                         <label class="top" for="password">Color*  <input type="text" id="invColor" name="invColor" value="" required></label>
