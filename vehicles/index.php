@@ -38,81 +38,102 @@
         $action = filter_input(INPUT_GET, 'action');
     }
 
-    echo "<script>alert('Vehicle Controller: action = $action');</script>";
+    if ($action == "Add Classification") {
+        $action = "add_class_view";
+    } elseif ($action == "Add Vehicle") {
+        $action = "add_vehicle_view";
+    }
+    
+    // echo "<script>alert('Vehicle Controller: action = $action');</script>";
 
     // $action = $_SESSION['status'];
 
     switch ($action){
+        case 'add_class_view':
+            // Case to display the add class view
+            // Display the alert box 
+            // echo "<script>alert('Vehicle Controller: add class view case');</script>";
+
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
+            exit;
         case 'add_class':
             // Display the alert box 
-            echo "<script>alert('Vehicle Controller: add class case');</script>";
+            // echo "<script>alert('Vehicle Controller: add class case');</script>";
 
             // Filter and store the data
-            $classificationName = filter_input(INPUT_POST, 'classificationName');
-
+            $classificationName = ucwords(trim(filter_input(INPUT_POST, 'classificationName')));
             // Check for missing data
             if(empty($classificationName)){
                 $message = '<p>Please provide information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
                 exit; 
             }
-            
             // Display the data 
-            echo "<script>alert('Vehicle Controller data: $classificationName);</script>";
+            // echo "<script>alert('Vehicle Controller data: $classificationName);</script>";
 
             // Send the data to the model
-            $addOutcome = addClassification($classificationName);
+            $addOutcome = addClass($classificationName);
 
             // Check and report the result
-            if($addResult === TRUE){
-                echo "<script>alert('Success - classification $classificationName is added.');</script>";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
-                exit;
+            if($addOutcome === TRUE){
+
+                $contentFileName = $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $classificationName . '_content.php';
+                $contentfile = fopen($contentFileName, "w");
+                $contentStr = "<p>Trucks  Page Content</p>";
+                fwrite($contentfile, $contentStr);
+                fclose($contentfile);
+
+                // Create the actual connection object and assign it to a variable
+                try {
+                    $contentfile = fopen($contentFileName, "w");
+                    $contentStr = "<p>Trucks  Page Content</p>";
+                    fwrite($contentfile, $contentStr);
+                    fclose($contentfile);
+                    $message = "<p>The new $classificationName class was added to the database, and the content.php file created.</p>";
+                } catch (PDOException $e) {
+                    $message = "<p>The $classificationName class was added to the database, but there was an error creating the content.php file.</p>";
+                } 
             } else {
-                echo "<script>alert('The attempt to add classification $classificationName to inventory failed.');</script>";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
-                exit;
-            } 
+                $message = "<p>Sorry, but the attempt to add the $classificationName class to the database failed.</p>";
+            }
+
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
+            exit;
+        case 'add_vehicle_view':
+            // Case to display the add vehicle view
+            // Display the alert box 
+            // echo "<script>alert('Vehicle Controller: add vehicle view case');</script>";
+
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
+            exit;
         case 'add_vehicle':
             // Display the alert box 
-            echo "<script>alert('Vehicle Controller: add vehicle Case');</script>";
+            // echo "<script>alert('Vehicle Controller: add vehicle Case');</script>";
 
             // Filter and store the data
-            $invMake = filter_input(INPUT_POST, 'invMake');
-            $invModel = filter_input(INPUT_POST, 'invModel');
-            $invDescription = filter_input(INPUT_POST, 'invDescription');
-            $invImage = filter_input(INPUT_POST, 'invImage');
-            $invThumbnail = filter_input(INPUT_POST, 'invThumbnail');
+            $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake')));
+            $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel')));
+            $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription')));
+            $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage')));
+            $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail'))));
             $invPrice = filter_input(INPUT_POST, 'invPrice');
             $invStock = filter_input(INPUT_POST, 'invStock');
-            $invColor = filter_input(INPUT_POST, 'invColor');
+            $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor')));
             $classificationId = filter_input(INPUT_POST, 'classificationId');
 
-            // Check for missing data
-            if(empty($invMake) || empty($invModel) || empty($invDescription) || empty($indImage)
-                || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invColor)
-                || empty($classificationId)){
-                $message = '<p>Please provide information for all empty form fields.</p>';
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
-                exit; 
-            }
+            // echo "<script>alert('Vehicle Controller: copy data into local variables');</script>";
             
-            // Display the data 
-            echo "<script>alert('Vehicle Controller data: $invMake, $invModel, $invDescription, 
-                    $invImage, $invThumbnail, $invPrice, $invStock, $invColor, 
-                    $classificationId');</script>";
-
             // Send the data to the model
             $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invImage, 
                             $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
 
             // Check and report the result
-            if($addResult === TRUE){
-                echo "<script>alert('Success - $invMake $invModel is added to inventory.');</script>";
+            if($addOutcome === TRUE){
+                $message = "<p>Success - $invMake $invModel has been added to inventory.</p>";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
                 exit;
             } else {
-                echo "<script>alert('The attempt to add $invMake $invModel to inventory failed.');</script>";
+                $message = "<p>The attempt to add the $invMake $invModel to inventory has failed.</p>";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
                 exit;
             }   

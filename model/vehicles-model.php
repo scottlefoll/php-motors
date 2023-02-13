@@ -40,10 +40,14 @@
         // Close the database interaction
         $stmt->closeCursor();
         // Return the indication of success (rows changed)
-        return $rowsChanged;
+        if ($rowsChanged > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    function addClassification($classificationName){
+    function addClass($classificationName){
         // Create a connection object using the phpmotors connection function
         $db = phConnect();
         $rowsChanged = 0;
@@ -78,7 +82,12 @@
         // Close the database interaction
         $stmt->closeCursor();
         // Return the indication of success (rows changed)
-        return $rowsChanged;
+        if ($rowsChanged > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
        }
 
     function getVehicles($vehicle = ""){

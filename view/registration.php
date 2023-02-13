@@ -3,6 +3,8 @@
         { 
             session_start(); 
         }
+    
+    $_SESSION["status"] = "register";
 ?>
 
 <!DOCTYPE html>
@@ -10,15 +12,12 @@
 <html lang="en">
 
     <!-- Head -->
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php';?>
 
-    <!-- <body class="body1"> -->
-
+    <body class="body1">
         <div id="content-box">
-
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
-
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">

@@ -93,7 +93,47 @@ form label.top input:required:valid {
     border-left: solid 6px green;
 }
 
+form select.top input:required {
+    border-left: solid 6px red;
+}
 
+form select.top input:required:valid {
+    border-left: solid 6px green;
+}
+
+#addVehicleBtn {
+    border: none;
+    background-color: #9c2c13;
+    background-color: #0000FF;
+    color: white;
+    /* background-color:#4c96d7; */
+    border-radius: 1rem;
+    padding: .75rem 1.5rem;
+    margin: 0 0 2 rem 2%;
+    width: 96%;
+    max-width: 20rem;
+}
+
+#addVehicleBtn:hover {
+    background-color:#4c96d7;
+  }
+
+#addClassBtn {
+    border: none;
+    background-color: #9c2c13;
+    background-color: #0000FF;
+    color: white;
+    /* background-color:#4c96d7; */
+    border-radius: 1rem;
+    padding: .75rem 1.5rem;
+    margin: 0 0 2 rem 2%;
+    width: 96%;
+    max-width: 20rem;
+}
+
+#addClassBtn:hover {
+    background-color:#4c96d7;
+  }
 
 /*----- Clearfix: Force an Element not to collapse -----*/
 .clearfix:after {

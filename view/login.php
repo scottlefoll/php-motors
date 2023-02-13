@@ -14,7 +14,7 @@
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
 
-    <!-- <body class="body1"> -->
+    <body class="body1">
         <div id="content-box">
 
             <!-- Header -->
@@ -30,36 +30,17 @@
 
             <!-- Main -->
             <main>
-                <br>
-                <h1>PHO Motors Login</h1>
-                <br>
-
-                <?php
-                    // if ($_SESSION["login"] = "true")
-                    // {
-                    //     $message = "<p>You are currently logged in as {$_SESSION['email']}.</p>";
-                    // }
-                ?>
+                <br><br>
+                <h1>Account Login</h1>
 
                 <?php
                     if (isset($message)) {
                     echo $message;
                     }
                 ?>
+                <br>
+                <h4>*Please note: all fields are required.</h4>
 
-                <?php
-                        // if(array_key_exists('addVehicle', $_POST)) {
-                        //     submitVehicleBtn2();
-                        // }
-                        // function submitVehicleBtn2() {
-                        //     echo "<script>alert('!!! Submit Add_vehicle -> go to vehicle controller');</script>";
-                        //     $_SESSION['status'] = "add_vehicle";    
-                        //     include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicles/index.php?action=add_vehicle';
-                        //     exit();
-                        // }
-                ?>
-
-                <!-- <form method="post";> -->
                 <form method="post" action= '/phpmotors/accounts/index.php';>
                     <fieldset>
                         <legend>Login Information</legend>
@@ -68,9 +49,9 @@
                     </fieldset>
                     <input type="submit" name="login" value="Login" class="submitBtn">
                     <input type="hidden" name="action" value="login"  class="hidden">
-
-                    <div class="signup"><p>No account? <button type="submit" name="action" value="register" onclick="/phpmotors/accounts/index.php" class="signupbtn">Sign Up</button></p></div>
-                                        
+                    <!-- PROBLEM: should this Form Action go to the controller or the child page? -->
+                    <!-- <div class="signup"><p>No account? <button type="submit" name="action" value="register" onclick="/phpmotors/accounts/index.php" class="signupbtn">Sign Up</button></p></div> -->
+                    <div class="signup"><p>No account? <button type="submit" name="action" value="register" class="signupbtn">Sign Up</button></p></div>
                 </form>
 
             </main>

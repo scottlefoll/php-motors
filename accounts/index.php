@@ -43,19 +43,27 @@
     // $action = $_SESSION['status'];
     
     switch ($action){
+        case 'login_view':
+            // Case to display the login view
+            // Display the alert box 
+            // echo "<script>alert('Account Controller: login view case');</script>";
+
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
+            exit;
+            
         case 'login':
             # this is the login page view
             // echo "<script>alert('Accounts Controller: case = login');</script>";
 
             // Filter and store the data
-            $clientEmail = filter_input(INPUT_POST, 'clientEmail');
-            $clientPassword = filter_input(INPUT_POST, 'clientPassword');
+            $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail')));
+            $clientPassword = trim(filter_input(INPUT_POST, 'clientPassword'));
 
             // Check for missing data
             if(empty($clientEmail) || empty($clientPassword)){
                 // echo "<script>alert('Accounts Controller: clientEmail = $clientEmail , clientPassword = $clientPassword');</script>";
                 $message = '<p>Please provide information for all empty form fields.</p>';
-                include '../view/login.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
                 exit; 
             }
 
@@ -68,27 +76,37 @@
                 $_SESSION["login"] = "true";
                 $_SESSION["email"] = $clientEmail;
                 $message = "<p>Thank you. You are now logged in as $clientEmail.</p>";
-                include '../view/home.php';
+                # PROBLEM - shouldn't this be going through the controller?
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
                 exit;
             } else {
                 $message = "<p>Sorry $clientEmail, but the login failed. Please try again.</p>";
-                include '../view/login.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
                 exit;
             }
+
+        case 'reg_view':
+            // Case to display the register view
+            // Display the alert box 
+            // echo "<script>alert('Account Controller: register view case');</script>";
+
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
+            exit;
+
         case 'register':
             # this is the register page view
             // echo "<script>alert('Accounts Controller: case = register');</script>";
 
             // Filter and store the data
-            $clientFirstname = filter_input(INPUT_POST, 'clientFirstname');
-            $clientLastname = filter_input(INPUT_POST, 'clientLastname');
-            $clientEmail = filter_input(INPUT_POST, 'clientEmail');
+            $clientFirstname = ucwords(trim(filter_input(INPUT_POST, 'clientFirstname')));
+            $clientLastname = ucwords(trim(filter_input(INPUT_POST, 'clientLastname')));
+            $clientEmail = strtolower(ucwords(trim(filter_input(INPUT_POST, 'clientEmail'))));
             $clientPassword = filter_input(INPUT_POST, 'clientPassword');
 
             // Check for missing data
             if(empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($clientPassword)){
                 $message = '<p>Please provide information for all empty form fields.</p>';
-                include '../view/registration.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
                 exit; 
             }
 
@@ -101,12 +119,12 @@
             // Check and report the result
             if($regOutcome === 1){
                 $message = "<p>Thank you for registering, $clientFirstname. Please use your email and password to login.</p>";
-                include '../view/login.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
                 exit;
             } else {
                 // if(strpos($message, "Duplicate entry") !== false)
                 $message = "<p>Sorry $clientFirstname, but the registration failed. Please try again.</p>";
-                include '../view/registration.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
                 exit;
             }
         // case 'logout':

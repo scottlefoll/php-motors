@@ -3,7 +3,9 @@
         { 
             session_start(); 
         }
-?> 
+
+    $_SESSION["status"] = "vehicle_man";
+?>
 
 <!DOCTYPE html>
 
@@ -12,12 +14,11 @@
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
 
-    <!-- <body class="body1"> -->
+    <body class="body1">
         <div id="content-box">
             <!-- Header -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; 
-                // echo "<script>alert('Enter vehicle_man.php');</script>";
-            ?> 
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php';?> 
+
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">
@@ -30,32 +31,24 @@
             <main>
                 <br><br>
                 <h2>Vehicle Management</h2>
-                <br><br>
-                <!-- <form method="post";> -->
-                
+
                 <?php
-                    
-                    if(isset($_POST['addClass'])) {
-                                echo "<script>alert('vehicle_man.php : action = add_class');</script>";
-                                $_POST['action'] = 'add_class';
-                                require_once($_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicles/index.php');
-                            } else if(isset($_POST['addVehicle'])) {
-                                echo "<script>alert('vehicle_man.php : action = add_vehicle');</script>";
-                                $_POST['action'] = 'add_vehicle';
-                                require_once($_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicles/index.php');
-                            }
+                    if (isset($message)) {
+                    echo $message;
+                    }
                 ?>
 
-
-                <form method="post">
-                    <input type="submit" id="addClass" name="addClass" value="Add Classification" class="submitBtn">
-                    <br>
-                    <br>
-                    <input type="submit" id="addVehicle" name="addVehicle" value="Add Vehicle" class="submitBtn">
-                    <br><br>
+                <form method="post" action='/phpmotors/vehicles/index.php';>
+                    <fieldset>
+                        <legend>Vehicle Managemenent Information</legend>
+                        <br><br>
+                        <input type="submit" name="action" value="Add Vehicle" class="submitBtn">
+                        <br><br><br>
+                        <input type="submit" name="action" value="Add Classification" class="submitBtn">
+                        <br><br><br>
+                    </fieldset>
                 </form>
 
-                <p>
             </main>
 
             <!-- Footer -->

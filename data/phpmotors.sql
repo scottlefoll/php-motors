@@ -242,11 +242,6 @@ MODIFY `invId` int NOT NULL AUTO_INCREMENT,
 --
 -- Table structure for table `carclassification`
 --
-ALTER TABLE `inventory`
-ADD CONSTRAINT car_info UNIQUE (invMake, invModel)
---
--- Table structure for table `inventory`
---
 DROP TABLE IF EXISTS `carclassification`;
 CREATE TABLE `carclassification` (
   `classificationId` int NOT NULL,

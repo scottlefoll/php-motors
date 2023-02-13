@@ -16,9 +16,16 @@
 
 /*----------- MAIN --------------*/
 
-form label.sbs {
-    padding: .4rem 0;
-}
+    form label.sbs {
+        padding: .4rem 0;
+    }
 
+    #addVehicleBtn {
+        padding: .4rem 0;
+    }
+
+    #addClassBtn {
+        padding: .4rem 0;
+    }
 
 } 

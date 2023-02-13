@@ -50,12 +50,7 @@
         $action = filter_input(INPUT_GET, 'action');
     }
 
-    echo "<script>alert('Main Controller: Action = $action');</script>";
-
-    // if ($action == 'loginClient'){
-    //     $action = 'home';
-    //     // echo "<script>alert('Main Controller: Action Delta = $action');</script>";
-    // }
+    // echo "<script>alert('Main Controller: Action = $action');</script>";
 
     switch ($action){
         case 'home':
@@ -67,26 +62,26 @@
             $_SESSION["status"] = "500";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/500.php';
             break;   
-        case 'add_class':
-                $_SESSION["status"] = "add_class";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicle/index.php';
-                break;
-        case 'add_vehicle':
-                $_SESSION["status"] = "add_vehicle";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicle/index.php';
-                break;
+        // case 'add_class':
+        //         $_SESSION["status"] = "add_class";
+        //         include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicle/index.php';
+        //         break;
+        // case 'add_vehicle':
+        //         $_SESSION["status"] = "add_vehicle";
+        //         include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/vehicle/index.php';
+        //         break;
         case 'vehicle_man':
                 $_SESSION["status"] = "vehicle_man";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
                 break;
-        case 'login':
+        case 'login_view':
             $_SESSION["status"] = "login";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
             break;
-        case 'register':
-            $_SESSION["status"] = "register";
-            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
-            break;
+        // case 'register':
+        //     $_SESSION["status"] = "register";
+        //     include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
+        //     break;
         default:
             $_SESSION["status"] = "home";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
