@@ -14,7 +14,7 @@
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
 
-    <body class="body1">
+    <!-- <body class="body1"> -->
         <div id="content-box">
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php';?> 
@@ -38,7 +38,7 @@
                     }
                 ?>
 
-                <form method="post" action='/phpmotors/vehicles/index.php';>
+                <form method="post" action='/phpmotors/vehicles/index.php' >
                     <fieldset>
                         <legend>Vehicle Managemenent Information</legend>
                         <br><br>

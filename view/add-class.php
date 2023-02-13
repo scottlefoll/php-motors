@@ -16,7 +16,7 @@
         $_SESSION['Status'] = "add_class";
     ?>
 
-    <body class="body1">
+    <!-- <body class="body1"> -->
         
         <div id="content-box">
             <!-- Header -->
@@ -40,7 +40,7 @@
                     }
                 ?>
 
-                <form method="post" action= '/phpmotors/vehicles/index.php';>
+                <form method="post" action= '/phpmotors/vehicles/index.php' >
                     <fieldset>
                         <legend>Classification Information</legend>
                         <label class="top" for="classificationName">Classification Name*  <input type="text" id="classificationName" name="classificationName" value="" required></label>

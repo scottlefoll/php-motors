@@ -247,7 +247,7 @@
         grid-row: 1;
         display: flex;
         justify-content: center;
-        align-items: bottom;
+        /* align-items: bottom; */
         width: 9rem;
         height: 1rem;
         margin-top: 4.25rem;

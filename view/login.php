@@ -14,7 +14,7 @@
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
 
-    <body class="body1">
+    <!-- <body class="body1"> -->
         <div id="content-box">
 
             <!-- Header -->
@@ -41,7 +41,7 @@
                 <br>
                 <h4>*Please note: all fields are required.</h4>
 
-                <form method="post" action= '/phpmotors/accounts/index.php';>
+                <form method="post" action= '/phpmotors/accounts/index.php' >
                     <fieldset>
                         <legend>Login Information</legend>
                         <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" value="" required></label>

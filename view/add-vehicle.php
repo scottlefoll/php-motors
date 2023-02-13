@@ -14,7 +14,7 @@
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php';?>
 
-    <body class="body1">
+    <!-- <body class="body1"> -->
         <div id="content-box">
 
             <!-- Header -->
@@ -49,7 +49,7 @@
                 <h4>*Please note: all fields are required.</h4>
 
                 <!-- <form method="post";> -->
-                <form method="post" action= '/phpmotors/vehicles/index.php';>
+                <form method="post" action= '/phpmotors/vehicles/index.php' >
                     <fieldset>
                         <legend>Vehicle Information</legend>
                         <label class="top" for="invMake">Make* <input type="text" id="invMake" name="invMake" value="" required></label>
