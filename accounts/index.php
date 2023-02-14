@@ -12,6 +12,8 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/model/main-model.php';
     // Get the accounts model
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/model/accounts-model.php';
+    // Get the functions library
+    require_once '../library/functions.php';
 
     // Display the alert box 
     // echo "<script>alert('Accounts: index.php');</script>";
@@ -47,7 +49,6 @@
             // Case to display the login view
             // Display the alert box 
             // echo "<script>alert('Account Controller: login view case');</script>";
-
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
             exit;
             
@@ -56,11 +57,15 @@
             // echo "<script>alert('Accounts Controller: case = login');</script>";
 
             // Filter and store the data
-            $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail')));
-            $clientPassword = trim(filter_input(INPUT_POST, 'clientPassword'));
+            $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
+            $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            $clientPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+            $clientEmail = checkEmail($clientEmail);
+            $checkPassword = checkPassword($clientPassword);
+            
             // Check for missing data
-            if(empty($clientEmail) || empty($clientPassword)){
+            if (empty($clientEmail) || empty($checkPassword)) {
                 // echo "<script>alert('Accounts Controller: clientEmail = $clientEmail , clientPassword = $clientPassword');</script>";
                 $message = '<p>Please provide information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
@@ -76,7 +81,6 @@
                 $_SESSION["login"] = "true";
                 $_SESSION["email"] = $clientEmail;
                 $message = "<p>Thank you. You are now logged in as $clientEmail.</p>";
-                # PROBLEM - shouldn't this be going through the controller?
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/index.php';
                 exit;
             } else {
@@ -89,7 +93,6 @@
             // Case to display the register view
             // Display the alert box 
             // echo "<script>alert('Account Controller: register view case');</script>";
-
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
             exit;
 
@@ -98,26 +101,33 @@
             // echo "<script>alert('Accounts Controller: case = register');</script>";
 
             // Filter and store the data
-            $clientFirstname = ucwords(trim(filter_input(INPUT_POST, 'clientFirstname')));
-            $clientLastname = ucwords(trim(filter_input(INPUT_POST, 'clientLastname')));
-            $clientEmail = strtolower(ucwords(trim(filter_input(INPUT_POST, 'clientEmail'))));
-            $clientPassword = filter_input(INPUT_POST, 'clientPassword');
+            $clientFirstname = ucwords(trim(filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $clientLastname = ucwords(trim(filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
+            $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            $clientPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+            $clientEmail = checkEmail($clientEmail);
+            
             // Check for missing data
-            if(empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($clientPassword)){
+            // Check for missing data
+            if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($checkPassword)) {
                 $message = '<p>Please provide information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
                 exit; 
             }
 
             // Display the data 
-            // echo "<script>alert('Vehicle Controller data: $invMake, $invModel, $invDescription, $invImage, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId');</script>";
+            // echo "<script>alert('Vehicle Controller: register data: $clientFirstname, $clientLastname, $clientEmail, $clientPassword');</script>";
+
+            $checkPassword = checkPassword($clientPassword);
 
             // Send the data to the model
-            $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassword);            
-            
+            $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);            
+            // echo "<script>alert('Accounts Controller: register regOutcome = $regOutcome');</script>";
+
             // Check and report the result
-            if($regOutcome === 1){
+            if($regOutcome === TRUE){
                 $message = "<p>Thank you for registering, $clientFirstname. Please use your email and password to login.</p>";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
                 exit;
@@ -127,6 +137,19 @@
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
                 exit;
             }
+        case 'logout':
+            // Check and report the result
+            if($logOutcome === 1){
+                $_SESSION["login"] = "false";
+                $message = "<p>Thank you. You are now loggout out.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
+                exit;
+            } else {
+                $message = "<p>You are already logged out.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
+                exit;
+            }
+
         // case 'logout':
         //     // Check and report the result
         //     if($logOutcome === 1){

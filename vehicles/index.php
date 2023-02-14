@@ -128,14 +128,16 @@
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor')));
             $classificationId = filter_input(INPUT_POST, 'classificationId');
 
-            // echo "<script>alert('Vehicle Controller: copy data into local variables');</script>";
-            
+            // echo "<script>alert('Vehicle Controller: local data')</script>";
+
             // Send the data to the model
             $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invImage, 
                             $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
 
             // Check and report the result
             if($addOutcome === TRUE){
+                // echo "<script>alert('Vehicle Controller: addOutcome = $addOutcome ');</script>";
+                // $message = "<p>Success - $invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId added.</p>";
                 $message = "<p>Success - $invMake $invModel has been added to inventory.</p>";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
                 exit; 

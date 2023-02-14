@@ -43,7 +43,7 @@
                 <form method="post" action= '/phpmotors/vehicles/index.php' >
                     <fieldset>
                         <legend>Classification Information</legend>
-                        <label class="top" for="classificationName">Classification Name*  <input type="text" id="classificationName" name="classificationName" value="" required></label>
+                        <label class="top" for="classificationName">Classification Name*  <input type="text" id="classificationName" name="classificationName" <?php if(isset($classificationName)){echo "value='$classificationName'";} ?> pattern="^[A-Za-z -]{1,30}$" required></label>
                         <br>
                     </fieldset>
                     <input type="submit" name=addClassification value="Add Classification" class="submitBtn">

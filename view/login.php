@@ -43,14 +43,12 @@
 
                 <form method="post" action= '/phpmotors/accounts/index.php' >
                     <fieldset>
-                        <legend>Login Information</legend>
-                        <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" value="" required></label>
-                        <label class="top" for="password">Password*  <input type="password" id="password" name="clientPassword" value="" required></label>
+                        <legend>Login Information</legend>                                                                                                                      
+                        <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?>  pattern="^.+@[^\.].*\.[a-z]{2,}$"  required></label>
+                        <label class="top" for="password">Password*  <input type="password" id="password" name="clientPassword" value="" pattern="^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required></label>
                     </fieldset>
                     <input type="submit" name="login" value="Login" class="submitBtn">
                     <input type="hidden" name="action" value="login"  class="hidden">
-                    <!-- PROBLEM: should this Form Action go to the controller or the child page? -->
-                    <!-- <div class="signup"><p>No account? <button type="submit" name="action" value="register" onclick="/phpmotors/accounts/index.php" class="signupbtn">Sign Up</button></p></div> -->
                     <div class="signup"><p>No account? <button type="submit" name="action" value="register" class="signupbtn">Sign Up</button></p></div>
                 </form>
 

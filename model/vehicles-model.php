@@ -28,23 +28,18 @@
         $stmt->bindValue(':classificationId', $classificationId, PDO::PARAM_STR);
 
         try {
+            // $stmt_str = print_r($stmt);
+            // echo "<script>alert('Vehicle Model: addVehicle Execute: stmt = $stmt_str ')</script>";
             // Insert the data
-            $stmt->execute();
-            // Ask how many rows changed as a result of our insert
-            $rowsChanged = $stmt->rowCount();
+            $addOutcome = $stmt->execute();
         } catch (Exception $e) {
-            $arr = $stmt->errorInfo();
-            // $arr_str = print_r($arr);
+            throw $e;
         }
 
         // Close the database interaction
         $stmt->closeCursor();
-        // Return the indication of success (rows changed)
-        if ($rowsChanged > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $addOutcome;
+        exit;
     }
 
     function addClass($classificationName){
@@ -70,25 +65,19 @@
         $stmt->bindValue(':classificationName', $classificationName, PDO::PARAM_STR);
 
         try {
+            // $stmt_str = print_r($stmt);
+            // echo "<script>alert('Vehicle Model: addVehicle Execute: stmt = $stmt_str ')</script>";
             // Insert the data
-            $stmt->execute();
-            // Ask how many rows changed as a result of our insert
-            $rowsChanged = $stmt->rowCount();
+            $addOutcome = $stmt->execute();
         } catch (Exception $e) {
-            $arr = $stmt->errorInfo();
-            // $arr_str = print_r($arr);
+            throw $e;
         }
     
         // Close the database interaction
         $stmt->closeCursor();
-        // Return the indication of success (rows changed)
-        if ($rowsChanged > 0) {
-            return true;
-        } else {
-            return false;
-        }
-
-       }
+        return $addOutcome;
+        exit;
+    }
 
     function getVehicles($vehicle = ""){
         // Create a connection object from the phpmotors connection function
