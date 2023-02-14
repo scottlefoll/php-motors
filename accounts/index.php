@@ -13,7 +13,7 @@
     // Get the accounts model
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/model/accounts-model.php';
     // Get the functions library
-    require_once '../library/functions.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/functions.php';
 
     // Display the alert box 
     // echo "<script>alert('Accounts: index.php');</script>";

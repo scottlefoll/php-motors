@@ -12,6 +12,8 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/model/main-model.php';
     // Get the PHP vehicles model for use as needed
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/model/vehicles-model.php';
+    // Get the functions library
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/functions.php';
 
     // Display the alert box 
     // echo "<script>alert('Vehicle: index.php');</script>";
