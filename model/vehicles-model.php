@@ -95,7 +95,7 @@
         $stmt->closeCursor(); 
         // The next line sends the array of data back to where the function 
         // was called (this should be the controller) 
-    return $vehicles;
+        return $vehicles;   
     }
 
 ?>
