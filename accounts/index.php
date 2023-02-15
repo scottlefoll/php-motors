@@ -168,11 +168,4 @@
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
             exit;
     }
-
-
 ?>
-
-
-
-
-

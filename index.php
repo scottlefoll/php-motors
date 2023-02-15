@@ -5,7 +5,7 @@
         session_start(); 
     }
 
-    $_SESSION["status"] = "home";
+    $_SESSION["status"] = "main";
     $_SESSION["login"] = "false";
     $_SESSION["email"] = "";
 
@@ -40,16 +40,15 @@
 
     switch ($action){
         case 'home':
-            $_SESSION["status"] = "home";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
             break;
-
         case '500':
-            $_SESSION["status"] = "500";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/500.php';
             break;   
+        case 'template':
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
+            break;       
         default:
-            $_SESSION["status"] = "home";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
             break;
     }

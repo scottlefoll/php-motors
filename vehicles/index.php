@@ -78,36 +78,28 @@
 
             // Check and report the result
             if($addOutcome === TRUE){
-
-                $contentFileName = $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $classificationName . '_content.php';
-                $contentfile = fopen($contentFileName, "w");
-                $contentStr = "<p>Trucks  Page Content</p>";
-                fwrite($contentfile, $contentStr);
-                fclose($contentfile);
-
-                // Create the actual connection object and assign it to a variable
+                $contentFilename = strtolower(str_replace(" ", "_", $classificationName));
+                $contentFilename = $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $contentFilename . '_content.php';
                 try {
-                    $contentfile = fopen($contentFileName, "w");
-                    $contentStr = "<p>Trucks  Page Content</p>";
-                    fwrite($contentfile, $contentStr);
-                    fclose($contentfile);
-                    // $message = "<p>The new $classificationName class was added to the database, and the content.php file created.</p>";
-                    $message = "";
-                    // Redirect the browser
-                    header('Location: http://localhost/phpmotors/vehicles/index.php');
-                    exit;                    
+                    $content_file_obj = fopen($contentFilename, "w");
+                    $content_str = str_replace('_', ' ', $classificationName);
+                    $content_str = "<p>$content_str Page Content</p>"; 
+                    fwrite($content_file_obj, $content_str);
+                    fclose($content_file_obj);
 
+                    $message = "";
+                    // The new new class was added to the database, and the content.php file created
+                    // Redirect the browser
+                    header("Location: //localhost/phpmotors/vehicles/index.php");
+                    exit;        
                 } catch (Exception $e) {
                     $message = "<p>The $classificationName class was added to the database, but there was an error creating the content.php file.</p>";
-                    // Redirect the browser
-                    header('Location: http://localhost/phpmotors/vehicles/index.php');
-                    exit;
                 } 
             } else {
                 $message = "<p>Sorry, but the attempt to add the $classificationName class to the database failed.</p>";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
-                exit;    
             }
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
+            exit;                   
         case 'add_vehicle_view':
             // Case to display the add vehicle view
             // Display the alert box 

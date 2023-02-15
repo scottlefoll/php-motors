@@ -54,20 +54,25 @@
                         <legend>Vehicle Information</legend>
                         
                         <label class="top" for="invMake">Make* <input type="text" id="title" name="invMake" <?php if(isset($invMake)){echo "value='$invMake'";} ?> placeholder="" pattern='^[A-Za-z -,.'0-9]{1,30}$' required></label>
-                        <label class="top" for="invModel">Model*  <input type="text" id="title" name="invModel" <?php if(isset($invModel)){echo "value='$invModel'";} ?> placeholder="" pattern='' required></label>
-                        <label class="top" for="invDescription">Description* <input type="invDescription" id="description" name="invDescription" <?php if(isset($invDescription)){echo "value='$invDescription'";} ?> pattern="^[A-Za-z0-9_ ?!\@#$%&*<>,.";:+=']{1,255}$" required></label>
-                        <label class="top" for="invImage">Image*  <input type="text" id="img_filename" name="invImage" <?php if(isset($imgFile_str)){echo "value='$imgFile_str'";} ?> pattern="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(gif|jpg|jpeg|png|gif|bmp)${6, 50}" required></label>
-                        <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="img_filename" name="invThumbnail"  <?php if(isset($imgFile_str)){echo "value='$imgFile_str'";} ?> pattern="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(gif|jpg|jpeg|png|gif|bmp)${6, 50}" required></label>
-                        <label class="top" for="invPrice">Price*  <input type="number" id="integer" placeholder="25000" name="invPrice" <?php if(isset($invPrice)){echo "value='$invPrice'";} ?> pattern="^\+?[1-9]\d*$" min="250" max="1250000" required></label>
-                        <label class="top" for="invStock">In Stock* <input type="number" id="integer" name="invStock" <?php if(isset($invStock)){echo "value='$invStock'";} ?> pattern="^[1-9]\d{0,5}$" min="1" max="99" required></label>
-                        <label class="top" for="invColor">Color*  <input type="text" id="title" name="invColor" <?php if(isset($invColor)){echo "value='$invColor'";} ?> placeholder="" pattern='^[A-Za-z0-9_ ]{3,20}$' required></label>
+                        <label class="top" for="invModel">Model*  <input type="text" id="title" name="invModel" <?php if(isset($invModel)){echo "value='$invModel'";} ?> placeholder="" pattern='^[A-Za-z -,.'0-9]{1,30}$' required></label>
+                        <label class="top" for="invDescription">Description* <input type="invDescription" id="description" name="invDescription" <?php if(isset($invDescription)){echo "value='$invDescription'";} ?> placeholder='' pattern='^[A-Za-z0-9_ ?!\@#$%&*<>,.";:+=']{1,255}$' required></label>
+                        <label class="top" for="invImage">Image*  <input type="text" id="img_filename" name="invImage" <?php if(isset($invImage)){echo "value='$invImage'";} else{echo "value='\PHPMotors\images\no-image.png'";} ?> placeholder='' pattern='^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(gif|jpg|jpeg|png|gif|bmp)${6, 50}' required></label>
+                        <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="img_filename" name="invThumbnail"  <?php if(isset($invThumbnail)){echo "value='$invThumbnail'";}  else{echo "value='\PHPMotors\images\no-image.png'";} ?> placeholder='\PHPMotors\images\no-image.png' pattern='^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(gif|jpg|jpeg|png|gif|bmp)${6, 50}' required></label>
+                        <label class="top" for="invPrice">Price*  <input type="number" id="integer" name="invPrice" <?php if(isset($invPrice)){echo "value='$invPrice'";} ?> placeholder='25000' pattern='^\+?[1-9]\d*$' min="250" max='1250000' required></label>
+                        <label class="top" for="invStock">In Stock* <input type="number" id="integer" name="invStock" <?php if(isset($invStock)){echo "value='$invStock'";} ?> placeholder='' pattern='^[0-9]\d{0,5}$' min='1' max='99' required></label>
+                        <label class="top" for="invColor">Color*  <input type="text" id="title" name="invColor" <?php if(isset($invColor)){echo "value='$invColor'";} ?> placeholder='' pattern='^[A-Za-z0-9_ ]{3,20}$' required></label>
 
                         <label class="top" for="classificationId">Classification*</label>    
-                            <select name="classificationId" id="classificationId" required>
+                            <select name="classificationId" id="classificationId" <?php if(isset($classificationId)){echo "value='$classificationId'";} ?> pattern='^\b([0-9]|1[0-9])\b$' required>
                             <option class="top" for="classificationId" type="number" id="classificationId" name="classificationId" value="0" required>Choose a Classification</option>                            
                             <?php
                                 foreach ($classifications as $classification) {
-                                    echo "<option value='$classification[classificationId]'>$classification[classificationName]</option>";
+                                    if (isset($classificationId) && $classificationId == $classification['classificationId']) {
+                                        $selected = 'selected';
+                                    } else {
+                                        $selected = '';
+                                    }
+                                    echo "<option value='$classification[classificationId]' $selected>$classification[classificationName]</option>";
                                 }
                             ?>
                             </select>
