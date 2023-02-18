@@ -62,6 +62,7 @@
 
             $clientPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
             $clientEmail = checkEmail($clientEmail);
+
             $checkPassword = checkPassword($clientPassword);
             
             // Check for missing data
@@ -106,10 +107,11 @@
             $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
             $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            $clientFirstname = checkName($clientFirstname, 15);
+            $clientLastname = checkName($clientLastname, 25);
             $clientPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
-            $clientEmail = checkEmail($clientEmail);
+            $checkPassword = checkPassword($clientPassword);
             
-            // Check for missing data
             // Check for missing data
             if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($checkPassword)) {
                 $message = '<p>Please provide information for all empty form fields.</p>';
@@ -137,19 +139,6 @@
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
                 exit;
             }
-        case 'logout':
-            // Check and report the result
-            if($logOutcome === 1){
-                $_SESSION["login"] = "false";
-                $message = "<p>Thank you. You are now loggout out.</p>";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
-                exit;
-            } else {
-                $message = "<p>You are already logged out.</p>";
-                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
-                exit;
-            }
-
         // case 'logout':
         //     // Check and report the result
         //     if($logOutcome === 1){

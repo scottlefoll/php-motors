@@ -63,7 +63,9 @@
             // echo "<script>alert('Vehicle Controller: add class case');</script>";
 
             // Filter and store the data
-            $classificationName = ucwords(trim(filter_input(INPUT_POST, 'classificationName')));
+            $classificationName = ucwords(trim(filter_input(INPUT_POST, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $classificationName = checkName($classificationName, 30);
+            
             // Check for missing data
             if(empty($classificationName)){
                 $message = '<p>Please provide information for all empty form fields.</p>';
@@ -112,15 +114,35 @@
             // echo "<script>alert('Vehicle Controller: add vehicle Case');</script>";
 
             // Filter and store the data
-            $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake')));
-            $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel')));
-            $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription')));
-            $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage')));
-            $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail'))));
-            $invPrice = filter_input(INPUT_POST, 'invPrice');
-            $invStock = filter_input(INPUT_POST, 'invStock');
-            $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor')));
-            $classificationId = filter_input(INPUT_POST, 'classificationId');
+            $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
+            $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_INT);
+            $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
+            $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
+
+            $invMake = checkName($invMake, 30);
+            $invModel = checkName($invModel, 30);
+            $DescriptionCheck = checkDescription($invDescription, 255);
+            $invImage = checkImageFilename($invImage);
+            $invThumbnail = checkImageFilename($invThumbnail);
+            $invPrice = checkPrice($invPrice);
+            $invStock = checkStock($invStock);
+            $invColor = checkName($invColor, 20);
+            $classificationId = checkclassificationId($classificationId);
+            
+            // Check for missing data
+            if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) ||
+                empty($invColor) || !$DescriptionCheck){
+                $message = '<p>Please provide valid information for all empty form fields.</p>';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
+                exit; 
+            }
+
+
 
             // echo "<script>alert('Vehicle Controller: local data')</script>";
 

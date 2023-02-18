@@ -40,45 +40,22 @@
         $stmt->closeCursor();
         return $addOutcome;
         exit;
-    }
 
+    }
     function addClass($classificationName){
         // Create a connection object using the phpmotors connection function
         $db = phConnect();
         $rowsChanged = 0;
-
-        // The SQL statement to be used with the database 
-        $sql = 'SELECT classificationId, classificationName FROM carclassification ORDER BY classificationName ASC'; 
-
-        // The SQL statement
-        $sql = 'INSERT INTO clients (clientFirstname, clientLastname,clientEmail, clientPassword)
-            VALUES (:clientFirstname, :clientLastname, :clientEmail, :clientPassword)';
-
-        // The SQL statement
-        $sql = 'INSERT INTO carClassification (classificationName)
-            VALUES (:classificationName)';
-        // Create the prepared statement using the phpmotors connection
+        $sql = 'INSERT INTO carClassification (classificationName) VALUES (:classificationName)';
         $stmt = $db->prepare($sql);
-        // The next four lines replace the placeholders in the SQL
-        // statement with the actual values in the variables
-        // and tells the database the type of data it is
         $stmt->bindValue(':classificationName', $classificationName, PDO::PARAM_STR);
-
-        try {
-            // $stmt_str = print_r($stmt);
-            // echo "<script>alert('Vehicle Model: addVehicle Execute: stmt = $stmt_str ')</script>";
-            // Insert the data
-            $addOutcome = $stmt->execute();
-        } catch (Exception $e) {
-            throw $e;
-        }
-    
-        // Close the database interaction
+        $stmt->execute(); 
+        return $rowsChanged === 1;
         $stmt->closeCursor();
-        return $addOutcome;
         exit;
     }
 
+    
     function getVehicles($vehicle = ""){
         // Create a connection object from the phpmotors connection function
         $db = phConnect(); 
