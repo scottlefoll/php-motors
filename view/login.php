@@ -44,14 +44,14 @@
                 <form method="post" action= '/phpmotors/accounts/index.php' >
                     <fieldset>
                         <legend>Login Information</legend>                                                                                                                      
-                        <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?>  pattern="^.+@[^\.].*\.[a-z]{2,}$"  required></label>
+                        <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?>  maxlength="40" pattern="^.+@[^\.].*\.[a-z]{2,}$"  required></label>
                         <label class="top" for="password">Password*  
                         <span>(Passwords must be at least 8 characters and contain at least <br> 1 number,  1 capital letter and 1 special character)</span>
-                        <input type="password" id="password" name="clientPassword" value="" pattern="^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required></label>
+                        <input type="password" id="password" name="clientPassword" value="" maxlength="255" pattern="^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required></label>
                     </fieldset>
                     <input type="submit" name="login" value="Login" class="submitBtn">
                     <input type="hidden" name="action" value="login"  class="hidden">
-                    <div class="signup"><p>No account? <button type="submit" name="action" value="register" class="signupbtn">Sign Up</button></p></div>
+                    <div class="signup"><p>No account? <button type="button" name="action" value="register"  onClick="myFunction()"  class="signupbtn">Sign Up</button></p></div>
                 </form>
 
             </main>
@@ -59,5 +59,10 @@
             <!-- Footer -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
         </div>
+        <script>
+            function myFunction() {
+                window.location.href="/phpmotors/accounts/index.php?action=register";  
+            }
+        </script>
     </body>
 </html>

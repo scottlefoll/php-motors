@@ -19,21 +19,9 @@
     // echo "<script>alert('Vehicle: index.php');</script>";
 
     // Get the array of classifications
-	$classifications = getClassifications();
-    // var_dump($classifications);
-    // exit;
+    $classifications = getClassifications();
+    $navList = getNavList($classifications);
 
-    // Build a navigation bar using the $classifications array
-    $navList = "<ul class='nav-ul' id='main-nav'>";
-    $navList .= "<li class='nav-li'><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
-    foreach ($classifications as $classification) {
-        $navList .= "<li class='nav-li' ><a href='/phpmotors/index.php?action=".urlencode($classification['classificationName'])."' title='View our $classification[classificationName] product line'>$classification[classificationName]</a></li>";
-    }
-    $navList .= '</ul>';
-    
-    // echo $navList;
-    // exit;
-    
     // Get the value from the action name - value pair
     $action = filter_input(INPUT_POST, 'action');
     if ($action == NULL){
@@ -122,7 +110,7 @@
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_INT);
             $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
+            $classificationId = filter_input(INPUT_POST, 'classificationId');
 
             $invMake = checkName($invMake, 30);
             $invModel = checkName($invModel, 30);
@@ -132,11 +120,11 @@
             $invPrice = checkPrice($invPrice);
             $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
-            $classificationId = checkclassificationId($classificationId);
-            
+            $classificationId = checkClassificationId($classificationId);
+
             // Check for missing data
             if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) ||
-                empty($invColor) || !$DescriptionCheck){
+                empty($invColor) || !$DescriptionCheck || empty($classificationId)){
                 $message = '<p>Please provide valid information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
                 exit; 

@@ -19,20 +19,8 @@
     // echo "<script>alert('Accounts: index.php');</script>";
 
     // Get the array of classifications
-	$classifications = getClassifications();
-    // var_dump($classifications);
-	// exit;
-
-    // Build a navigation bar using the $classifications array
-    $navList = "<ul class='nav-ul' id='main-nav'>";
-    $navList .= "<li class='nav-li'><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
-    foreach ($classifications as $classification) {
-        $navList .= "<li class='nav-li' ><a href='/phpmotors/index.php?action=".urlencode($classification['classificationName'])."'title='View our $classification[classificationName] product line'>$classification[classificationName]</a></li>";
-    }
-    $navList .= '</ul>';
-    
-    // echo $navList;
-    // exit;
+    $classifications = getClassifications();
+    $navList = getNavList($classifications);
 
     // Get the value from the action name - value pair
     $action = filter_input(INPUT_POST, 'action');
@@ -59,10 +47,7 @@
             // Filter and store the data
             $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
             $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            $clientPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
             $clientEmail = checkEmail($clientEmail);
-
             $checkPassword = checkPassword($clientPassword);
             
             // Check for missing data
@@ -74,7 +59,8 @@
             }
 
             // Send the data to the model
-            $logOutcome = logClient($clientEmail, $clientPassword);            
+            // echo "<script>alert('Accounts Controller: loginClient clientEmail = $clientEmail, hashPassword = $hashedPassword ');</script>";
+            $logOutcome = logClient($clientEmail, $clientPassword);
             // echo "<script>alert('Accounts Controller: login outcome = $logOutcome');</script>";
 
             // Check and report the result
@@ -106,10 +92,8 @@
             $clientLastname = ucwords(trim(filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
             $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
             $clientFirstname = checkName($clientFirstname, 15);
             $clientLastname = checkName($clientLastname, 25);
-            $clientPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
             $checkPassword = checkPassword($clientPassword);
             
             // Check for missing data
@@ -119,10 +103,10 @@
                 exit; 
             }
 
+            $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+
             // Display the data 
             // echo "<script>alert('Vehicle Controller: register data: $clientFirstname, $clientLastname, $clientEmail, $clientPassword');</script>";
-
-            $checkPassword = checkPassword($clientPassword);
 
             // Send the data to the model
             $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);            
@@ -139,18 +123,6 @@
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
                 exit;
             }
-        // case 'logout':
-        //     // Check and report the result
-        //     if($logOutcome === 1){
-        //         $_SESSION["login"] = "false";
-        //         $message = "<p>Thank you. You are now loggout out.</p>";
-        //         include '../view/home.php';
-        //         exit;
-        //     } else {
-        //         $message = "<p>You are already logged out.</p>";
-        //         include '../view/home.php';
-        //         exit;
-        //     }
         default:
             // Display the login view by default
             // echo "<script>alert('Accounts Controller: login view');</script>";

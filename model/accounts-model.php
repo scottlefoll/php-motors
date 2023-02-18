@@ -5,7 +5,7 @@
         session_start(); 
     } 
 
-    function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassword){
+    function regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword){
         // Create a connection object using the phpmotors connection function
         $db = phConnect();
         $rowsChanged = 0;
@@ -21,7 +21,7 @@
         $stmt->bindValue(':clientFirstname', $clientFirstname, PDO::PARAM_STR);
         $stmt->bindValue(':clientLastname', $clientLastname, PDO::PARAM_STR);
         $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
-        $stmt->bindValue(':clientPassword', $clientPassword, PDO::PARAM_STR);
+        $stmt->bindValue(':clientPassword', $hashedPassword, PDO::PARAM_STR);
         $rowsChanged = $stmt->execute();
         $stmt->closeCursor();
         return $rowsChanged;
@@ -32,20 +32,18 @@
         // Create a connection object using the phpmotors connection function
         $db = phConnect();
         // The SQL statement
-        $sql = 'SELECT * FROM clients WHERE clientEmail = :clientEmail AND clientPassword = :clientPassword';
+        $sql = 'SELECT * FROM clients WHERE clientEmail = :clientEmail';
         // Create the prepared statement using the phpmotors connection
         $stmt = $db->prepare($sql);
-        // The next four lines replace the placeholders in the SQL
-        // statement with the actual values in the variables
-        // and tells the database the type of data it is
         $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
-        $stmt->bindValue(':clientPassword', $clientPassword, PDO::PARAM_STR);
         // Insert the data
         $stmt->execute();
         // Ask how many rows changed as a result of our insert
         $rowsChanged = $stmt->rowCount();
-        // Close the database interaction
+        // echo "<script>alert('Accounts Model: rowsChanged = $rowsChanged');</script>";
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $hashedPassword = $result[0]['clientPassword'];
         $stmt->closeCursor();
-        // Return the indication of success (rows changed)
-        return $rowsChanged;
+        // echo "<script>alert('Accounts Model: hashPassword = $hashedPassword');</script>";
+        return (password_verify($clientPassword, $hashedPassword));
    }
