@@ -22,20 +22,9 @@
         $stmt->bindValue(':clientLastname', $clientLastname, PDO::PARAM_STR);
         $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
         $stmt->bindValue(':clientPassword', $clientPassword, PDO::PARAM_STR);
-
-        try {
-            // $stmt_str = print_r($stmt);
-            // echo "<script>alert('Vehicle Model: addVehicle Execute: stmt = $stmt_str ')</script>";
-            // Insert the data
-            $addOutcome = $stmt->execute();
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-        // Close the database interaction
+        $rowsChanged = $stmt->execute();
         $stmt->closeCursor();
-        return $addOutcome;
-        exit;
+        return $rowsChanged;
     }
 
 

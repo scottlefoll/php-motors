@@ -65,7 +65,6 @@
             // Filter and store the data
             $classificationName = ucwords(trim(filter_input(INPUT_POST, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $classificationName = checkName($classificationName, 30);
-            
             // Check for missing data
             if(empty($classificationName)){
                 $message = '<p>Please provide information for all empty form fields.</p>';
@@ -77,6 +76,7 @@
 
             // Send the data to the model
             $addOutcome = addClass($classificationName);
+            echo "<script>alert('Vehicle Controller: add class addOutcome = $addOutcome');</script>";
 
             // Check and report the result
             if($addOutcome === TRUE){

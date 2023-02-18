@@ -26,21 +26,9 @@
         $stmt->bindValue(':invStock', $invStock, PDO::PARAM_STR);
         $stmt->bindValue(':invColor', $invColor, PDO::PARAM_STR);
         $stmt->bindValue(':classificationId', $classificationId, PDO::PARAM_STR);
-
-        try {
-            // $stmt_str = print_r($stmt);
-            // echo "<script>alert('Vehicle Model: addVehicle Execute: stmt = $stmt_str ')</script>";
-            // Insert the data
-            $addOutcome = $stmt->execute();
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-        // Close the database interaction
+        $rowsChanged = $stmt->execute();
         $stmt->closeCursor();
-        return $addOutcome;
-        exit;
-
+        return $rowsChanged;
     }
     function addClass($classificationName){
         // Create a connection object using the phpmotors connection function
@@ -49,10 +37,9 @@
         $sql = 'INSERT INTO carClassification (classificationName) VALUES (:classificationName)';
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':classificationName', $classificationName, PDO::PARAM_STR);
-        $stmt->execute(); 
-        return $rowsChanged === 1;
+        $rowsChanged = $stmt->execute();
         $stmt->closeCursor();
-        exit;
+        return $rowsChanged;
     }
 
     

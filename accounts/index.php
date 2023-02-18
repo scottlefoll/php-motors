@@ -78,7 +78,7 @@
             // echo "<script>alert('Accounts Controller: login outcome = $logOutcome');</script>";
 
             // Check and report the result
-            if($logOutcome === 1){
+            if($logOutcome === TRUE){
                 $_SESSION["login"] = "true";
                 $_SESSION["email"] = $clientEmail;
                 $message = "<p>Thank you. You are now logged in as $clientEmail.</p>";

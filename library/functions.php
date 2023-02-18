@@ -21,20 +21,24 @@
 
     function checkImageFilename($ImageFilename){
         $pattern = '/^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(gif|jpg|jpeg|png|gif|bmp){6, 50}$/';
-        if (!preg_match($pattern, $ImageFilename));
-            $ImageFilename ="";
-        return $ImageFilename;
+        if (preg_match($pattern, $ImageFilename)){
+            return $ImageFilename;
+        } else {
+            return "";
         }
+    }
 
-    function checkName($Name, $num){
-        $pattern = '/^[A-Za-z -,.]{1, $num}$/';
-        if (!preg_match($pattern, $Name));
-            $Name ="";
-        return $Name;
+    function checkName($name, $num){
+        $pattern = '/[A-Za-z -.,]{1,30}/';
+        if (preg_match($pattern, $name)){
+            return $name;
+        } else {
+            return "";
         }
+    }
 
     function checkDescription($Description, $num){
-        $pattern='/^[A-Za-z0-9_ ?!\@#$%&*<>,.";:+=]{1,255}$/';
+        $pattern='/^[A-Za-z0-9_ ?!\@#$%&*<>.,";:+=]{1,255}$/';
         return preg_match($pattern, $Description);
         }
         
@@ -47,5 +51,3 @@
    }
 
 ?>
-
-
