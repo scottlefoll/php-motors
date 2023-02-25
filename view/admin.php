@@ -34,7 +34,7 @@
                 <br>
                 <div class="admin-box">
                     <h1>Admin Page</h1>
-                    <p><br></p>
+                    <br><br>
                     <h2>
                         <?php
                             if (isset($_SESSION['message'])) {
@@ -48,14 +48,14 @@
                             <li class="review1-li">Email: <?php echo $_SESSION['clientData']['clientEmail']; ?></li>
                         </ul>
                     </div>
-                    <p><br></p>
+                    <br><br>
                     <?php
                         if($_SESSION['clientData']['clientLevel'] > 1){
                             require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/admin_content.php';
                         }
                     ?>
                 </div>
-                <p><br></p>
+                <br><br>
             </main> 
 
             <!-- Footer -->
