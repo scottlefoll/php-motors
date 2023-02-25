@@ -32,8 +32,8 @@
                 <h1>PHP Motors Account Registration</h1>
                 <br>
                 <?php
-                    if (isset($message)) {
-                        echo $message;
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
                     }
                 ?>
 

@@ -22,6 +22,13 @@
             <main>
             <br>
             <?php
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    }
+                ?>
+            <br>
+            
+            <?php
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/500_content.php';
             ?>
             

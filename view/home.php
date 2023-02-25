@@ -20,15 +20,12 @@
 
             <!-- Main -->
             <main>
-            
-            <br>
             <?php
-                    if (isset($message)) {
-                    echo $message;
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
                     }
-            ?>
+                ?>
             <br>
-
             <?php
                     if(isset($_GET['action']) and $_GET['action'] != 'template'){
                         $current_action = $_GET['action'];

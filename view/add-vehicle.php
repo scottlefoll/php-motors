@@ -4,6 +4,12 @@
             session_start(); 
         }
 
+    if(isset($_SESSION['clientData']['clientFirstname'])) {
+        if($_SESSION['clientData']['clientLevel'] < 2){
+            header('Location: /phpmotors/index.php');
+        }   
+    } 
+
     $_SESSION["status"] = "add_vehicle";
 ?> 
 

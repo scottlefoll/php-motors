@@ -22,6 +22,12 @@
             <main>
             <br>
             <?php
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    }
+                ?>
+            <br>
+            <?php
                     if(isset($_GET['action']) and $_GET['action'] != 'template'){
                         // PROBLEM: I need to reset this action to home, but in the appropriate place, if it is loginClient
                         $current_action = $_GET['action'];

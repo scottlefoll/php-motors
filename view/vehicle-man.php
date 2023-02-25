@@ -4,6 +4,12 @@
             session_start(); 
         }
 
+    if(isset($_SESSION['clientData']['clientFirstname'])) {
+        if($_SESSION['clientData']['clientLevel'] < 2){
+            header('Location: /phpmotors/index.php');
+        }   
+    } 
+
     $_SESSION["status"] = "vehicle_man";
 ?>
 
@@ -17,8 +23,8 @@
     <!-- <body class="body1"> -->
         <div id="content-box">
             <!-- Header -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php';?> 
-
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php';?>
+            
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">
@@ -30,6 +36,12 @@
             <!-- Main -->
             <main>
                 <br><br>
+                <?php
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    }
+                ?>
+                <br>
                 <h2>Vehicle Management</h2>
 
                 <?php

@@ -27,6 +27,22 @@
         padding-bottom: 1em;
     }
 
+    .admin-box {
+        width: 100%;
+        background-color: white;
+        margin-left: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .admin-message{
+        color: black;
+        font-family: 'Share Tech Mono', sans-serif;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
     .footer{
         margin-top: 4rem;
         margin-bottom: 2rem;

@@ -4,7 +4,13 @@
             session_start(); 
         }
 
-        $_SESSION["status"] = "add_class";
+    if(isset($_SESSION['clientData']['clientFirstname'])) {
+        if($_SESSION['clientData']['clientLevel'] < 2){
+            header('Location: /phpmotors/index.php');
+        }   
+    } 
+
+    $_SESSION["status"] = "add_class";
 ?> 
 
 <!DOCTYPE html>
@@ -39,7 +45,7 @@
                         echo $message;
                     }
                 ?>
-
+                <br>
                 <form method="post" action= '/phpmotors/vehicles/index.php' >
                     <fieldset>
                         <legend>Classification Information</legend>

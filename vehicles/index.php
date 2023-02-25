@@ -3,8 +3,14 @@
     { 
         session_start(); 
     }
+    
+    if(isset($_SESSION['clientData']['clientFirstname'])) {
+        if($_SESSION['clientData']['clientLevel'] < 2){
+            header('Location: /phpmotors/index.php');
+        }   
+    } 
 
-    $_SESSION["status"] = "vehicle";
+    $_SESSION["status"] = "vehicle_man";
     // This is the vehicles controller 
     // Get the database connection file
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
@@ -43,8 +49,14 @@
             // Case to display the add class view
             // Display the alert box 
             // echo "<script>alert('Vehicle Controller: add class view case');</script>";
-
+            $_SESSION['message'] = "";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
+            exit;
+        case 'vehicle_man':
+                // Case to display the add class view
+                // Display the alert box 
+                // echo "<script>alert('Vehicle Controller: add class view case');</script>";
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
             exit;
         case 'add_class':
             // Display the alert box 
@@ -64,7 +76,7 @@
 
             // Send the data to the model
             $addOutcome = addClass($classificationName);
-            echo "<script>alert('Vehicle Controller: add class addOutcome = $addOutcome');</script>";
+            // echo "<script>alert('Vehicle Controller: add class addOutcome = $addOutcome');</script>";
 
             // Check and report the result
             if($addOutcome === TRUE){
@@ -94,7 +106,7 @@
             // Case to display the add vehicle view
             // Display the alert box 
             // echo "<script>alert('Vehicle Controller: add vehicle view case');</script>";
-
+            $_SESSION['message'] = "";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
             exit;
         case 'add_vehicle':

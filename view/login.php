@@ -30,18 +30,17 @@
 
             <!-- Main -->
             <main>
-                <br><br>
+                <br>
                 <h1>Account Login</h1>
-
                 <?php
-                    if (isset($message)) {
-                    echo $message;
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
                     }
                 ?>
-                <br>
+                <br><br>
                 <h4>*Please note: all fields are required.</h4>
 
-                <form method="post" action= '/phpmotors/accounts/index.php' >
+                <form method="post" action= '/phpmotors/accounts/' >
                     <fieldset>
                         <legend>Login Information</legend>                                                                                                                      
                         <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?>  maxlength="40" pattern="^.+@[^\.].*\.[a-z]{2,}$"  required></label>

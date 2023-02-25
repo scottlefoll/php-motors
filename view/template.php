@@ -23,6 +23,12 @@
             <main>
             <br>
             <?php
+                    if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    }
+            ?>
+            <br>
+            <?php
                     if(isset($_GET['action']) and $_GET['action'] != 'template'){
                         $content_name = str_replace(' ', '_', $current_action);
                         require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $content_name . '_content.php';

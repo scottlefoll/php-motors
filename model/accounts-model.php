@@ -28,7 +28,31 @@
     }
 
 
-   function logClient($clientEmail, $clientPassword){
+    function checkExistingEmail($clientEmail){
+        // Create a connection object using the phpmotors connection function
+        $db = phConnect();
+        $rowsChanged = 0;
+        // The SQL statement
+        $sql = 'SELECT clientEmail FROM clients WHERE clientEmail = :clientEmail';
+        // Create the prepared statement using the phpmotors connection
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
+        // Insert the data
+        $stmt->execute();
+        // Ask how many rows changed as a result of our insert
+        $stmt->rowCount();
+        $matchEmail = $stmt->fetch(PDO::FETCH_NUM);
+        // echo "<script>alert('Accounts Model: rowsChanged = $rowsChanged');</script>";
+        $stmt->closeCursor();
+        # check if email exists
+        if (empty($matchEmail)) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+   function getClient($clientEmail){
         // Create a connection object using the phpmotors connection function
         $db = phConnect();
         // The SQL statement
@@ -38,12 +62,8 @@
         $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
         // Insert the data
         $stmt->execute();
-        // Ask how many rows changed as a result of our insert
-        $rowsChanged = $stmt->rowCount();
         // echo "<script>alert('Accounts Model: rowsChanged = $rowsChanged');</script>";
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $hashedPassword = $result[0]['clientPassword'];
+        $clientData = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
-        // echo "<script>alert('Accounts Model: hashPassword = $hashedPassword');</script>";
-        return (password_verify($clientPassword, $hashedPassword));
+        return $clientData;
    }
