@@ -72,27 +72,22 @@
         return $rowsChanged;
     }
 
-    function checkExistingEmail($clientEmail){
+    function isExistingEmail($clientEmail){
         // Create a connection object using the phpmotors connection function
         $db = phpConnect();
-        $rowsChanged = 0;
+        $rowsfound = 0;
         // The SQL statement
         $sql = 'SELECT clientEmail FROM clients WHERE clientEmail = :clientEmail';
         // Create the prepared statement using the phpmotors connection
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
-        // Insert the data
         $stmt->execute();
-        // Ask how many rows changed as a result of our insert
-        $stmt->rowCount();
-        $matchEmail = $stmt->fetch(PDO::FETCH_NUM);
-        // echo "<script>alert('Accounts Model: rowsChanged = $rowsChanged');</script>";
+        $rowsChanged = $stmt->rowCount();
         $stmt->closeCursor();
-        # check if email exists
-        if (empty($matchEmail)) {
-            return FALSE;
+        if ($rowsChanged > 0) {
+            return 1;
         } else {
-            return TRUE;
+            return 0;
         }
     }
 
@@ -106,7 +101,6 @@
         $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
         // Insert the data
         $stmt->execute();
-        // echo "<script>alert('Accounts Model: rowsChanged = $rowsChanged');</script>";
         $clientData = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
         return $clientData;

@@ -63,7 +63,7 @@
             $clientPasswordConfirm = filter_input(INPUT_POST, 'clientPasswordConfirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if ($clientPassword != $clientPasswordConfirm) {
-                $message = "<p>You did not correctly confirm your new password. Please try again.</p>";
+                $message = "<p>The password and confirmation password did not match. Please try again.</p>";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-password.php';
                 exit;
             }
@@ -112,9 +112,8 @@
             $clientEmail = checkEmail($clientEmail);
 
             # check for existing email address
-            $existingEmail = checkExistingEmail($clientEmail);
-            if ($existingEmail) {
-                $message = "<p>The email $clientEmail is already registered. Please enter a unique email address.</p>";
+            if (($_SESSION['clientData']['clientEmail'] != $clientEmail) && isExistingEmail($clientEmail)) {
+                $message = '<p>That email is already registered. Try logging in instead.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
                 exit;
             }
@@ -216,17 +215,24 @@
             $clientLastname = ucwords(trim(filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
             $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $clientPasswordConfirm = filter_input(INPUT_POST, 'clientPasswordConfirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if ($clientPassword != $clientPasswordConfirm) {
+                $message = "<p>The password and confirmation password did not match. Please try again.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
+                exit;
+            }
+
             $clientFirstname = checkName($clientFirstname, 15);
             $clientLastname = checkName($clientLastname, 25);
             $clientEmail = checkEmail($clientEmail);
             $checkPassword = checkPassword($clientPassword);
 
             # check for existing email address
-            $existingEmail = checkExistingEmail($clientEmail);
-            if ($existingEmail) {
+            if (isExistingEmail($clientEmail)) {
                 $message = '<p>That email is already registered. Try logging in instead.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
-                exit; 
+                exit;
             }
 
             // Check for missing data
