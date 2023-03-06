@@ -33,7 +33,11 @@
                 <br>
                 <?php
                     if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+                        echo $_SESSION['message'];
+                        $_SESSION['message_delivered'] = True;
+                    }
+                    if (isset($message)) {
+                        echo $message;
                     }
                 ?>
 

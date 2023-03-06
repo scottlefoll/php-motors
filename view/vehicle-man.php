@@ -9,10 +9,6 @@
         exit;
     }
 
-    if (isset($_SESSION['message'])) {
-        $message = $_SESSION['message'];
-    }
-
     $_SESSION["status"] = "vehicle_man";
 ?>
 
@@ -43,11 +39,12 @@
 
                 <?php
                     if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+                        echo $_SESSION['message'];
+                        $_SESSION['message_delivered'] = True;
                     }
-                    // if (isset($message)) {
-                    // echo $message;
-                    // }
+                    if (isset($message)) {
+                        echo $message;
+                    }
                     echo "<br>";
                     if (isset($classificationList)) { 
                         echo '<h2>Vehicles By Classification</h2>'; 

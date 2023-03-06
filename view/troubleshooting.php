@@ -22,11 +22,6 @@
             <!-- Main -->
             <main>
             <br>
-            <?php
-                    if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
-                    }
-                ?>
             <br>
             <?php
                     if(isset($_GET['action']) and $_GET['action'] != 'template'){

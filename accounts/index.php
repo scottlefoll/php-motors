@@ -8,6 +8,10 @@
     if(isset($_COOKIE['firstname'])){
         $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
+    if ((isset($_SESSION['message']) && (isset($_SESSION['message_delivered']) && ($_SESSION['message_delivered'] == True)))){
+        unset($_SESSION['message']);
+        $_SESSION['message_delivered'] = False;
+    }
 
     // This is the accounts controller
     // Get the database connection file
@@ -42,13 +46,6 @@
 
     // echo "<script>alert('Accounts Controller: action2 = $action');</script>";
     switch ($action){
-        case 'update_account_view':
-            // Case to display the admin view
-            // Display the alert box
-            // echo "<script>alert('Account Controller: admin view case');</script>";
-            $_SESSION['message'] = "";
-            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
-            exit;
         case 'update_password_view':
             // Case to display the admin view
             // Display the alert box
@@ -94,6 +91,13 @@
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-password.php';
                 exit;
             }
+        case 'update_account_view':
+            // Case to display the admin view
+            // Display the alert box
+            // echo "<script>alert('Account Controller: admin view case');</script>";
+            $_SESSION['message'] = "";
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
+            exit;
         case 'update_account':
             # this is the update account 
             // echo "<script>alert('Accounts Controller: case = update account');</script>";
@@ -128,6 +132,9 @@
             if($updateOutcome == TRUE){
                 // Check and report the result
                 setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
+                $clientData = getClientById($clientId);
+                array_pop($clientData);
+                $_SESSION["clientData"] = $clientData;
                 $_SESSION['message'] = "Your account information has been successfully updated, $clientFirstname.";
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/admin.php';
                 exit;

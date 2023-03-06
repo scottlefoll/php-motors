@@ -119,7 +119,7 @@
         $sql = 'SELECT * FROM clients WHERE clientId = :clientId';
         // Create the prepared statement using the phpmotors connection
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':clientEmail', $clientId, PDO::PARAM_STR);
+        $stmt->bindValue(':clientId', $clientId, PDO::PARAM_STR);
         // Insert the data
         $stmt->execute();
         // echo "<script>alert('Accounts Model: rowsChanged = $rowsChanged');</script>";

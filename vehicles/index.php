@@ -1,11 +1,16 @@
 <?php
     if(!isset($_SESSION)) 
-    { 
+    {
         session_start(); 
     }
 
     if (!(isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == TRUE) && ($_SESSION['clientData']['clientLevel'] > 1))){
         header('Location: /phpmotors/index.php');
+    }
+
+    if ((isset($_SESSION['message']) && (isset($_SESSION['message_delivered']) && ($_SESSION['message_delivered'] == True)))){
+        $_SESSION['message'] = "";
+        $_SESSION['message_delivered'] = False;
     }
 
     // This is the vehicles controller 

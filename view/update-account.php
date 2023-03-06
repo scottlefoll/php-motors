@@ -33,6 +33,7 @@
                 <?php
                     if (isset($_SESSION['message'])) {
                         echo $_SESSION['message'];
+                        $_SESSION['message_delivered'] = True;
                     }
                     echo "<br>";
                     if (isset($message)) {
@@ -62,6 +63,7 @@
                         <?php
                             if(isset($_SESSION['clientData']['clientId'])){
                                 echo "{$_SESSION['clientData']['clientId']};";
+                                $_SESSION['message_delivered'] = True;
                             } elseif(isset($clientId)){
                                 echo $clientId;
                             }

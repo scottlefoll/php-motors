@@ -19,7 +19,7 @@
 
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
-    
+
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">
@@ -34,7 +34,12 @@
                 <h1>Account Login</h1>
                 <?php
                     if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+                        echo $_SESSION['message'];
+                        $_SESSION['message_delivered'] = True;
+                    }
+                    echo "<br>";
+                    if (isset($message)) {
+                        echo $message;
                     }
                 ?>
                 <br><br>
