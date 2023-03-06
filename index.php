@@ -39,10 +39,13 @@
             break;
         case '500':
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/500.php';
-            break;   
+            break;
+        case 'admin_view':
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/admin.php';
+            break;
         case 'template':
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/template.php';
-            break;       
+            break;
         default:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
             break;

@@ -8,7 +8,7 @@
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == TRUE){
             // do something here if the value is TRUE
             if($_SESSION['clientData']['clientLevel'] > 1){
-                echo '<a href="/phpmotors/vehicles/index.php?action=vehicle_man" class="account-link" >Vehicle Management</a>';
+                echo '<a href="/phpmotors/index.php?action=admin_view" class="account-link" >Admin</a>';
             }
             echo '<a href="/phpmotors/accounts/index.php?action=logout" class="account-link" >Logout</a>';
             if(isset($cookieFirstname)) {
