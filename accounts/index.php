@@ -4,7 +4,6 @@
         session_start(); 
     }
 
-    $_SESSION["status"] = "account";
     // Check if the firstname cookie exists, get its value
     if(isset($_COOKIE['firstname'])){
         $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -21,7 +20,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/functions.php';
 
     // Display the alert box 
-    // echo "<script>alert('Accounts: index.php');</script>";
+    // echo "<script>alert('Accounts Controller');</script>";
 
     // Get the array of classifications
     $classifications = getClassifications();
@@ -32,10 +31,111 @@
     if ($action == NULL){
         $action = filter_input(INPUT_GET, 'action');
     }
+    // echo "<script>alert('Accounts Controller: action = $action');</script>";
 
     // $action = $_SESSION['status'];
-    
+    if ($action == "Update Account") {
+        $action = "update_account_view";
+    } else if($action == "Update Password" ) {
+        $action = "update_password_view";
+    }
+
+    // echo "<script>alert('Accounts Controller: action2 = $action');</script>";
     switch ($action){
+        case 'update_account_view':
+            // Case to display the admin view
+            // Display the alert box
+            // echo "<script>alert('Account Controller: admin view case');</script>";
+            $_SESSION['message'] = "";
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
+            exit;
+        case 'update_password_view':
+            // Case to display the admin view
+            // Display the alert box
+            // echo "<script>alert('Account Controller: admin view case');</script>";
+            $_SESSION['message'] = "";
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-password.php';
+            exit;
+        case 'update_password':
+            # this is the update password
+            // echo "<script>alert('Accounts Controlle 1: case = update pssword');</script>";
+
+            // Filter and store the data
+            $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+            $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $clientPasswordConfirm = filter_input(INPUT_POST, 'clientPasswordConfirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if ($clientPassword != $clientPasswordConfirm) {
+                $message = "<p>You did not correctly confirm your new password. Please try again.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-password.php';
+                exit;
+            }
+
+            $clientPassword = checkPassword($clientPassword);
+
+            // Check for missing data
+            if (empty($clientPassword)) {
+                $message = '<p>Please provide information for all empty form fields.</p>';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-password.php';
+                exit; 
+            }
+
+            $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+            // Send the data to the model
+            $updateOutcome = updatePassword($clientId, $hashedPassword);
+            // Check and report the result
+            if($updateOutcome == TRUE){
+                // Check and report the result
+                $_SESSION['message'] = "Your account password has been successfully changed.";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/admin.php';
+                exit;
+            } else {
+                $message = "<p>Sorry, but the password change failed. Please try again.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-password.php';
+                exit;
+            }
+        case 'update_account':
+            # this is the update account 
+            // echo "<script>alert('Accounts Controller: case = update account');</script>";
+            // Filter and store the data
+            $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+            $clientFirstname = ucwords(trim(filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $clientLastname = ucwords(trim(filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            $clientEmail = strtolower(trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL)));
+
+            $clientFirstname = checkName($clientFirstname, 15);
+            $clientLastname = checkName($clientLastname, 25);
+            $clientEmail = checkEmail($clientEmail);
+
+            # check for existing email address
+            $existingEmail = checkExistingEmail($clientEmail);
+            if ($existingEmail) {
+                $message = "<p>The email $clientEmail is already registered. Please enter a unique email address.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
+                exit;
+            }
+
+            // Check for missing data
+            if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)){
+                $message = '<p>Please provide information for all empty form fields.</p>';
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
+                exit;
+            }
+
+            // Send the data to the model
+            $updateOutcome = updateAccount($clientId, $clientFirstname, $clientLastname, $clientEmail);
+            // Check and report the result
+            if($updateOutcome == TRUE){
+                // Check and report the result
+                setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
+                $_SESSION['message'] = "Your account information has been successfully updated, $clientFirstname.";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/admin.php';
+                exit;
+            } else {
+                $message = "<p>Sorry $clientFirstname, but the account update failed. Please try again.</p>";
+                include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-account.php';
+                exit;
+            }
         case 'login_view':
             // Case to display the login view
             // Display the alert box 
@@ -61,7 +161,7 @@
             $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $clientEmail = checkEmail($clientEmail);
             $checkPassword = checkPassword($clientPassword);
-            
+
             // Check for missing data
             if (empty($clientEmail) || empty($checkPassword)) {
                 // echo "<script>alert('Accounts Controller: clientEmail = $clientEmail , clientPassword = $clientPassword');</script>";
@@ -73,7 +173,6 @@
             // Send the data to the model
             // echo "<script>alert('Accounts Controller: loginClient clientEmail = $clientEmail, hashPassword = $hashedPassword ');</script>";
             $clientData = getClient($clientEmail);
-            // echo "<script>alert('Accounts Model: getClient clientPassword = $clientData_str');</script>";
             if (empty($clientData)) {
                 $message = '<p>Sorry, but that email address is not found. Please try again.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';
@@ -101,7 +200,6 @@
             $_SESSION['message'] = "";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/registration.php';
             exit;
-
         case 'register':
             # this is the register page view
             // echo "<script>alert('Accounts Controller: case = register');</script>";
@@ -113,8 +211,9 @@
             $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $clientFirstname = checkName($clientFirstname, 15);
             $clientLastname = checkName($clientLastname, 25);
+            $clientEmail = checkEmail($clientEmail);
             $checkPassword = checkPassword($clientPassword);
-            
+
             # check for existing email address
             $existingEmail = checkExistingEmail($clientEmail);
             if ($existingEmail) {
@@ -131,17 +230,11 @@
             }
 
             $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
-
-            // Display the data 
-            // echo "<script>alert('Vehicle Controller: register data: $clientFirstname, $clientLastname, $clientEmail, $clientPassword');</script>";
-
             // Send the data to the model
-            $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);            
-            // echo "<script>alert('Accounts Controller: register regOutcome = $regOutcome');</script>";
-
+            $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);
             // Check and report the result
-            if($regOutcome === TRUE){
-                // Check and report the result                
+            if($regOutcome == TRUE){
+                // Check and report the result
                 setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
                 $_SESSION['message'] = "Thanks for registering, $clientFirstname. Please use your email and password to login.";
                 // include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/login.php';

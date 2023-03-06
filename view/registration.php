@@ -46,7 +46,7 @@
                         <span>(Passwords must be at least 8 characters and contain at least <br> 1 number,  1 capital letter and 1 special character)</span>
                         <input type="password" id="password" name="clientPassword" value="" maxlength="255" pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required></label>                                                        
                         <label class="top" for="email">Email *<input type="email" id="email" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?> maxlength="40" pattern="^.+@[^\.].*\.[a-z]{2,}$"  name="clientEmail" placeholder="johndoe@gmail.com" required></label>
-                        
+
                     </fieldset>
                     <input type="submit" name="submit" id="regbtn" value="Register"  class="submitBtn">
                     <input type="hidden" name="action" value="register"  class="hidden">

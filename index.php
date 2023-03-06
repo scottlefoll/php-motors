@@ -9,8 +9,6 @@
     if(isset($_COOKIE['firstname'])){
         $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
-
-    $_SESSION["status"] = "main";
     $_SESSION['message'] = "";
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';

@@ -59,21 +59,56 @@
     h1 {
         font-weight: 700;
         color: #3a3a3a;
-        margin-bottom: 1rem;
+        /* margin-bottom: 1rem;
         margin-top: 2rem;
         margin-left: 3vw;
-        font-size: .5rem;
+        font-size: .5rem; */
     }
 
     h2 {
         color: black;
-        font-size: 1.5vw;
+        /* font-size: 1.5vw; */
     }
 
     h3 {
         color: black;
-        font-size: 1.5vw;
+        /* font-size: 1.5vw; */
     }
+
+    #vehicle-table {
+        display: flex;
+        justify-content: center;
+      }
+
+    table {
+        /* font-family: arial, sans-serif; */
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+
+    tr:nth-child(odd) {
+        background-color: #eee;
+      }
+      
+    th {
+        background-color: #555;
+        width: 100%;
+        max-width: 100%;
+        color: #fff;
+        text-align: left;
+        padding: 0.5em 1em;
+        border: 1px solid black;
+    }
+
+    td {
+        text-align: left;
+        padding: 0.5em 1em;
+      }
 
     .account-link {
         color: #8d8d8d;

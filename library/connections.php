@@ -1,7 +1,7 @@
 <?php
     /* Proxy connection to the phpmotors database */
 
-    function phConnect()
+    function phpConnect()
     {
         $server = 'localhost';
         $dbname = 'phpmotors';

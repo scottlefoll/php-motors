@@ -1,14 +1,17 @@
 <?php
-    if(!isset($_SESSION)) 
+    if(!isset($_SESSION))
         { 
-            session_start(); 
+            session_start();
         }
 
-    if(isset($_SESSION['clientData']['clientFirstname'])) {
-        if($_SESSION['clientData']['clientLevel'] < 2){
-            header('Location: /phpmotors/index.php');
-        }   
-    } 
+    if (!(isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == TRUE) && ($_SESSION['clientData']['clientLevel'] > 1))){
+        header('Location: /phpmotors/index.php');
+        exit;
+    }
+
+    if (isset($_SESSION['message'])) {
+        $message = $_SESSION['message'];
+    }
 
     $_SESSION["status"] = "vehicle_man";
 ?>
@@ -24,31 +27,43 @@
         <div id="content-box">
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php';?>
-            
+
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">
             <!-- enhance-desktop -->
-            <link href="/phpmotors/css/large-forms.css" rel="stylesheet">       
+            <link href="/phpmotors/css/large-forms.css" rel="stylesheet">
 
             <nav class="nav"><?php echo $navList; ?></nav>
 
             <!-- Main -->
             <main>
-                <br><br>
+                <br>
+                <h1>Vehicle Management</h1>
+
                 <?php
                     if (isset($_SESSION['message'])) {
                     echo $_SESSION['message'];
                     }
+                    // if (isset($message)) {
+                    // echo $message;
+                    // }
+                    echo "<br>";
+                    if (isset($classificationList)) { 
+                        echo '<h2>Vehicles By Classification</h2>'; 
+                        echo "<br>";
+                        echo '<p>Choose a classification to see those vehicles</p>'; 
+                        echo "<br>";
+                        echo $classificationList;
+                        }
                 ?>
-                <br>
-                <h2>Vehicle Management</h2>
-
-                <?php
-                    if (isset($message)) {
-                    echo $message;
-                    }
-                ?>
+            <div id="vehicle-table">
+                <noscript>
+                    <p><strong>JavaScript Must Be Enabled to Use this Page.</strong></p>
+                </noscript>
+                <br><br>
+                <table id="inventoryDisplay"></table>
+            </div>
 
                 <form method="post" action='/phpmotors/vehicles/index.php' >
                     <fieldset>
@@ -66,5 +81,7 @@
             <!-- Footer -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
         </div>
+        <script src= '/phpmotors/js/inventory.js' ></script>
     </body>
 </html>
+<?php unset($_SESSION['message']); ?>

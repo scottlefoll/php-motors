@@ -1,0 +1,35 @@
+
+                            <select name="classificationId" id="classificationId"
+                                <?php
+                                    if(isset($classificationId) && $classificationId > 0){
+                                        echo "value='$classificationId'";
+                                    } elseif(isset($invInfo['classificationId'])) {
+                                        echo "value='classificationId[invMake]'";
+                                    } else {echo "value=''";}
+                                ?> min='1' required>
+
+                            <option class="top"
+                                    type="number"
+                                    id="classificationId"
+                                    name="classificationId"
+                                    value=""
+                                    required>Choose a Classification</option>
+
+                            <?php
+                                foreach ($classifications as $classification) {
+                                    if (isset($classificationId) && $classificationId === $classification['classificationId']) {
+                                        $selected = 'selected';
+                                    } elseif (isset($invInfo['classificationId']) && $invInfo['classificationId'] === $classification['classificationId']) {
+                                        $selected = 'selected';
+                                    } else {
+                                        $selected = '';
+                                    }
+                                    echo "<option value='$classification[classificationId]' $selected>$classification[classificationName]</option>";
+                                }
+                            ?>
+
+                            </select>
+
+
+
+

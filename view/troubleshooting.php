@@ -3,6 +3,7 @@
         { 
             session_start(); 
         }
+        $_SESSION["status"] = "home";
 ?>
 
 <!DOCTYPE html>

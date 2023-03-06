@@ -6,8 +6,9 @@
     }
 
     function addVehicle($invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId){
+        // This function adds a vehicle to the database
         // Create a connection object using the phpmotors connection function
-        $db = phConnect();
+        $db = phpConnect();
         $rowsChanged = 0;
         // The SQL statement
         $sql = 'INSERT INTO inventory (invMake, invModel, invDescription, invImage, invThumbnail, invPrice, invStock, invColor, classificationId)
@@ -30,9 +31,79 @@
         $stmt->closeCursor();
         return $rowsChanged;
     }
-    function addClass($classificationName){
+
+    function updateVehicle($invId, $invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId){
+        // This function updates a vehicle to the database
         // Create a connection object using the phpmotors connection function
-        $db = phConnect();
+        $db = phpConnect();
+        $rowsChanged = 0;
+        // The SQL statement
+        $sql = 'UPDATE  inventory SET invMake = :invMake, invModel = :invModel, invDescription = :invDescription, invImage = :invImage, 
+                        invThumbnail = :invThumbnail, invPrice = :invPrice, invStock = :invStock, invColor = :invColor,
+                        classificationId = :classificationId WHERE invId = :invId';
+
+        // Create the prepared statement using the phpmotors connection
+        $stmt = $db->prepare($sql);
+        // The next lines replace the placeholders in the SQL
+        // statement with the actual values in the variables
+        // and tells the database the type of data it is
+        $stmt->bindValue(':invId', $invId, PDO::PARAM_STR);
+        $stmt->bindValue(':invMake', $invMake, PDO::PARAM_STR);
+        $stmt->bindValue(':invModel', $invModel, PDO::PARAM_STR);
+        $stmt->bindValue(':invDescription', $invDescription, PDO::PARAM_STR);
+        $stmt->bindValue(':invImage', $invImage, PDO::PARAM_STR);
+        $stmt->bindValue(':invThumbnail', $invThumbnail, PDO::PARAM_STR);
+        $stmt->bindValue(':invPrice', $invPrice, PDO::PARAM_STR);
+        $stmt->bindValue(':invStock', $invStock, PDO::PARAM_STR);
+        $stmt->bindValue(':invColor', $invColor, PDO::PARAM_STR);
+        $stmt->bindValue(':classificationId', $classificationId, PDO::PARAM_STR);
+        $stmt->execute();
+        $rowsChanged = $stmt->rowCount();
+        $stmt->closeCursor();
+        return $rowsChanged;
+    }
+
+    function deleteVehicle($invId) {
+        // This function deletes a vehicle from the database
+        $db = phpConnect();
+        $sql = 'DELETE FROM inventory WHERE invId = :invId';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
+        $stmt->execute();
+        $rowsChanged = $stmt->rowCount();
+        $stmt->closeCursor();
+        return $rowsChanged;
+       }
+
+    // Get vehicles by classificationId 
+    function getInventoryByClassification($classificationId){
+        // This funtion returns an array of vehicles based on the classificationId
+        $db = phpConnect(); 
+        $sql = ' SELECT * FROM inventory WHERE classificationId = :classificationId'; 
+        $stmt = $db->prepare($sql); 
+        $stmt->bindValue(':classificationId', $classificationId, PDO::PARAM_INT); 
+        $stmt->execute(); 
+        $inventory = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+        $stmt->closeCursor(); 
+        return $inventory; 
+    }
+
+   // Get vehicle information by invId
+    function getInvItemInfo($invId){
+        // This funtion returns an array of a specific vehicle based on the invId
+        $db = phpConnect();
+        $sql = 'SELECT * FROM inventory WHERE invId = :invId';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
+        $stmt->execute();
+        $invInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $invInfo;
+    }
+
+    function addClass($classificationName){
+        // This funtion adds a classification to the database
+        $db = phpConnect();
         $rowsChanged = 0;
         $sql = 'INSERT INTO carClassification (classificationName) VALUES (:classificationName)';
         $stmt = $db->prepare($sql);
@@ -44,8 +115,8 @@
 
     
     function getVehicles($vehicle = ""){
-        // Create a connection object from the phpmotors connection function
-        $db = phConnect(); 
+        // This funtion returns a list of all vehicle classificationIds and names
+        $db = phpConnect(); 
         // The SQL statement to be used with the database 
         $sql = 'SELECT classificationId, classificationName FROM carclassification ORDER BY classificationName ASC'; 
         // The next line creates the prepared statement using the phpmotors connection      

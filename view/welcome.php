@@ -6,6 +6,7 @@
         { 
             session_start(); 
         }
+        $_SESSION["status"] = "welcome";
 ?>
 
 <!DOCTYPE html>

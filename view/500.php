@@ -3,6 +3,7 @@
         { 
             session_start(); 
         }
+    $_SESSION["status"] = "500";
 ?>
 
 <!DOCTYPE html>

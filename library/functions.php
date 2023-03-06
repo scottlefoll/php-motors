@@ -4,33 +4,44 @@
         session_start(); 
     }
     function checkEmail($clientEmail){
-    $valEmail = filter_var($clientEmail, FILTER_VALIDATE_EMAIL);
-    return $valEmail;
+        $valEmail = filter_var($clientEmail, FILTER_VALIDATE_EMAIL);
+        return $valEmail;
     }
 
     function checkPrice($invPrice){
         $value = filter_var($invPrice, FILTER_VALIDATE_INT, array("options" => array("min_range"=>100, "max_range"=>2000000)));
         return $value;
-        }
+    }
 
     function checkClassificationId($classificationId){
         $value = filter_var($classificationId, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99)));
         return $value;
-        }
+    }
 
     function checkStock($invStock){
         $value = filter_var($invStock, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99)));
         return $value;
-        }
+    }
 
     function checkImageFilename($ImageFilename){
-        $pattern = "/([0-9a-zA-Z\._-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))/";
+        $pattern = "^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$^";
         if (preg_match($pattern, $ImageFilename)){
             return $ImageFilename;
         } else {
             return "";
         }
     }
+
+    // Build the classifications select list 
+    function buildClassificationList($classifications){ 
+        $classificationList = '<select name="classificationId" id="classificationList">'; 
+        $classificationList .= "<option>Choose a Classification</option>"; 
+        foreach ($classifications as $classification) { 
+            $classificationList .= "<option value='$classification[classificationId]'>$classification[classificationName]</option>"; 
+        }
+        $classificationList .= '</select>'; 
+        return $classificationList; 
+   }
 
     function checkName($name, $num){
         $pattern = '/[A-Za-z -.,]{1,30}/';
@@ -44,8 +55,8 @@
     function checkDescription($Description, $num){
         $pattern='/^[A-Za-z0-9_ ?!\@#$%&*<>.,";:+=]{1,255}$/';
         return preg_match($pattern, $Description);
-        }
-        
+    }
+
     // Check the password for a minimum of 8 characters,
     // at least one 1 capital letter, at least 1 number and
     // at least 1 special character

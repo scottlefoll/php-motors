@@ -4,12 +4,10 @@
             session_start(); 
         }
 
-    if(isset($_SESSION['clientData']['clientFirstname'])) {
-        if($_SESSION['clientData']['clientLevel'] < 2){
+        if (!(isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == TRUE) && ($_SESSION['clientData']['clientLevel'] > 1))){
             header('Location: /phpmotors/index.php');
-        }   
-    } 
-
+        }
+    
     $_SESSION["status"] = "add_class";
 ?> 
 
