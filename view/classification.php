@@ -3,7 +3,7 @@
         { 
             session_start(); 
         }
-    $_SESSION["status"] = "500";
+    $_SESSION["status"] = "home";
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +17,13 @@
         <div id="content-box">
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/navigation.php'; ?>
-
+            <nav class="nav"><?php echo $navList; ?></nav>
+            <title><?php echo $classificationName; ?> vehicles | PHP Motors, Inc.</title>
             <!-- Main -->
             <main>
-            <br>
+            <h1><?php echo $classificationName; ?> vehicles</h1>
             <?php
+
                 if (isset($_SESSION['message'])) {
                     echo $_SESSION['message'];
                     unset($_SESSION['message']);
@@ -31,12 +32,12 @@
                     echo $message;
                     $message = "";
                 }
-            ?>
 
-            <?php
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/500_content.php';
+                if(isset($vehicleDisplay)){
+                    echo $vehicleDisplay;
+                }
             ?>
-                <p><br><br><br><br><br><br><br></p>
+                <p><br><br><br>
             </main>
 
             <!-- Footer -->

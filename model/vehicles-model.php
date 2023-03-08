@@ -113,7 +113,6 @@
         return $rowsChanged;
     }
 
-    
     function getVehicles($vehicle = ""){
         // This funtion returns a list of all vehicle classificationIds and names
         $db = phpConnect(); 

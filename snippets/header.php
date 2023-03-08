@@ -16,8 +16,8 @@
             } 
         } else {
             // do something here if the value is FALSE
-            // echo "<script>alert('Header: logged out');</script>";
+            echo "<script>alert('Header: logged out');</script>";
             echo '<a href="/phpmotors/accounts/index.php" class="account-link" >Login</a>';      
         }
-    ?>  
+    ?>
 </header>

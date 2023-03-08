@@ -3,15 +3,7 @@
     {
         session_start(); 
     }
-
-    if (!(isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == TRUE) && ($_SESSION['clientData']['clientLevel'] > 1))){
-        header('Location: /phpmotors/index.php');
-    }
-
-    if ((isset($_SESSION['message']) && (isset($_SESSION['message_delivered']) && ($_SESSION['message_delivered'] == True)))){
-        $_SESSION['message'] = "";
-        $_SESSION['message_delivered'] = False;
-    }
+    echo "<script>alert('Vehicle Controller 1');</script>";
 
     // This is the vehicles controller 
     // Get the database connection file
@@ -33,7 +25,7 @@
         $action = filter_input(INPUT_GET, 'action');
     }
 
-    // echo "<script>alert('Vehicle Controller: action = $action');</script>";
+    echo "<script>alert('Vehicle Controller 5: action = $action');</script>";
 
     if ($action == "Add Classification") {
         $action = "add_class_view";
@@ -42,6 +34,8 @@
     } elseif ($action == "Vehicle Management") {
         $action = "";
     }
+
+    echo "<script>alert('Vehicle Controller 5: action = $action');</script>";
 
     switch ($action){
         case 'add_class_view':
@@ -198,6 +192,7 @@
             if (empty($classificationId) || empty($invMake) || empty($invModel) || empty($invDescription) 
                 || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invColor)) {
                 $message = '<p>Please complete all information for updating the item! Double check the classification of the item.</p>';
+                $_SESSION['message'] = $message;
                 include '../view/update-vehicle.php';
                 exit;
             }
@@ -206,9 +201,11 @@
                 $message = "<p class='notify'>Congratulations, the $invMake $invModel was successfully updated.</p>";
                 $_SESSION['message'] = $message;
                 header('location: /phpmotors/vehicles/');
+                // include '../view/update-vehicle.php';
                 exit;
             } else {
                 $message = "<p class='notice'>Error. the $invMake $invModel was not updated.</p>";
+                $_SESSION['message'] = $message;
                 include '../view/update-vehicle.php';
                 exit;
             }
@@ -222,19 +219,18 @@
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/delete-vehicle.php';
             exit;
         case 'delete_vehicle':
-            echo "<script>alert('Vehicle Controller: deleteVehicle case');</script>";
             $invMake = filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $invModel = filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
 
             $deleteResult = deleteVehicle($invId);
             if ($deleteResult) {
-                $message = "<p class='notice'>Congratulations, $invMake $invModel was successfully deleted.</p>";
+                $message = "<p class='notice'>Congratulations, the $invMake $invModel was successfully deleted.</p>";
                 $_SESSION['message'] = $message;
                 header('location: /phpmotors/vehicles/');
                 exit;
             } else {
-                $message = "<p class='notice'>Error: $invMake $invModel was not deleted.</p>";
+                $message = "<p class='notice'>Error: the $invMake $invModel was not deleted.</p>";
                 $_SESSION['message'] = $message;
                 header('location: /phpmotors/vehicles/');
                 exit;
@@ -244,6 +240,16 @@
             $classificationList = buildClassificationList($classifications);
             # vehicle_man view:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
+            exit;
+        case 'classification':
+            $classificationName = filter_input(INPUT_GET, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $vehicles = getVehiclesByClassification($classificationName);
+            if(!count($vehicles)){
+                $message = "<p class='notice'>Sorry, no $classificationName could be found.</p>";
+            } else {
+                $vehicleDisplay = buildVehiclesDisplay($vehicles);
+            }
+            include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/classification.php';
             exit;
         default:
             $classificationList = buildClassificationList($classifications);

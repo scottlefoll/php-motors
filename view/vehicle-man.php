@@ -38,14 +38,16 @@
                 <h1>Vehicle Management</h1>
 
                 <?php
+
                     if (isset($_SESSION['message'])) {
                         echo $_SESSION['message'];
-                        $_SESSION['message_delivered'] = True;
+                        unset($_SESSION['message']);
                     }
                     if (isset($message)) {
                         echo $message;
+                        $message = "";
                     }
-                    echo "<br>";
+
                     if (isset($classificationList)) { 
                         echo '<h2>Vehicles By Classification</h2>'; 
                         echo "<br>";

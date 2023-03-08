@@ -8,10 +8,6 @@
     if(isset($_COOKIE['firstname'])){
         $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
-    if ((isset($_SESSION['message']) && (isset($_SESSION['message_delivered']) && ($_SESSION['message_delivered'] == True)))){
-        unset($_SESSION['message']);
-        $_SESSION['message_delivered'] = False;
-    }
 
     // This is the accounts controller
     // Get the database connection file
@@ -23,7 +19,7 @@
     // Get the functions library
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/functions.php';
 
-    // Display the alert box 
+    // Display the alert box
     // echo "<script>alert('Accounts Controller');</script>";
 
     // Get the array of classifications

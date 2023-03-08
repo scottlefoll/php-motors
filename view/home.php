@@ -21,13 +21,14 @@
 
             <!-- Main -->
             <main>
-            <?php
+                <?php
                     if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
-                    $_SESSION['message_delivered'] = True;
+                        echo $_SESSION['message'];
+                        unset($_SESSION['message']);
                     }
                     if (isset($message)) {
                         echo $message;
+                        $message = "";
                     }
                 ?>
             <br>
@@ -41,9 +42,9 @@
                         require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
                     }
             ?>
-            
+
                 <p><br><br><br><br><br><br><br></p>
-            </main> 
+            </main>
 
             <!-- Footer -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 

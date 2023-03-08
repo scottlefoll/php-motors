@@ -7,7 +7,7 @@
         if (!(isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == TRUE) && ($_SESSION['clientData']['clientLevel'] > 1))){
             header('Location: /phpmotors/index.php');
         }
-    
+
     $_SESSION["status"] = "add_class";
 ?> 
 
@@ -21,7 +21,7 @@
     ?>
 
     <!-- <body class="body1"> -->
-        
+
         <div id="content-box">
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
@@ -30,7 +30,7 @@
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">
             <!-- enhance-desktop -->
             <link href="/phpmotors/css/large-forms.css" rel="stylesheet">
-            
+
             <nav class="nav"><?php echo $navList; ?></nav>        
 
             <!-- Main -->
@@ -41,12 +41,14 @@
                 <?php
                     if (isset($_SESSION['message'])) {
                         echo $_SESSION['message'];
-                        $_SESSION['message_delivered'] = True;
+                        unset($_SESSION['message']);
                     }
                     if (isset($message)) {
                         echo $message;
+                        $message = "";
                     }
                 ?>
+
                 <br>
                 <form method="post" action= '/phpmotors/vehicles/index.php' >
                     <fieldset>

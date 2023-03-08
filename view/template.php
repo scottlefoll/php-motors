@@ -22,28 +22,29 @@
 
             <!-- Main -->
             <main>
-            <br>
-            <?php
+                <br>
+                <?php
                     if (isset($_SESSION['message'])) {
                         echo $_SESSION['message'];
-                        $_SESSION['message_delivered'] = True;
+                        unset($_SESSION['message']);
                     }
                     if (isset($message)) {
                         echo $message;
+                        $message = "";
                     }
-            ?>
-            <br>
-            <?php
-                    if(isset($_GET['action']) and $_GET['action'] != 'template'){
-                        $content_name = str_replace(' ', '_', $current_action);
-                        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $content_name . '_content.php';
+                ?>
+                <br>
+                <?php
+                        if(isset($_GET['action']) and $_GET['action'] != 'template'){
+                            $content_name = str_replace(' ', '_', $current_action);
+                            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $content_name . '_content.php';
 
-                    }else{
-                        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
-                    }
+                        }else{
+                            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
+                        }
 
-            ?>
-            
+                ?>
+
                 <p><br><br><br><br><br><br><br></p>
             </main> 
 

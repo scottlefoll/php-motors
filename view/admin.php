@@ -44,17 +44,16 @@
                 <br>
                 <div class="admin-box">
                     <h1>Admin Page</h1>
-                    <br><br>
-                    <h2>
-                        <?php
-                            if (isset($_SESSION['message'])) {
-                                echo $_SESSION['message'];
-                                $_SESSION['message_delivered'] = True;
-                            }
-                            if (isset($message)) {
-                                echo $message;
-                            }
-                        ?></h2>
+                    <?php
+                        if (isset($_SESSION['message'])) {
+                            echo $_SESSION['message'];
+                            unset($_SESSION['message']);
+                        }
+                        if (isset($message)) {
+                            echo $message;
+                            $message = "";
+                        }
+                    ?>
                     <br>
                     <div class="admin-message">
                         <ul class="review1-ul">

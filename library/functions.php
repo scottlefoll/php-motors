@@ -74,10 +74,38 @@
         $navList = "<ul class='nav-ul' id='main-nav'>";
         $navList .= "<li class='nav-li'><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
         foreach ($classifications as $classification) {
-            $navList .= "<li class='nav-li' ><a href='/phpmotors/index.php?action=".urlencode($classification['classificationName'])."' 
-                        title='View our $classification[classificationName] product line'>$classification[classificationName]</a></li>";
+            $navList .= "<li class='nav-li' ><a href='/phpmotors/vehicles/?action=classification&classificationName=".urlencode($classification['classificationName'])."'
+                        title='View our $classification[classificationName] lineup of vehicles'>$classification[classificationName]</a></a></li>";
         }
         $navList .= '</ul>';
         return $navList;
     }
+
+    function getVehiclesByClassification($classificationName){
+        $db = phpConnect();
+        $sql = 'SELECT * FROM inventory WHERE classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':classificationName', $classificationName, PDO::PARAM_STR);
+        $stmt->execute();
+        $vehicles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $vehicles;
+       }
+
+    function buildVehiclesDisplay($vehicles){
+    $dv = '<ul id="inv-display">';
+    foreach ($vehicles as $vehicle) {
+        $dv .= '<li>';
+        $dv .= "<img src='/phpmotors/images/vehicles/$vehicle[invThumbnail]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'>";
+        $dv .= '<hr>';
+        $dv .= "<h2>$vehicle[invMake] $vehicle[invModel]</h2>";
+        $dv .= "<span>$vehicle[invPrice]</span>";
+        $dv .= '</li>';
+    }
+    $dv .= '</ul>';
+    return $dv;
+    }
+
+
+
 ?>
