@@ -3,7 +3,7 @@
         { 
             session_start(); 
         }
-    $_SESSION["status"] = "register";
+    $_SESSION["status"] = "update_password";
 ?>
 
 <!DOCTYPE html>

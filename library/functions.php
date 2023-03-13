@@ -75,7 +75,7 @@
         $navList .= "<li class='nav-li'><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
         foreach ($classifications as $classification) {
             $navList .= "<li class='nav-li' ><a href='/phpmotors/vehicles/?action=classification&classificationName=".urlencode($classification['classificationName'])."'
-                        title='View our $classification[classificationName] lineup of vehicles'>$classification[classificationName]</a></a></li>";
+                        title='View our $classification[classificationName] lineup of vehicles'>$classification[classificationName]</a></li>";
         }
         $navList .= '</ul>';
         return $navList;
@@ -93,19 +93,70 @@
        }
 
     function buildVehiclesDisplay($vehicles){
-    $dv = '<ul id="inv-display">';
-    foreach ($vehicles as $vehicle) {
-        $dv .= '<li>';
-        $dv .= "<img src='/phpmotors/images/vehicles/$vehicle[invThumbnail]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'>";
-        $dv .= '<hr>';
-        $dv .= "<h2>$vehicle[invMake] $vehicle[invModel]</h2>";
-        $dv .= "<span>$vehicle[invPrice]</span>";
-        $dv .= '</li>';
+        $dv = '<div>';
+        $dv .= '<ul id="inv-display">';
+        foreach ($vehicles as $vehicle) {
+            $dv .= '<li>';
+            $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><img src='/phpmotors/images/vehicles/$vehicle[invThumbnail]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'></a>";
+            $dv .= '<hr>';
+            $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><h2>$vehicle[invMake] $vehicle[invModel]</h2></a>";
+            $usd = "$" . number_format($vehicle['invPrice'], 0, ".", ",");
+            $dv .= "<span>$usd</span>";
+            $dv .= '</li>';
+        }
+        $dv .= '</ul>';
+        $dv .= '</div>';
+        return $dv;
     }
-    $dv .= '</ul>';
-    return $dv;
+
+    function buildInvItemDisplay($invInfo){
+        $dv = "<div id='inv-detail-box'>";
+        $dv .= "<div id='inv-fieldset-div'>";
+        $dv .= "<fieldset id='inv-fieldset'><legend>Vehicle Information</legend>";
+        $lbltype = "text";
+        $pattern = "";
+        $DescriptionKey = "";
+        $DescriptionValue = "";
+        $ImageKey = "";
+        $ImageValue = "";
+        $invMake = "";
+        $invModel = "";
+        foreach($invInfo as $key => $value) {
+            if ($key != "invId" && $key != "classificationId" && $key != "invThumbnail"){
+                $key_str = str_replace('inv', '', $key);
+                switch($key_str){
+                    case "Description":
+                        $DescriptionKey = $key_str;
+                        $DescriptionValue = $value;
+                        continue 2;
+                    case "Image":
+                        $ImageKey = $key_str;
+                        $ImageValue = $value;
+                        continue 2;
+                    case "Price":
+                        $lbltype = "text";
+                        $value = "$" . number_format($value, 0, ".", ",");
+                        break;
+                    case "Stock":
+                        $lbltype = "number";
+                        break;
+                    case "Make":
+                        $invMake = $value;
+                        break;
+                    case "Model":
+                        $invModel = $value;
+                        break;
+                }
+                $dv .= "<label class='top' for=$key_str>$key_str</label><input type=$lbltype name='invMake' id=$key_str value=$value disabled><br>";
+                $lbltype = "text";
+                $pattern = "";
+            }
+        }
+        $dv .= "<label class='top' for=$DescriptionKey>$DescriptionKey</label><textarea name='invDescription' id=$DescriptionKey rows='4' cols='50' disabled>$DescriptionValue</textarea><br>";
+        $dv .= "</fieldset></div>";
+        $imageString = "<img id='inv-img' src='/phpmotors/images/vehicles/$ImageValue' alt='Image of $invMake $invModel on phpmotors.com'>";
+        $dv .= "<div id='inv-img-div'>$imageString</div>";
+        $dv .= "</div>";
+        return $dv;
     }
-
-
-
 ?>

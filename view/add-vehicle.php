@@ -17,6 +17,7 @@
 
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php';?>
+    <title>php Motors | Add Vehicle</title>
 
     <!-- <body class="body1"> -->
         <div id="content-box">

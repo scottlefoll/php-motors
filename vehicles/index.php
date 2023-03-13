@@ -3,7 +3,7 @@
     {
         session_start(); 
     }
-    echo "<script>alert('Vehicle Controller 1');</script>";
+    // echo "<script>alert('Vehicle Controller 1');</script>";
 
     // This is the vehicles controller 
     // Get the database connection file
@@ -25,7 +25,7 @@
         $action = filter_input(INPUT_GET, 'action');
     }
 
-    echo "<script>alert('Vehicle Controller 5: action = $action');</script>";
+    // echo "<script>alert('Vehicle Controller 5: action = $action');</script>";
 
     if ($action == "Add Classification") {
         $action = "add_class_view";
@@ -35,7 +35,7 @@
         $action = "";
     }
 
-    echo "<script>alert('Vehicle Controller 5: action = $action');</script>";
+    // echo "<script>alert('Vehicle Controller 5: action = $action');</script>";
 
     switch ($action){
         case 'add_class_view':
@@ -149,7 +149,7 @@
         case 'getInventoryItems':
             // Get vehicles by classificationId 
             // Used for starting Update & Delete process 
-            echo "<script>alert('Vehicle Controller: getInventoryItems case');</script>";
+            // echo "<script>alert('Vehicle Controller: getInventoryItems case');</script>";
             // Get the classificationId 
             $classificationId = filter_input(INPUT_GET, 'classificationId', FILTER_SANITIZE_NUMBER_INT); 
             // Fetch the vehicles by classificationId from the DB 
@@ -219,9 +219,10 @@
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/delete-vehicle.php';
             exit;
         case 'delete_vehicle':
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
+            // $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
             $invMake = filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $invModel = filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
 
             $deleteResult = deleteVehicle($invId);
             if ($deleteResult) {
@@ -235,10 +236,24 @@
                 header('location: /phpmotors/vehicles/');
                 exit;
             }
-            exit;
+        case 'view_vehicle':
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+            $invInfo = getInvItemInfo($invId);
+            if(count($invInfo)<1){
+                $message = "";
+                $_SESSION['message'] = "Sorry, information for vehicle ID # $invId could not be found.";
+                include '../view/classification.php';
+                exit;
+            } else {
+                $_SESSION["invInfo"] = $invInfo;
+                $invItemDisplay = buildInvItemDisplay($invInfo);
+                $_SESSION["invItemDisplay"] = $invItemDisplay;
+                // $_SESSION['message'] = "<p>Success, the $invInfo[invMake] $invInfo[invModel] was found.</p>";
+                include '../view/vehicle-detail.php';
+                exit;
+            }
         case 'vehicle_man':
             $classificationList = buildClassificationList($classifications);
-            # vehicle_man view:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
             exit;
         case 'classification':
@@ -253,7 +268,6 @@
             exit;
         default:
             $classificationList = buildClassificationList($classifications);
-            # vehicle_man view:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
             exit;
 }

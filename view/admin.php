@@ -25,6 +25,7 @@
 
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
+    
 
     <!-- <body class="body1"> -->
         <div id="content-box">

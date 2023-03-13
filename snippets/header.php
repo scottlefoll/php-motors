@@ -13,11 +13,11 @@
             echo '<a href="/phpmotors/accounts/index.php?action=logout" class="account-link" >Logout</a>';
             if(isset($cookieFirstname)) {
                 echo "<span class='account-link' >Welcome $cookieFirstname</span>";
-            } 
+            }
         } else {
             // do something here if the value is FALSE
-            echo "<script>alert('Header: logged out');</script>";
-            echo '<a href="/phpmotors/accounts/index.php" class="account-link" >Login</a>';      
+            // echo "<script>alert('Header: logged out');</script>";
+            echo '<a href="/phpmotors/accounts/index.php" class="account-link" >Login</a>';
         }
     ?>
 </header>

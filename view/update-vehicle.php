@@ -26,15 +26,6 @@
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?>
 
-            <title>
-                    <?php
-                        if(isset($invInfo['invMake']) && isset($invInfo['invModel'])){
-                            echo "Modify $invInfo[invMake] $invInfo[invModel]";}
-                        elseif(isset($invMake) && isset($invModel)) {
-                            echo "Modify $invMake $invModel"; }
-                    ?> | PHP Motors
-            </title>
-
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">
@@ -85,7 +76,7 @@
                         <label class="top" for="invModel">Model* <input type="text" name="invModel" id="invModel"
                             <?php if(isset($invModel)){ echo "value='$invModel'"; } elseif(isset($invInfo['invModel'])) {echo "value='$invInfo[invModel]'"; }?>
                             placeholder="" maxlength="30" pattern='^[A-Za-z -,.'0-9]{1,30}$' required></label>
-                        <label class="top" for="invDescription">Description* <input type="invDescription" id="description" name="invDescription"
+                        <label class="top" for="invDescription">Description* <input type="text" id="invdescription" name="invDescription"
                             <?php if(isset($invDescription)){echo "value='$invDescription'";} elseif(isset($invInfo['invDescription'])) {echo "value='$invInfo[invDescription]'"; }?>
                             placeholder='' maxlength="255" pattern='^[A-Za-z0-9_ ?!\@#$%&*<>,.";:+=']{1,255}$' required></label>
                         <label class="top" for="invImage">Image*  <input type="text" id="img_filename" name="invImage"

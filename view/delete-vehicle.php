@@ -26,15 +26,6 @@
             <!-- Header -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?>
 
-            <title>
-                    <?php
-                        if(isset($invInfo['invMake']) && isset($invInfo['invModel'])){
-                            echo "Delete $invInfo[invMake] $invInfo[invModel]";}
-                        elseif(isset($invMake) && isset($invModel)) {
-                            echo "Delete $invMake $invModel"; }
-                    ?> | PHP Motors
-            </title>
-
             <!-- STYLE SHEETS -->
             <!-- phone-default -->
             <link href="/phpmotors/css/small-forms.css" rel="stylesheet">

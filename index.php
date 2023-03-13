@@ -32,7 +32,7 @@
         $action = filter_input(INPUT_GET, 'action');
     }
 
-    echo "<script>alert('Main Controller: Action = $action');</script>";
+    // echo "<script>alert('Main Controller: Action = $action');</script>";
 
     switch ($action){
         case 'home':
@@ -49,7 +49,7 @@
             break;
         default:
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/home.php';
-            echo "<script>alert('Main Controller: Case Default Action');</script>";
+            // echo "<script>alert('Main Controller: Case Default Action');</script>";
             break;
     }
 

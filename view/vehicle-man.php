@@ -18,6 +18,7 @@
 
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
+    <title>php Motors  | Vehicle Management</title>
 
     <!-- <body class="body1"> -->
         <div id="content-box">
@@ -48,7 +49,8 @@
                         $message = "";
                     }
 
-                    if (isset($classificationList)) { 
+                    if (isset($classificationList)) {
+                        echo "<br>";
                         echo '<h2>Vehicles By Classification</h2>'; 
                         echo "<br>";
                         echo '<p>Choose a classification to see those vehicles</p>'; 
