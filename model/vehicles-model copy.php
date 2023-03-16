@@ -79,6 +79,7 @@
     function getInventoryByClassification($classificationId){
         // This funtion returns an array of vehicles based on the classificationId
         $db = phpConnect();
+        // $sql = ' SELECT * FROM inventory WHERE classificationId = :classificationId';
         $sql = "SELECT inv.*,
                     MAX(CASE WHEN img.imgPath LIKE '%-tn.%' THEN img.imgPath END) AS imgTnPath,
                     MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
@@ -86,7 +87,7 @@
                 LEFT JOIN (
                     SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
                         FROM images) AS img ON inv.invId = img.invId 
-                    WHERE inv.classificationId = :classificationId
+                    WHERE inv.classificationId = 3
                 GROUP BY inv.invId;";
 
         $stmt = $db->prepare($sql);
