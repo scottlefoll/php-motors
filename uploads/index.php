@@ -48,10 +48,12 @@
             $imgName = $_FILES['file1']['name'];
             $imageCheck = checkExistingImage($imgName);
 
+            // echo "<script>alert('Uploads Controller: Upload: invId = $invId, imgName = $imgName');</script>";
+
             if($imageCheck){
-            $message = '<p class="notice">An image by that name already exists.</p>';
-            } elseif (empty($invId) || empty($imgName)) {
-            $message = '<p class="notice">You must select a vehicle and image file for the vehicle.</p>';
+                $message = '<p class="notice">An image by that name already exists.</p>';
+            } elseif (empty($invId) || $invId == 0 || empty($imgName)) {
+                $message = '<p class="notice">You must select a vehicle and image file for the vehicle.</p>';
             } else {
             // Upload the image, store the returned path to the file
             $imgPath = uploadFile('file1');
@@ -60,9 +62,9 @@
 
             // Set a message based on the insert result
             if ($result) {
-            $message = '<p class="notice">The upload succeeded.</p>';
+                $message = '<p class="notice">The upload succeeded.</p>';
             } else {
-            $message = '<p class="notice">Sorry, the upload failed.</p>';
+                $message = '<p class="notice">Sorry, the upload failed.</p>';
             }
             }
 

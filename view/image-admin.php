@@ -58,7 +58,7 @@
                             </fieldset>
                         <label>Upload Image:</label>
                         <input type="file" name="file1">
-                        <input type="submit" class="regbtn" value="Upload">
+                        <input type="submit" class="regbtn" value="Upload" >
                         <input type="hidden" name="action" value="upload">
                     </form>
                     <br>
