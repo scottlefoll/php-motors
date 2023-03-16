@@ -15,3 +15,126 @@ invThumbnail = CONCAT("/phpmotors", invThumbnail);
 
 
 
+The type of SQL query that pulls all the records from the left table and only the records from the right
+table that match the join is called a LEFT JOIN.
+
+Here's an example of a LEFT JOIN query:
+
+SELECT *
+FROM left_table
+LEFT JOIN right_table
+ON left_table.key = right_table.key;
+
+In this query, all the records from the left_table will be included in the result, and only the matching
+records from the right_table will be included. If there is no match in the right_table, the columns for
+the right_table will be NULL in the result set.
+
+you can use the GROUP BY clause with an aggregate function like MAX() or MIN() to combine multiple rows 
+from the right table into fields in the result row.
+
+Here's an example of a query that uses a LEFT JOIN to join two tables and then uses MAX() and GROUP BY 
+to combine multiple rows from the right table into a single field in the result row:
+
+SELECT t1.id, t1.name, MAX(t2.value) AS max_value, MAX(t2.date) AS max_date
+FROM table1 t1
+LEFT JOIN table2 t2 ON t1.id = t2.table1_id
+GROUP BY t1.id, t1.name;
+
+In this query, we're joining table1 and table2 using a LEFT JOIN. Then, we're using MAX() and GROUP BY 
+to combine the value and date columns from table2 into max_value and max_date fields in the result row 
+for each id and name combination in table1. If there are no matching rows in table2, the max_value and 
+max_date fields will be NULL.
+
+Rewrite this SQL query to return a single result row, and turn multiple rows from the right table into 
+fields in the result row?
+
+SELECT inv.*, img.imgPath 
+FROM inventory as inv 
+INNER JOIN images as img ON inv.inv_Id = img.inv_Id 
+WHERE inv.classificationId = 1
+
+To return a single result row and turn multiple rows from the right table into fields in the result row, 
+you can use an aggregate function like GROUP_CONCAT() to concatenate the values from the right table 
+into a single field in the result row.
+
+Here's an example of how to rewrite the query:
+
+SELECT inv.*, GROUP_CONCAT(img.imgPath) AS imgPaths 
+FROM inventory as inv 
+LEFT JOIN images as img ON inv.inv_Id = img.inv_Id 
+WHERE inv.classificationId = 1
+GROUP BY inv.inv_Id;
+
+In this query, we're using a LEFT JOIN to include all records from the inventory table, and using
+GROUP_CONCAT() to concatenate the values of the imgPath column from the images table for each
+matching record in the inventory table. The result will include a single row for each unique inv_Id
+value in the inventory table. If there are no matching records in the images table, the imgPaths
+column will be NULL.
+
+To turn the imgPath field from each row of the right table into a separate field in the result row, 
+you can use multiple subqueries with conditional aggregation to pivot the imgPath values into separate columns.
+
+Here's an example of how to rewrite the query:
+
+SELECT inv.*,
+       MAX(CASE WHEN img.imgIndex = 1 THEN img.imgPath END) AS imgPath1,
+       MAX(CASE WHEN img.imgIndex = 2 THEN img.imgPath END) AS imgPath2,
+       MAX(CASE WHEN img.imgIndex = 3 THEN img.imgPath END) AS imgPath3
+FROM inventory as inv
+LEFT JOIN (
+    SELECT *, ROW_NUMBER() OVER(PARTITION BY inv_Id ORDER BY img_Id) AS imgIndex
+    FROM images
+) AS img ON inv.inv_Id = img.inv_Id
+WHERE inv.classificationId = 1
+GROUP BY inv.inv_Id;
+
+In this query, we're using a subquery to add a row number to each row of the images table, partitioned
+by inv_Id. We're then using a LEFT JOIN to include all records from the inventory table, and using
+conditional aggregation with MAX() and CASE statements to pivot the imgPath values into separate columns
+based on the imgIndex value. The result will include a single row for each unique inv_Id value in the
+inventory table, with separate columns for each imgPath value up to a maximum of three. If there are
+fewer than three imgPath values, the remaining columns will be NULL.
+
+Final SQL with Case statements and LEFT JOIN:
+
+SELECT inv.*,
+       MAX(CASE WHEN img.imgPath LIKE '%-tn.%' THEN img.imgPath END) AS imgTnPath,
+       MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
+FROM inventory as inv 
+LEFT JOIN (
+    SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
+    FROM images
+) AS img ON inv.invId = img.invId 
+WHERE inv.classificationId = 3
+GROUP BY inv.invId;
+
+
+Scratch:
+
+SELECT inv.*,
+       MAX(CASE WHEN img.imgIndex = 1 THEN img.imgPath END) AS CASE WHEN img.imgPath LIKE '%-tn.%' THEN AS img.imgTnPath, ELSE img.imgPath1,
+       MAX(CASE WHEN img.imgIndex = 2 THEN img.imgPath END) AS imgPath2,
+       MAX(CASE WHEN img.imgIndex = 3 THEN img.imgPath END) AS imgPath3
+FROM inventory as inv 
+LEFT JOIN (
+    SELECT *, ROW_NUMBER() OVER(PARTITION BY inv_Id ORDER BY img_Id) AS imgIndex
+    FROM images
+) AS img ON inv.inv_Id = img.inv_Id 
+WHERE inv.classificationId = 1
+GROUP BY inv.inv_Id;
+
+SET @PATH = "";
+SELECT inv.*,
+       MAX(CASE WHEN img.imgIndex = 1 THEN 
+                CASE WHEN img.imgPath LIKE '%-tn.%' THEN @PATH := 'imgTnPath' ELSE @PATH := img.imgPath END
+           END) AS @PATH,
+       MAX(CASE WHEN img.imgIndex = 1 THEN 
+                CASE WHEN img.imgPath LIKE '%-tn.%' THEN @PATH := 'imgTnPath' ELSE @PATH := img.imgPath END
+           END) AS @PATH
+FROM inventory as inv 
+LEFT JOIN (
+    SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
+    FROM images
+) AS img ON inv.invId = img.invId 
+WHERE inv.classificationId = 3
+GROUP BY inv.invId;

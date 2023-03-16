@@ -58,13 +58,13 @@
                         echo $classificationList;
                         }
                 ?>
-            <div id="vehicle-table">
-                <noscript>
-                    <p><strong>JavaScript Must Be Enabled to Use this Page.</strong></p>
-                </noscript>
-                <br><br>
-                <table id="inventoryDisplay"></table>
-            </div>
+                <div id="vehicle-table">
+                    <noscript>
+                        <p><strong>JavaScript Must Be Enabled to Use this Page.</strong></p>
+                    </noscript>
+                    <br><br>
+                    <table id="inventoryDisplay"></table>
+                </div>
 
                 <form method="post" action='/phpmotors/vehicles/index.php' >
                     <fieldset>

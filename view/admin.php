@@ -1,5 +1,4 @@
 <?php
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
     if(!isset($_SESSION)) 
         {
             session_start();
@@ -25,7 +24,6 @@
 
     <!-- Head -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/head.php'; ?>
-    
 
     <!-- <body class="body1"> -->
         <div id="content-box">

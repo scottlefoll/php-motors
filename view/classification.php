@@ -1,7 +1,7 @@
 <?php
-    if(!isset($_SESSION)) 
-        { 
-            session_start(); 
+    if(!isset($_SESSION))
+        {
+            session_start();
         }
     $_SESSION["status"] = "classification";
 ?>
@@ -40,7 +40,7 @@
                 ?>
             </main>
             <!-- Footer -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?>
         </div>
     </body>
 </html>

@@ -5,7 +5,7 @@
     }
     // echo "<script>alert('Vehicle Controller 1');</script>";
 
-    // This is the vehicles controller 
+    // This is the vehicles controller
     // Get the database connection file
     require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/library/connections.php';
     // Get the PHP Motors model for use as needed
@@ -40,13 +40,13 @@
     switch ($action){
         case 'add_class_view':
             // Case to display the add class view
-            // Display the alert box 
+            // Display the alert box
             // echo "<script>alert('Vehicle Controller: add class view case');</script>";
             $_SESSION['message'] = "";
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
             exit;
         case 'add_class':
-            // Display the alert box 
+            // Display the alert box
             // echo "<script>alert('Vehicle Controller: add class case');</script>";
 
             // Filter and store the data
@@ -56,9 +56,9 @@
             if(empty($classificationName)){
                 $message = '<p>Please provide information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-class.php';
-                exit; 
+                exit;
             }
-            // Display the data 
+            // Display the data
             // echo "<script>alert('Vehicle Controller data: $classificationName);</script>";
 
             // Send the data to the model
@@ -259,6 +259,7 @@
         case 'classification':
             $classificationName = filter_input(INPUT_GET, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $vehicles = getVehiclesByClassification($classificationName);
+            // echo "<script>alert('Vehicle Controller: classification, vehicles = " . var_dump($vehicles) . ";</script>";
             if(!count($vehicles)){
                 $message = "<p class='notice'>Sorry, no $classificationName could be found.</p>";
             } else {

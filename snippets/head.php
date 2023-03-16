@@ -70,6 +70,9 @@
             case 'vehicle_management':
                 echo "<title>php Motors, Inc. | Update Password</title>";
                 break;
+            case 'image_admin':
+                echo "<title>php Motors, Inc. | Image Management</title>";
+                break;
             default:
                 echo "<title>php Motors, Inc.</title>";
                 break;
