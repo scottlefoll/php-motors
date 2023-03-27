@@ -24,7 +24,7 @@
     <!-- <body class="body1"> -->
         <div id="content-box">
             <!-- Header -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?>
 
             <!-- STYLE SHEETS -->
             <!-- phone-default -->

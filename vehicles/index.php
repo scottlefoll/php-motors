@@ -104,8 +104,8 @@
             $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
+            // $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            // $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
@@ -114,25 +114,27 @@
             $invMake = checkName($invMake, 30);
             $invModel = checkName($invModel, 30);
             $DescriptionCheck = checkDescription($invDescription, 255);
-            $invImage = checkImageFilename($invImage);
-            $invThumbnail = checkImageFilename($invThumbnail);
+            // $invImage = checkImageFilename($invImage);
+            // $invThumbnail = checkImageFilename($invThumbnail);
             $invPrice = checkPrice($invPrice);
             $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
             $classificationId = checkClassificationId($classificationId);
 
             // Check for missing data
-            if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) ||
+            if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invPrice) || empty($invStock) ||
                 empty($invColor) || !$DescriptionCheck || empty($classificationId)){
-                echo "<script>alert('Vehicle Controller: add vehicle: Missing Data');</script>";
+                // echo "<script>alert('Vehicle Controller: add vehicle: Missing Data');</script>";
                 $message = '<p>Please provide valid information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
                 exit; 
             }
             // echo "<script>alert('Vehicle Controller: local data')</script>";
             // Send the data to the model
-            $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invImage,
-                            $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
+            // $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invImage,
+            //                 $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
+
+            $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invPrice, $invStock, $invColor, $classificationId);
 
             // Check and report the result
             if($addOutcome === TRUE){
@@ -172,8 +174,8 @@
             $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
+            // $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
+            // $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
@@ -182,21 +184,21 @@
             $invMake = checkName($invMake, 30);
             $invModel = checkName($invModel, 30);
             $DescriptionCheck = checkDescription($invDescription, 255);
-            $invImage = checkImageFilename($invImage);
-            $invThumbnail = checkImageFilename($invThumbnail);
+            // $invImage = checkImageFilename($invImage);
+            // $invThumbnail = checkImageFilename($invThumbnail);
             $invPrice = checkPrice($invPrice);
             $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
             $classificationId = checkClassificationId($classificationId);
 
             if (empty($classificationId) || empty($invMake) || empty($invModel) || empty($invDescription) 
-                || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invColor)) {
+                || empty($invPrice) || empty($invStock) || empty($invColor)) {
                 $message = '<p>Please complete all information for updating the item! Double check the classification of the item.</p>';
                 $_SESSION['message'] = $message;
                 include '../view/update-vehicle.php';
                 exit;
             }
-            $updateResult = updateVehicle($invId, $invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
+            $updateResult = updateVehicle($invId, $invMake, $invModel, $invDescription, $invPrice, $invStock, $invColor, $classificationId);
             if ($updateResult) {
                 $message = "<p class='notify'>Congratulations, the $invMake $invModel was successfully updated.</p>";
                 $_SESSION['message'] = $message;
