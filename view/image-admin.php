@@ -49,13 +49,13 @@
                     <form action="/phpmotors/uploads/" method="post" enctype="multipart/form-data">
                         <label for="invItem">Vehicle</label>
                             <?php echo $prodSelect; ?>
-                            <fieldset>
+                            <!-- <fieldset>
                                 <label>Is this the main image for the vehicle?</label>
                                 <label for="priYes" class="pImage">Yes</label>
                                 <input type="radio" name="imgPrimary" id="priYes" class="pImage" value="1">
                                 <label for="priNo" class="pImage">No</label>
                                 <input type="radio" name="imgPrimary" id="priNo" class="pImage" checked value="0">
-                            </fieldset>
+                            </fieldset> -->
                         <label>Upload Image:</label>
                         <input type="file" name="file1">
                         <input type="submit" class="regbtn" value="Upload" >

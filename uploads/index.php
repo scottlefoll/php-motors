@@ -44,7 +44,7 @@
             // echo "<script>alert('Uploads Controller: Upload action');</script>";
             // Store the incoming vehicle id and primary picture indicator
             $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $imgPrimary = filter_input(INPUT_POST, 'imgPrimary', FILTER_VALIDATE_INT);
+            // $imgPrimary = filter_input(INPUT_POST, 'imgPrimary', FILTER_VALIDATE_INT);
 
             // Store the name of the uploaded image
             $imgName = $_FILES['file1']['name'];
@@ -58,13 +58,13 @@
             } else {
                 // Upload the image, store the returned pat h to the file
                 $imgPath = uploadFile('file1');
-                if ($imgPrimary == 1){
-                    // If the image is set as primary, set the all existing images for the vehicle to not primary
-                    setImgPrimaryOff($invId);
-                }
+                // if ($imgPrimary == 1){
+                //     // If the image is set as primary, set the all existing images for the vehicle to not primary
+                //     setImgPrimaryOff($invId);
+                // }
                 // Insert the image information to the database, get the result
-                $result = storeImages($imgPath, $invId, $imgName, $imgPrimary);
-
+                // $result = storeImages($imgPath, $invId, $imgName, $imgPrimary);
+                $result = storeImages($imgPath, $invId, $imgName);
             // Set a message based on the insert result
             if ($result) {
                 $message = '<p class="notice">The upload succeeded.</p>';

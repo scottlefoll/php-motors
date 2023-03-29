@@ -159,11 +159,7 @@
                     title='Delete the image' class='img-delete-label'>Delete $image[imgName]</a>";
 
             if (strpos($image['imgName'], "-tn.") == false) {
-                if ($image['imgPrimary'] == 1){
-                    $id .= '<label class="img-primary-label">Primary</label>';
-                } else {
-                    $id .= "<a href='/phpmotors/uploads?action=make_primary&invId=$image[invId]&imgName=$image[imgName]' title='Swap the image' class='img-swap-label'>Make Primary</a>";
-                }
+                $id .= '<label class="img-primary-label">Primary</label>';
             }
             $id .= '</li>';
         }

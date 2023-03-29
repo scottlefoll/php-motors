@@ -106,12 +106,22 @@
         // $sql = 'SELECT * FROM inventory 
         //         WHERE classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)';
 
+        // $sql = "SELECT inv.*,
+        //             MAX(CASE WHEN img.imgPath LIKE '%-tn.%' THEN img.imgPath END) AS imgTnPath,
+        //             MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
+        //         FROM inventory as inv
+        //         LEFT JOIN ( SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
+        //                     FROM images WHERE imgPrimary = 1)
+        //         AS img ON inv.invId = img.invId
+        //         WHERE inv.classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)
+        //         GROUP BY inv.invId";
+
         $sql = "SELECT inv.*,
                     MAX(CASE WHEN img.imgPath LIKE '%-tn.%' THEN img.imgPath END) AS imgTnPath,
                     MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
                 FROM inventory as inv
                 LEFT JOIN ( SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
-                            FROM images WHERE imgPrimary = 1)
+                            FROM images)
                 AS img ON inv.invId = img.invId
                 WHERE inv.classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)
                 GROUP BY inv.invId";
@@ -129,9 +139,13 @@
         // This funtion returns an array of a specific vehicle based on the invId, for the detail view
         $db = phpConnect();
         // $sql = "SELECT * FROM inventory WHERE invId = :invId";
-        $sql = "SELECT inv.*, i.imgPath, i.imgPrimary FROM inventory AS inv
-                LEFT JOIN images AS i ON inv.invId = i.InvId AND i.imgPrimary = 1
-                WHERE inv.invId = :invId AND i.imgPath NOT LIKE '%-tn.%'";
+        // $sql = "SELECT inv.*, i.imgPath, i.imgPrimary FROM inventory AS inv
+        //         LEFT JOIN images AS i ON inv.invId = i.InvId AND i.imgPrimary = 1
+        //         WHERE inv.invId = :invId AND i.imgPath NOT LIKE '%-tn.%'";
+
+        $sql = "SELECT inv.*, i.imgPath FROM inventory AS inv
+        LEFT JOIN images AS i ON inv.invId = i.InvId
+        WHERE inv.invId = :invId AND i.imgPath NOT LIKE '%-tn.%'";
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':invId', $invId, PDO::PARAM_STR);
@@ -146,7 +160,7 @@
             $stmt->execute();
             $invInfo = $stmt->fetch(PDO::FETCH_ASSOC);
             $invInfo["imgPath"] = '/phpmotors/images/vehicles/no-image.png';
-            $invInfo["imgPrimary"] = 1;
+            // $invInfo["imgPrimary"] = 1;
         }
         $stmt->closeCursor();
         return $invInfo;
@@ -155,8 +169,11 @@
    function getInvItemImages($invId){
     // This function returns an array of thumbnail images for the detail view for a specific vehicle
     $db = phpConnect();
+    // $sql = "SELECT imgId, imgPath, imgName FROM images
+    //         WHERE invId = :invId AND imgPath LIKE '%-tn.%' ORDER BY imgPrimary DESC";
+
     $sql = "SELECT imgId, imgPath, imgName FROM images
-            WHERE invId = :invId AND imgPath LIKE '%-tn.%' ORDER BY imgPrimary DESC";
+    WHERE invId = :invId AND imgPath LIKE '%-tn.%'";
 
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':invId', $invId, PDO::PARAM_STR);
