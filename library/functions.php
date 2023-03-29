@@ -18,10 +18,10 @@
         return $value;
     }
 
-    function checkStock($invStock){
-        $value = filter_var($invStock, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99)));
-        return $value;
-    }
+    // function checkStock($invStock){
+    //     $value = filter_var($invStock, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99)));
+    //     return $value;
+    // }
 
     function checkImageFilename($ImageFilename){
         $pattern = "^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$^";
@@ -115,7 +115,7 @@
         $dv .= "<label class='top-detail' for='invModel'>Model <input type='text' name='invModel' id='invModel' value='$invInfo[invModel]'></label><br>";
         $dv .= "<label class='top-detail' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='$invInfo[invPrice]'></label><br>";
         // $dv .= "<label class='top' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='cho money_format(%i, $invInfo[invPrice])'></label><br>";
-        $dv .= "<label class='top-detail' for='invStock'>Stock <input type='text' name='invStock' id='invStock' value='$invInfo[invStock]'></label><br>";
+        // $dv .= "<label class='top-detail' for='invStock'>Stock <input type='text' name='invStock' id='invStock' value='$invInfo[invStock]'></label><br>";
         $dv .= "<label class='top-detail' for='invColor'>Color <input type='text' name='invColor' id='invColor' value='$invInfo[invColor]'></label><br>";
         $dv .= "<label class='top-detail' for='invDescription'>Description </label><textarea name='invDescription' id='inv-textarea' rows='5' cols='40'
                 disabled>$invInfo[invDescription]</textarea><br>";

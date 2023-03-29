@@ -93,9 +93,11 @@
                         <label class="top" for="invPrice">Price*  <input type="number" id="integer" name="invPrice"
                             <?php if(isset($invPrice)){echo "value='$invPrice'";} elseif(isset($invInfo['invPrice'])) {echo "value='$invInfo[invPrice]'"; }?>
                             placeholder='25000' pattern='^\+?[1-9]\d*$' min="250" max='1250000' required></label>
-                        <label class="top" for="invStock">In Stock* <input type="number" id="integer" name="invStock"
-                            <?php if(isset($invStock)){echo "value='$invStock'";} elseif(isset($invInfo['invStock'])) {echo "value='$invInfo[invStock]'"; }?> 
-                            placeholder='' pattern='^[0-9]\d{0,5}$' min='1' max='99' required></label>
+                        <!-- <label class="top" for="invStock">In Stock* <input type="number" id="integer" name="invStock"
+                            <?php 
+                                // if(isset($invStock)){echo "value='$invStock'";} elseif(isset($invInfo['invStock'])) {echo "value='$invInfo[invStock]'"; }
+                            ?> 
+                            placeholder='' pattern='^[0-9]\d{0,5}$' min='1' max='99' required></label> -->
                         <label class="top" for="invColor">Color*  <input type="text" id="title" name="invColor"
                             <?php if(isset($invColor)){echo "value='$invColor'";} elseif(isset($invInfo['invColor'])) {echo "value='$invInfo[invColor]'"; }?> 
                             placeholder='' maxlength="20" pattern='^[A-Za-z0-9_ ]{3,20}$' required></label>

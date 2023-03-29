@@ -107,7 +107,7 @@
             // $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             // $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
+            // $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
 
@@ -119,12 +119,12 @@
             $invImage = "";
             $invThumbnail = "";
             $invPrice = checkPrice($invPrice);
-            $invStock = checkStock($invStock);
+            // $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
             $classificationId = checkClassificationId($classificationId);
 
             // Check for missing data
-            if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invPrice) || empty($invStock) ||
+            if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invPrice) ||
                 empty($invColor) || !$DescriptionCheck || empty($classificationId)){
                 // echo "<script>alert('Vehicle Controller: add vehicle: Missing Data');</script>";
                 $message = '<p>Please provide valid information for all empty form fields.</p>';
@@ -136,7 +136,7 @@
             // $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invImage,
             //                 $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
 
-            $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invPrice, $invStock, $invColor, $classificationId);
+            $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invPrice, $invColor, $classificationId);
 
             // Check and report the result
             if($addOutcome === TRUE){
@@ -179,7 +179,7 @@
             // $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             // $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
+            // $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
 
@@ -191,12 +191,12 @@
             $invImage = "";
             $invThumbnail = "";
             $invPrice = checkPrice($invPrice);
-            $invStock = checkStock($invStock);
+            // $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
             $classificationId = checkClassificationId($classificationId);
 
             if (empty($classificationId) || empty($invMake) || empty($invModel) || empty($invDescription) 
-                || empty($invPrice) || empty($invStock) || empty($invColor)) {
+                || empty($invPrice) || empty($invColor)) {
                 $message = '<p>Please complete all information for updating the item! Double check the classification of the item.</p>';
                 $_SESSION['message'] = $message;
                 include '../view/update-vehicle.php';
