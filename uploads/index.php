@@ -41,6 +41,7 @@
 
     switch ($action) {
         case 'upload':
+            // echo "<script>alert('Uploads Controller: Upload action');</script>";
             // Store the incoming vehicle id and primary picture indicator
             $invId = filter_input(INPUT_POST, 'invId', FILTER_VALIDATE_INT);
             $imgPrimary = filter_input(INPUT_POST, 'imgPrimary', FILTER_VALIDATE_INT);
@@ -48,7 +49,6 @@
             // Store the name of the uploaded image
             $imgName = $_FILES['file1']['name'];
             $imageCheck = checkExistingImage($imgName);
-
             // echo "<script>alert('Uploads Controller: Upload: invId = $invId, imgName = $imgName');</script>";
 
             if($imageCheck){
@@ -56,10 +56,14 @@
             } elseif (empty($invId) || $invId == 0 || empty($imgName)) {
                 $message = '<p class="notice">You must select a vehicle and image file for the vehicle.</p>';
             } else {
-            // Upload the image, store the returned path to the file
-            $imgPath = uploadFile('file1');
-            // Insert the image information to the database, get the result
-            $result = storeImages($imgPath, $invId, $imgName, $imgPrimary);
+                // Upload the image, store the returned pat h to the file
+                $imgPath = uploadFile('file1');
+                if ($imgPrimary == 1){
+                    // If the image is set as primary, set the all existing images for the vehicle to not primary
+                    setImgPrimaryOff($invId);
+                }
+                // Insert the image information to the database, get the result
+                $result = storeImages($imgPath, $invId, $imgName, $imgPrimary);
 
             // Set a message based on the insert result
             if ($result) {
@@ -76,6 +80,7 @@
             header('location: .');
             exit;
         case 'delete':
+            // echo "<script>alert('Uploads Controller: delete action');</script>";
             // Get the image name and id
             $filename = filter_input(INPUT_GET, 'filename', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imgId = filter_input(INPUT_GET, 'imgId', FILTER_VALIDATE_INT);
@@ -105,15 +110,33 @@
             // Redirect to this controller for default action
             header('location: .');
             exit;
+
+        case 'make_primary':
+            // echo "<script>alert('Uploads Controller: Swap Primary action');</script>";
+            // Get the image name and id
+            $imgName = filter_input(INPUT_GET, 'imgName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+            // echo "<script>alert('filename = $imgName, InvId = $invId ');</script>";
+            // Make primary image
+            // call the model setPrimaryImage
+            setPrimaryImage($invId, $imgName);
+            // Store message to session
+            $_SESSION['message'] = $message;
+            // Redirect to this controller for default action
+            header('location: .');
+            exit;
         default:
-            // Call function to return image info from database
+            // echo "<script>alert('Uploads Controller: Default View');</script>";
+            // This function builds the image display for the image admin view
+            // Call the model to return image info from database
             $imageArray = getImages();
 
             // Build the image information into HTML for display
             if (count($imageArray)) {
-            $imageDisplay = buildImageDisplay($imageArray);
+                // call the function to build the image display
+                $imageDisplay = buildImageDisplay($imageArray);
             } else {
-            $imageDisplay = '<p class="notice">Sorry, no images could be found.</p>';
+                $imageDisplay = '<p class="notice">Sorry, no images could be found.</p>';
             }
 
             // Get vehicles information from database

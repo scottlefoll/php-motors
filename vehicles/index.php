@@ -116,6 +116,8 @@
             $DescriptionCheck = checkDescription($invDescription, 255);
             // $invImage = checkImageFilename($invImage);
             // $invThumbnail = checkImageFilename($invThumbnail);
+            $invImage = "";
+            $invThumbnail = "";
             $invPrice = checkPrice($invPrice);
             $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
@@ -127,7 +129,7 @@
                 // echo "<script>alert('Vehicle Controller: add vehicle: Missing Data');</script>";
                 $message = '<p>Please provide valid information for all empty form fields.</p>';
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
-                exit; 
+                exit;
             }
             // echo "<script>alert('Vehicle Controller: local data')</script>";
             // Send the data to the model
@@ -186,6 +188,8 @@
             $DescriptionCheck = checkDescription($invDescription, 255);
             // $invImage = checkImageFilename($invImage);
             // $invThumbnail = checkImageFilename($invThumbnail);
+            $invImage = "";
+            $invThumbnail = "";
             $invPrice = checkPrice($invPrice);
             $invStock = checkStock($invStock);
             $invColor = checkName($invColor, 20);
@@ -239,8 +243,12 @@
                 exit;
             }
         case 'view_vehicle':
+            # this is the view for the vehicle detail page
             $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
             $invInfo = getInvItemInfo($invId);
+            $invImages = getInvItemImages($invId);
+            // print("<script>alert('PHP: invInfo: " . json_encode($invInfo) . "');</script>");
+            // print("<script>alert('PHP: invImages: " . json_encode($invImages) . "');</script>");
             if(count($invInfo)<1){
                 $message = "";
                 $_SESSION['message'] = "Sorry, information for vehicle ID # $invId could not be found.";
@@ -248,9 +256,15 @@
                 exit;
             } else {
                 $_SESSION["invInfo"] = $invInfo;
-                $invItemDisplay = buildInvItemDisplay($invInfo);
+                // print("<script>alert('PHP: invInfo: " . json_encode($invInfo) . "');</script>");
+                if (count($invImages) > 0) {
+                    // print("<script>alert('PHP: invImages: " . json_encode($invImages) . "');</script>");
+                } else {
+                    $_SESSION["invImages"] = "";
+                }
+                $invItemDisplay = buildInvItemDisplay($invInfo, $invImages);
                 $_SESSION["invItemDisplay"] = $invItemDisplay;
-                // $_SESSION['message'] = "<p>Success, the $invInfo[invMake] $invInfo[invModel] was found.</p>";
+
                 include '../view/vehicle-detail.php';
                 exit;
             }
@@ -259,9 +273,9 @@
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
             exit;
         case 'classification':
+            # this is the view for the vehicle classification page
             $classificationName = filter_input(INPUT_GET, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $vehicles = getVehiclesByClassification($classificationName);
-            // echo "<script>alert('Vehicle Controller: classification, vehicles = " . var_dump($vehicles) . ";</script>";
             if(!count($vehicles)){
                 $message = "<p class='notice'>Sorry, no $classificationName could be found.</p>";
             } else {

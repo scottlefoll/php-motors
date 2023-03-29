@@ -78,14 +78,18 @@
                         <label class="top" for="invDescription">Description* <input type="text" id="invdescription" name="invDescription"
                             <?php if(isset($invDescription)){echo "value='$invDescription'";} elseif(isset($invInfo['invDescription'])) {echo "value='$invInfo[invDescription]'"; }?>
                             placeholder='' maxlength="255" pattern='^[A-Za-z0-9_ ?!\@#$%&*<>,.";:+=']{1,255}$' required></label>
-                        <label class="top" for="invImage">Image*  <input type="text" id="img_filename" name="invImage"
-                            <?php if(isset($invImage)){echo "value='$invImage'";} elseif(isset($invInfo['imgFullPath']) && $invInfo['imgFullPath'] != null) 
-                            {echo "value='$invInfo[imgFullPath]'"; } elseif(isset($invInfo['invImage'])) {echo "value='$invInfo[invImage]'"; }?>
-                            maxlength="50" placeholder='no-image.png' pattern='^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$' readonly></label>
-                        <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="img_filename" name="invThumbnail"
-                            <?php if(isset($invThumbnail)){echo "value='$invThumbnail'";} elseif(isset($invInfo['imgTnPath']) && $invInfo['imgTnPath'] != null) 
-                            {echo "value='$invInfo[imgTnPath]'"; } elseif(isset($invInfo['invThumbnail'])) {echo "value='$invInfo[invThumbnail]'"; }?>
-                            maxlength="50" placeholder='no-image.png' pattern='^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$' readonly></label>
+                        <!-- <label class="top" for="invImage">Image*  <input type="text" id="img_filename" name="invImage" -->
+                            <?php 
+                                // if(isset($invImage)){echo "value='$invImage'";} elseif(isset($invInfo['imgFullPath']) && $invInfo['imgFullPath'] != null) 
+                                // {echo "value='$invInfo[imgFullPath]'"; } elseif(isset($invInfo['invImage'])) {echo "value='$invInfo[invImage]'"; }
+                            ?>
+                        <!-- maxlength="50" placeholder='no-image.png' pattern='^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$' readonly></label> -->
+                        <!-- <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="img_filename" name="invThumbnail" -->
+                            <?php 
+                                // if(isset($invThumbnail)){echo "value='$invThumbnail'";} elseif(isset($invInfo['imgTnPath']) && $invInfo['imgTnPath'] != null) 
+                                // {echo "value='$invInfo[imgTnPath]'"; } elseif(isset($invInfo['invThumbnail'])) {echo "value='$invInfo[invThumbnail]'"; }
+                            ?>
+                        <!-- maxlength="50" placeholder='no-image.png' pattern='^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$' readonly></label> -->
                         <label class="top" for="invPrice">Price*  <input type="number" id="integer" name="invPrice"
                             <?php if(isset($invPrice)){echo "value='$invPrice'";} elseif(isset($invInfo['invPrice'])) {echo "value='$invInfo[invPrice]'"; }?>
                             placeholder='25000' pattern='^\+?[1-9]\d*$' min="250" max='1250000' required></label>

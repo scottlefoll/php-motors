@@ -135,9 +135,24 @@ form select.top input:required:valid {
     background-color:#4c96d7;
   }
 
-/*----- Clearfix: Force an Element not to collapse -----*/
-.clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
+
+  form label.top-detail {
+    display: block;
+    padding-top: 1rem;
+    color: #9c2c13;
+    font-size: .8rem;
 }
+
+form label.top-detail input, form label.top-detail select {
+    -webkit-appearance: none;
+    display: block;
+    font-size: .75rem;
+    border: solid 1px #999;
+    border-radius: 4px;
+    padding: .75rem;
+    color: #555;
+    width: 9vw;
+    /* max-width: 20rem; */
+    background-color: rgba(0,0,0,0.1);
+}
+

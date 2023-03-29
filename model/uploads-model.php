@@ -30,7 +30,7 @@
     // Get Image Information from images table
     function getImages() {
         $db = phpConnect();
-        $sql = 'SELECT imgId, imgPath, imgName, imgDate, inventory.invId, invMake, invModel FROM images JOIN inventory ON images.invId = inventory.invId';
+        $sql = 'SELECT imgId, imgPath, imgName, imgDate, imgPrimary, inventory.invId, invMake, invModel FROM images JOIN inventory ON images.invId = inventory.invId';
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $imageArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -59,4 +59,40 @@
         $stmt->closeCursor();
         return $imageMatch;
    }
+
+   // Check for an existing image
+   function setImgPrimaryOff($invId){
+        // This function sets imgPrimary = 0 for all the images of a vehicle when a new set of primary images are uploaded
+        $db = phpConnect();
+        $rowsChanged = 0;
+        // The SQL statement
+        $sql = "UPDATE images SET imgPrimary = 0 WHERE invId = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $invId, PDO::PARAM_STR);
+        $stmt->execute();
+        $rowsChanged = $stmt->rowCount();
+        $stmt->closeCursor();
+        return;
+    }
+
+    function setPrimaryImage($invId, $imgName){
+        // This function sets imgPrimary = 0 for all the images of a vehicle when a new set of primary images are uploaded
+        //  call the function to set all the images to 0
+        setImgPrimaryOff($invId);
+        // Now turn on the new primary image
+        $imgName2 = str_replace(".", '-tn.', $imgName);
+        $db = phpConnect();
+        $rowsChanged = 0;
+        // The SQL statement
+        $sql = "UPDATE images SET imgPrimary = 1 WHERE (imgName = :name OR imgName = :name2) AND invId = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', $imgName, PDO::PARAM_STR);
+        $stmt->bindValue(':name2', $imgName2, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $invId, PDO::PARAM_STR);
+        $stmt->execute();
+        $rowsChanged = $stmt->rowCount();
+        $stmt->closeCursor();
+        return;
+    }
+
 ?>

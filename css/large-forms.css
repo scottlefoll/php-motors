@@ -29,3 +29,29 @@
     }
 
 } 
+
+/* #inv-textarea {
+    columns: 30;
+} */
+
+form label.top-detail {
+    display: block;
+    padding-top: 1rem;
+    color: #9c2c13;
+    font-size: .8rem;
+}
+
+form label.top-detail input, form label.top-detail select {
+    -webkit-appearance: none;
+    display: block;
+    font-size: 1rem;
+    border: solid 1px #999;
+    border-radius: 4px;
+    padding: .75rem;
+    color: #555;
+    width: 12vw;
+    max-width: 12vw;
+    background-color: rgba(0,0,0,0.1);
+}
+
+

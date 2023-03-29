@@ -106,25 +106,31 @@
         return $dv;
     }
 
-    function buildInvItemDisplay($invInfo){
+    function buildInvItemDisplay($invInfo, $invImages){
+        setlocale(LC_MONETARY,"en_US");
         $dv = "<div id='inv-detail-box'>";
         $dv .= "<div id='inv-fieldset-div'>";
         $dv .= "<fieldset id='inv-fieldset'><legend>Vehicle Information</legend>";
-        $dv .= "<label class='top' for='invMake'>Make <input type='text' name='invMake' id='invMake' value='$invInfo[invMake]'></label><br>";
-        $dv .= "<label class='top' for='invModel'>Model <input type='text' name='invModel' id='invModel' value='$invInfo[invModel]'></label><br>";
-        $dv .= "<label class='top' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='$invInfo[invPrice]'></label><br>";
-        $dv .= "<label class='top' for='invStock'>Stock <input type='text' name='invStock' id='invStock' value='$invInfo[invStock]'></label><br>";
-        $dv .= "<label class='top' for='invColor'>Color <input type='text' name='invColor' id='invColor' value='$invInfo[invColor]'></label><br>";
-        $dv .= "<label class='top' for='invDescription'>Description </label><textarea name='invDescription' id='invDescription' rows='4' cols='50' 
+        $dv .= "<label class='top-detail' for='invMake'>Make <input type='text' name='invMake' id='invMake' value='$invInfo[invMake]'></label><br>";
+        $dv .= "<label class='top-detail' for='invModel'>Model <input type='text' name='invModel' id='invModel' value='$invInfo[invModel]'></label><br>";
+        $dv .= "<label class='top-detail' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='$invInfo[invPrice]'></label><br>";
+        // $dv .= "<label class='top' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='cho money_format(%i, $invInfo[invPrice])'></label><br>";
+        $dv .= "<label class='top-detail' for='invStock'>Stock <input type='text' name='invStock' id='invStock' value='$invInfo[invStock]'></label><br>";
+        $dv .= "<label class='top-detail' for='invColor'>Color <input type='text' name='invColor' id='invColor' value='$invInfo[invColor]'></label><br>";
+        $dv .= "<label class='top-detail' for='invDescription'>Description </label><textarea name='invDescription' id='inv-textarea' rows='5' cols='40'
                 disabled>$invInfo[invDescription]</textarea><br>";
         $dv .= "</fieldset></div>";
 
-        if ($invInfo['imgFullPath'] == null){
+        if ($_SESSION["invImages"] = "" || $_SESSION["invImages"] = null){
             $dv .= "<div id='inv-img-div'><img id='inv-img' src='..$invInfo[invImage]' alt='Image of $invInfo[invMake] $invInfo[invModel] on phpmotors.com'></div>";
         } else {
-            $dv .= "<div id='inv-img-div'><img id='inv-img' src='../..$invInfo[imgFullPath]' alt='Image of $invInfo[invMake] $invInfo[invModel] on phpmotors.com'></div>";
+            $dv .= "<div id='inv-img-div'><img id='inv-img' src='../..$invInfo[imgPath]' alt='Image of $invInfo[invMake] $invInfo[invModel] on phpmotors.com'></div>";
         }
-        $dv .= "</div>";
+        $dv .= "<div id='inv-thumbs-div'>";
+        foreach ($invImages as $invImage){
+            $dv .= "<img class='inv-thumb-img' src='../..$invImage[imgPath]' title='Click to view larger image.' alt='Image of $invInfo[invMake] $invInfo[invModel] on phpmotors.com'>";
+        }
+        $dv .= "</div></div>";
         return $dv;
     }
 
@@ -143,20 +149,30 @@
 
     // Build images display for image management view
     function buildImageDisplay($imageArray) {
-        $id = '<ul id="image-display">';
+        $id = '<div id="image-display-div">';
+        $id .= '<ul id="image-display-ul">';
         foreach ($imageArray as $image) {
-            $id .= '<li>';
-            $id .= "<img src='$image[imgPath]' title='$image[invMake] $image[invModel] image on PHP Motors.com' 
-                              alt='$image[invMake] $image[invModel] image on PHP Motors.com'>";
-            $id .= "<p><a href='/phpmotors/uploads?action=delete&imgId=$image[imgId]&filename=$image[imgName]' 
-                              title='Delete the image'>Delete $image[imgName]</a></p>";
+            $id .= '<li class="image-display-li">';
+            $id .= "<img class='image-display-img' src='$image[imgPath]' title='$image[invMake] $image[invModel] image on PHP Motors.com'
+                    alt='$image[invMake] $image[invModel] image on PHP Motors.com'>";
+            $id .= "<a href='/phpmotors/uploads?action=delete&imgId=$image[imgId]&filename=$image[imgName]'
+                    title='Delete the image' class='img-delete-label'>Delete $image[imgName]</a>";
+
+            if (strpos($image['imgName'], "-tn.") == false) {
+                if ($image['imgPrimary'] == 1){
+                    $id .= '<label class="img-primary-label">Primary</label>';
+                } else {
+                    $id .= "<a href='/phpmotors/uploads?action=make_primary&invId=$image[invId]&imgName=$image[imgName]' title='Swap the image' class='img-swap-label'>Make Primary</a>";
+                }
+            }
             $id .= '</li>';
         }
         $id .= '</ul>';
+        $id .= '</div>';
         return $id;
     }
 
-   // Build the vehicles select list
+    // Build the vehicles select list
     function buildVehiclesSelect($vehicles) {
         $prodList = '<select name="invId" id="invId">';
         $prodList .= "<option>Choose a Vehicle</option>";
@@ -166,6 +182,7 @@
         $prodList .= '</select>';
         return $prodList;
     }
+
 
     // Handles the file upload process and returns the path
     // The file path is stored into the database

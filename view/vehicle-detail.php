@@ -62,5 +62,7 @@
             <!-- Footer -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src= '/phpmotors/js/detail.js' ></script>
     </body>
 </html>

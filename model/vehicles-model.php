@@ -5,9 +5,11 @@
         session_start();
     }
 
-    function addVehicle($invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId){
+    function addVehicle($invMake, $invModel, $invDescription, $invPrice, $invStock, $invColor, $classificationId){
         // This function adds a vehicle to the database
         // Create a connection object using the phpmotors connection function
+        $invImage = '/images/vehicles/no-image.png';
+        $invThumbnail = '/images/vehicles/no-image.png';
         $db = phpConnect();
         $rowsChanged = 0;
         // The SQL statement
@@ -32,14 +34,14 @@
         return $rowsChanged;
     }
 
-    function updateVehicle($invId, $invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId){
+    function updateVehicle($invId, $invMake, $invModel, $invDescription, $invPrice, $invStock, $invColor, $classificationId){
         // This function updates a vehicle to the database
         // Create a connection object using the phpmotors connection function
         $db = phpConnect();
         $rowsChanged = 0;
         // The SQL statement
-        $sql = 'UPDATE  inventory SET invMake = :invMake, invModel = :invModel, invDescription = :invDescription, invImage = :invImage, 
-                        invThumbnail = :invThumbnail, invPrice = :invPrice, invStock = :invStock, invColor = :invColor,
+        $sql = 'UPDATE  inventory SET invMake = :invMake, invModel = :invModel, invDescription = :invDescription,
+                        invPrice = :invPrice, invStock = :invStock, invColor = :invColor,
                         classificationId = :classificationId WHERE invId = :invId';
 
         // Create the prepared statement using the phpmotors connection
@@ -51,8 +53,8 @@
         $stmt->bindValue(':invMake', $invMake, PDO::PARAM_STR);
         $stmt->bindValue(':invModel', $invModel, PDO::PARAM_STR);
         $stmt->bindValue(':invDescription', $invDescription, PDO::PARAM_STR);
-        $stmt->bindValue(':invImage', $invImage, PDO::PARAM_STR);
-        $stmt->bindValue(':invThumbnail', $invThumbnail, PDO::PARAM_STR);
+        // $stmt->bindValue(':invImage', $invImage, PDO::PARAM_STR);
+        // $stmt->bindValue(':invThumbnail', $invThumbnail, PDO::PARAM_STR);
         $stmt->bindValue(':invPrice', $invPrice, PDO::PARAM_STR);
         $stmt->bindValue(':invStock', $invStock, PDO::PARAM_STR);
         $stmt->bindValue(':invColor', $invColor, PDO::PARAM_STR);
@@ -77,8 +79,9 @@
 
     // Get vehicles by classificationId
     function getInventoryByClassification($classificationId){
-        // This funtion returns an array of vehicles based on the classificationId
+        // This funtion returns an array of vehicles based on the classificationId for the list
         $db = phpConnect();
+        // $sql = ' SELECT * FROM inventory WHERE classificationId = :classificationId';
         $sql = "SELECT inv.*,
                     MAX(CASE WHEN img.imgPath LIKE '%-tn.%' THEN img.imgPath END) AS imgTnPath,
                     MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
@@ -86,7 +89,7 @@
                 LEFT JOIN (
                     SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
                         FROM images) AS img ON inv.invId = img.invId 
-                    WHERE inv.classificationId = :classificationId
+                    WHERE inv.classificationId = 3
                 GROUP BY inv.invId;";
 
         $stmt = $db->prepare($sql);
@@ -98,6 +101,7 @@
     }
 
     function getVehiclesByClassification($classificationName){
+        # this function returns a list of vehicles in a certain category for the classification page view
         $db = phpConnect();
         // $sql = 'SELECT * FROM inventory 
         //         WHERE classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)';
@@ -107,7 +111,7 @@
                     MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
                 FROM inventory as inv
                 LEFT JOIN ( SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
-                            FROM images)
+                            FROM images WHERE imgPrimary = 1)
                 AS img ON inv.invId = img.invId
                 WHERE inv.classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)
                 GROUP BY inv.invId";
@@ -122,26 +126,54 @@
 
    // Get vehicle information by invId
     function getInvItemInfo($invId){
-        // This funtion returns an array of a specific vehicle based on the invId
+        // This funtion returns an array of a specific vehicle based on the invId, for the detail view
         $db = phpConnect();
-        // $sql = 'SELECT * FROM inventory WHERE invId = :invId';
-
-        $sql = "SELECT inv.*,
-                    MAX(CASE WHEN img.imgPath LIKE '%-tn.%' THEN img.imgPath END) AS imgTnPath,
-                    MAX(CASE WHEN img.imgPath NOT LIKE '%-tn.%' THEN img.imgPath END) AS imgFullPath
-                FROM inventory as inv
-                LEFT JOIN ( SELECT *, ROW_NUMBER() OVER(PARTITION BY invId ORDER BY imgId) AS imgIndex
-                    FROM images)
-                AS img ON inv.invId = img.invId
-                WHERE inv.invId = :invId";
+        // $sql = "SELECT * FROM inventory WHERE invId = :invId";
+        $sql = "SELECT inv.*, i.imgPath, i.imgPrimary FROM inventory AS inv
+                LEFT JOIN images AS i ON inv.invId = i.InvId AND i.imgPrimary = 1
+                WHERE inv.invId = :invId AND i.imgPath NOT LIKE '%-tn.%'";
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
         $stmt->execute();
         $invInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($stmt->rowCount() == 0) {
+            $sql = "SELECT inv.* FROM inventory AS inv
+                    WHERE inv.invId = :invId";
+
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
+            $stmt->execute();
+            $invInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $invInfo["imgPath"] = '/phpmotors/images/vehicles/no-image.png';
+            $invInfo["imgPrimary"] = 1;
+        }
         $stmt->closeCursor();
         return $invInfo;
     }
+
+   function getInvItemImages($invId){
+    // This function returns an array of thumbnail images for the detail view for a specific vehicle
+    $db = phpConnect();
+    $sql = "SELECT imgId, imgPath, imgName FROM images
+            WHERE invId = :invId AND imgPath LIKE '%-tn.%' ORDER BY imgPrimary DESC";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
+    $stmt->execute();
+    $invImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($stmt->rowCount() == 0) {
+        $invImages = array(
+            array(
+                "imgId" => 1,
+                "imgPath" => "/phpmotors/images/vehicles/no-image.png",
+                "imgName" => "no-image.jpg"
+            )
+        );
+    }
+    $stmt->closeCursor();
+    return $invImages;
+}
 
     function addClass($classificationName){
         // This funtion adds a classification to the database
