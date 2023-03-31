@@ -69,36 +69,32 @@
                     <fieldset>
                         <legend>Vehicle Information</legend>
 
+                        <label class="top" for="invId">VIN  <input type="text" id="invId" name="invId"
+                            <?php if(isset($invId)){echo "value='$invId'";} elseif(isset($invInfo['invId'])) {echo "value='$invInfo[invId]'"; }?> 
+                            disabled></label>
                         <label class="top" for="invMake">Make* <input type="text" name="invMake" id="invMake"
                             <?php if(isset($invMake)){ echo "value='$invMake'"; } elseif(isset($invInfo['invMake'])) {echo "value='$invInfo[invMake]'"; }?>
                             placeholder="" maxlength="30" pattern='^[A-Za-z -,.'0-9]{1,30}$' required></label>
                         <label class="top" for="invModel">Model* <input type="text" name="invModel" id="invModel"
                             <?php if(isset($invModel)){ echo "value='$invModel'"; } elseif(isset($invInfo['invModel'])) {echo "value='$invInfo[invModel]'"; }?>
                             placeholder="" maxlength="30" pattern='^[A-Za-z -,.'0-9]{1,30}$' required></label>
-                        <label class="top" for="invDescription">Description* <input type="text" id="invdescription" name="invDescription"
+                        <label class="top" for="invYear">Year* <input type="number" id="invYear" name="invYear"
+                            <?php
+                                if(isset($invYear)){echo "value='$invYear'";} elseif(isset($invInfo['invYear'])) {echo "value='$invInfo[invYear]'"; }
+                            ?>
+                            placeholder='' pattern='^[0-9]\d{0,5}$' min='1900' max='2100' required></label>
+                        <label class="top" for="invDescription">Description* <input type="text" id="invDescription" name="invDescription"
                             <?php if(isset($invDescription)){echo "value='$invDescription'";} elseif(isset($invInfo['invDescription'])) {echo "value='$invInfo[invDescription]'"; }?>
                             placeholder='' maxlength="255" pattern='^[A-Za-z0-9_ ?!\@#$%&*<>,.";:+=']{1,255}$' required></label>
-                        <!-- <label class="top" for="invImage">Image*  <input type="text" id="img_filename" name="invImage" -->
-                            <?php 
-                                // if(isset($invImage)){echo "value='$invImage'";} elseif(isset($invInfo['imgFullPath']) && $invInfo['imgFullPath'] != null) 
-                                // {echo "value='$invInfo[imgFullPath]'"; } elseif(isset($invInfo['invImage'])) {echo "value='$invInfo[invImage]'"; }
-                            ?>
-                        <!-- maxlength="50" placeholder='no-image.png' pattern='^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$' readonly></label> -->
-                        <!-- <label class="top" for="invThumbnail">Thumbnail* <input type="text" id="img_filename" name="invThumbnail" -->
-                            <?php 
-                                // if(isset($invThumbnail)){echo "value='$invThumbnail'";} elseif(isset($invInfo['imgTnPath']) && $invInfo['imgTnPath'] != null) 
-                                // {echo "value='$invInfo[imgTnPath]'"; } elseif(isset($invInfo['invThumbnail'])) {echo "value='$invInfo[invThumbnail]'"; }
-                            ?>
-                        <!-- maxlength="50" placeholder='no-image.png' pattern='^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$' readonly></label> -->
-                        <label class="top" for="invPrice">Price*  <input type="number" id="integer" name="invPrice"
+                        <label class="top" for="invPrice">Price*  <input type="number" id="invPrice" name="invPrice"
                             <?php if(isset($invPrice)){echo "value='$invPrice'";} elseif(isset($invInfo['invPrice'])) {echo "value='$invInfo[invPrice]'"; }?>
-                            placeholder='25000' pattern='^\+?[1-9]\d*$' min="250" max='1250000' required></label>
-                        <!-- <label class="top" for="invStock">In Stock* <input type="number" id="integer" name="invStock"
-                            <?php 
-                                // if(isset($invStock)){echo "value='$invStock'";} elseif(isset($invInfo['invStock'])) {echo "value='$invInfo[invStock]'"; }
-                            ?> 
-                            placeholder='' pattern='^[0-9]\d{0,5}$' min='1' max='99' required></label> -->
-                        <label class="top" for="invColor">Color*  <input type="text" id="title" name="invColor"
+                            placeholder='5000' pattern='^\+?[1-9]\d*$' min="250" max='1250000' required></label>
+                        <label class="top" for="invMiles">Miles* <input type="number" id="invMiles" name="invMiles"
+                            <?php
+                                if(isset($invMiles)){echo "value='$invMiles'";} elseif(isset($invInfo['invMiles'])) {echo "value='$invInfo[invMiles]'"; }
+                            ?>
+                            placeholder='' pattern='^[0-9]\d{0,5}$' min='0' max='1000000' required></label>
+                        <label class="top" for="invColor">Color*  <input type="text" id="invColor" name="invColor"
                             <?php if(isset($invColor)){echo "value='$invColor'";} elseif(isset($invInfo['invColor'])) {echo "value='$invInfo[invColor]'"; }?> 
                             placeholder='' maxlength="20" pattern='^[A-Za-z0-9_ ]{3,20}$' required></label>
 

@@ -32,7 +32,7 @@
             <!-- enhance-desktop -->
             <link href="/phpmotors/css/large-forms.css" rel="stylesheet">
 
-            <nav class="nav"><?php echo $navList; ?></nav>        
+            <nav class="nav"><?php echo $navList; ?></nav>
 
             <!-- Main -->
             <main>
@@ -55,14 +55,14 @@
                     <fieldset>
                         <legend>Classification Information</legend>
                         <label class="top" for="classificationName">Classification Name*  <input type="text" id="classificationName" name="classificationName" <?php if(isset($classificationName)){echo "value='$classificationName'";} ?> maxlength="30" pattern="^[A-Za-z -]{1,30}$" required></label>
-                        <br>                                                                                                                                                                                                                
+                        <br>
                     </fieldset>
                     <input type="submit" name=addClassification value="Add Classification" class="submitBtn">
                     <input type="hidden" name="action" value="add_class" class="hidden">
                 </form>
-            
+
                 <p><br><br><br></p>
-            </main> 
+            </main>
 
             <!-- Footer -->
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 

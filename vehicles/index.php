@@ -99,44 +99,42 @@
         case 'add_vehicle':
             // Display the alert box 
             // echo "<script>alert('Vehicle Controller: add vehicle Case 1');</script>";
-
             // Filter and store the data
+            $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $invYear = filter_input(INPUT_POST, 'invYear', FILTER_SANITIZE_NUMBER_INT);
             $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            // $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            // $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            // $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
+            $invMiles = filter_input(INPUT_POST, 'invMiles', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
 
+            $invId = checkInvId($invId);
+            $invYear = checkYear($invYear);
             $invMake = checkName($invMake, 30);
             $invModel = checkName($invModel, 30);
             $DescriptionCheck = checkDescription($invDescription, 255);
-            // $invImage = checkImageFilename($invImage);
-            // $invThumbnail = checkImageFilename($invThumbnail);
-            $invImage = "";
-            $invThumbnail = "";
             $invPrice = checkPrice($invPrice);
-            // $invStock = checkStock($invStock);
+            $invMiles = checkMiles($invMiles);
             $invColor = checkName($invColor, 20);
             $classificationId = checkClassificationId($classificationId);
 
             // Check for missing data
-            if (empty($invMake) || empty($invModel) || empty($invDescription) || empty($invPrice) ||
-                empty($invColor) || !$DescriptionCheck || empty($classificationId)){
-                // echo "<script>alert('Vehicle Controller: add vehicle: Missing Data');</script>";
+            if (empty($classificationId) || empty($invMake) || empty($invModel) || empty($invDescription) 
+               || empty($invPrice) || empty($invId) || empty($invColor || empty($invYear) || empty($invMiles))) {
                 $message = '<p>Please provide valid information for all empty form fields.</p>';
+                $_SESSION['message'] = $message;
                 include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/add-vehicle.php';
                 exit;
             }
+
             // echo "<script>alert('Vehicle Controller: local data')</script>";
             // Send the data to the model
             // $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invImage,
             //                 $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
 
-            $addOutcome = addVehicle($invMake, $invModel, $invDescription, $invPrice, $invColor, $classificationId);
+            $addOutcome = addVehicle($invId, $invYear, $invMake, $invModel, $invDescription, $invPrice, $invMiles, $invColor, $classificationId);
 
             // Check and report the result
             if($addOutcome === TRUE){
@@ -164,7 +162,7 @@
         case 'mod':
             // Vehicle update view
             // echo "<script>alert('Vehicle Controller: mod case - Update View');</script>";
-            $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_STRING);
             $invInfo = getInvItemInfo($invId);
             if(count($invInfo)<1){
                 $message = 'Sorry, no vehicle information could be found.';
@@ -172,37 +170,33 @@
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/update-vehicle.php';
             exit;
         case 'update_vehicle':
-            $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+            $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $invYear = filter_input(INPUT_POST, 'invYear', FILTER_SANITIZE_NUMBER_INT);
             $invMake = ucwords(trim(filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invModel = ucwords(trim(filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $invDescription = ucfirst(trim(filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            // $invImage = strtolower(trim(filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
-            // $invThumbnail = strtolower(trim(trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
             $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            // $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
+            $invMiles = filter_input(INPUT_POST, 'invMiles', FILTER_SANITIZE_NUMBER_INT);
             $invColor = ucwords(trim(filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
             $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
 
+            $invYear = checkYear($invYear);
             $invMake = checkName($invMake, 30);
             $invModel = checkName($invModel, 30);
             $DescriptionCheck = checkDescription($invDescription, 255);
-            // $invImage = checkImageFilename($invImage);
-            // $invThumbnail = checkImageFilename($invThumbnail);
-            $invImage = "";
-            $invThumbnail = "";
             $invPrice = checkPrice($invPrice);
-            // $invStock = checkStock($invStock);
+            $invMiles = checkMiles($invMiles);
             $invColor = checkName($invColor, 20);
             $classificationId = checkClassificationId($classificationId);
 
             if (empty($classificationId) || empty($invMake) || empty($invModel) || empty($invDescription) 
-                || empty($invPrice) || empty($invColor)) {
+                || empty($invPrice) || empty($invColor || empty($invYear) || empty($invMiles))) {
                 $message = '<p>Please complete all information for updating the item! Double check the classification of the item.</p>';
                 $_SESSION['message'] = $message;
                 include '../view/update-vehicle.php';
                 exit;
             }
-            $updateResult = updateVehicle($invId, $invMake, $invModel, $invDescription, $invPrice, $invStock, $invColor, $classificationId);
+            $updateResult = updateVehicle($invId, $invYear, $invMake, $invModel, $invDescription, $invPrice, $invMiles, $invColor, $classificationId);
             if ($updateResult) {
                 $message = "<p class='notify'>Congratulations, the $invMake $invModel was successfully updated.</p>";
                 $_SESSION['message'] = $message;
@@ -217,7 +211,7 @@
             }
         case 'del':
             // echo "<script>alert('Vehicle Controller: del case');</script>";
-            $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_STRING);
             $invInfo = getInvItemInfo($invId);
             if(count($invInfo)<1){
                 $message = 'Sorry, no vehicle information could be found.';
@@ -225,8 +219,8 @@
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/delete-vehicle.php';
             exit;
         case 'delete_vehicle':
-            $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
-            // $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+            // $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_STRING);
+            $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $invMake = filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $invModel = filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -244,7 +238,8 @@
             }
         case 'view_vehicle':
             # this is the view for the vehicle detail page
-            $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_STRING);
+            // print("<script>alert('PHP: Vehicles Controller, invId = $invId ');</script>");
             $invInfo = getInvItemInfo($invId);
             $invImages = getInvItemImages($invId);
             // print("<script>alert('PHP: invInfo: " . json_encode($invInfo) . "');</script>");
@@ -274,17 +269,36 @@
             exit;
         case 'classification':
             # this is the view for the vehicle classification page
+            // print("<script>alert('Vehicles Controller: Classification Case');</script>");
             $classificationName = filter_input(INPUT_GET, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            // print("<script>alert('Vehicles Controller: classification, classificationName = $classificationName');</script>");
             $vehicles = getVehiclesByClassification($classificationName);
+            // print("<script>alert('Vehicles Controller: classification, vehicles = $vehicles');</script>");
+            // print("<script>alert('Vehicles Controller: classification, Vehicles = " . print_r($vehicles, true) . "');</script>");
+            // print("<script>alert('Vehicles Controller: classification, Vehicles = " . json_encode($vehicles) . "');</script>");
+            // print("<script>alert('Vehicles Controller: classification, Vehicles = " . var_export($vehicles, true) . "');</script>");
+            // print("<script>alert('Vehicles Controller: classification, Vehicles = " . var_dump($vehicles) . "');</script>");
+            // print("<script>alert('Vehicles Controller: classification, Vehicles = " . implode(", ", $vehicles) . "');</script>");
+            // echo '<pre>';
+            //     var_dump($vehicles['0']['invId']);
+            // echo '</pre>';
+            // echo "<pre>";
+            //     print_r($vehicles);
+            // echo "</pre>";
+                // echo "<script>alert('" . json_encode($vehicles) . "');</script>";
+            // echo '<div></div>';
+
             if(!count($vehicles)){
                 $message = "<p class='notice'>Sorry, no $classificationName could be found.</p>";
             } else {
                 $vehicleDisplay = buildVehiclesDisplay($vehicles);
+
             }
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/classification.php';
             exit;
         default:
             $classificationList = buildClassificationList($classifications);
+
             include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/view/vehicle-man.php';
             exit;
 }

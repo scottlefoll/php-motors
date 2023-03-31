@@ -19,34 +19,34 @@
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/header.php'; ?> 
             <nav class="nav"><?php echo $navList; ?></nav>
 
-                <!-- Main -->
-                <main>
-                    <?php
-                        if (isset($_SESSION['message'])) {
-                            echo $_SESSION['message'];
-                            unset($_SESSION['message']);
-                        }
-                        if (isset($message)) {
-                            echo $message;
-                            $message = "";
-                        }
-                    ?>
-                <br>
+            <!-- Main -->
+            <main>
                 <?php
-                        if(isset($_GET['action']) and $_GET['action'] != 'template'){
-                            $current_action = $_GET['action'];
-                            // echo "<script>alert('home.php: action = $action ');</script>";
-                            $content_name = str_replace(' ', '_', $current_action);
-                            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $content_name . '_content.php';
-                        }else{
-                            require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
-                        }
+                    if (isset($_SESSION['message'])) {
+                        echo $_SESSION['message'];
+                        unset($_SESSION['message']);
+                    }
+                    if (isset($message)) {
+                        echo $message;
+                        $message = "";
+                    }
                 ?>
+            <br>
+            <?php
+                    if(isset($_GET['action']) and $_GET['action'] != 'template'){
+                        $current_action = $_GET['action'];
+                        // echo "<script>alert('home.php: action = $action ');</script>";
+                        $content_name = str_replace(' ', '_', $current_action);
+                        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/' . $content_name . '_content.php';
+                    }else{
+                        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/home_content.php';
+                    }
+            ?>
 
-                    <p><br><br><br><br><br><br><br></p>
-                </main>
-            </div>
+                <p><br><br><br><br><br><br><br></p>
+            </main>
             <!-- Footer -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?>
+        </div>
     </body>
 </html>

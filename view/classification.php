@@ -35,12 +35,13 @@
                     }
 
                     if(isset($vehicleDisplay)){
+                        // var_dump($vehicleDisplay);
                         echo $vehicleDisplay;
                     }
                 ?>
             </main>
-            <!-- Footer -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?>
         </div>
+        <!-- Footer -->
+        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?>
     </body>
 </html>

@@ -69,7 +69,9 @@
                 <form method="post" action= '/phpmotors/vehicles/index.php' >
                     <fieldset>
                         <legend>Vehicle Information</legend>
-
+                        <label class="top" for="invId">VIN* <input type="text" name="invId" id="invId"
+                            <?php if(isset($invId)){ echo "value='$invId'"; } elseif(isset($invInfo['invId'])) {echo "value='$invInfo[invId]'"; }?> 
+                            readonly></label>
                         <label class="top" for="invMake">Make* <input type="text" name="invMake" id="invMake"
                             <?php if(isset($invMake)){ echo "value='$invMake'"; } elseif(isset($invInfo['invMake'])) {echo "value='$invInfo[invMake]'"; }?> 
                             readonly></label>

@@ -1,22 +1,26 @@
-<h1>Welcome to PHP Motors!</h1>
-
-<h2 class="auto1-title" >DMC Delorean</h2>
 
 
-<ul class="auto1-ul" >
-    <li class="auto1-li">3 Cup Holders</li>
-    <li class="auto1-li">Batman doors</li>
-    <li class="auto1-li">Fuzzy dice!</li>
-</ul>
+<div class="delorean-specs">
+    <h1 class="home-title">Welcome to PHP Motors!</h1>
+    <h2 class="auto1-title" >DMC Delorean</h2>
 
-<button class="auto1-button" >Own Today</button>
 
-<img
-    class="auto1-img"
-    src="/phpmotors/images/vehicles/delorean.png"
-    alt="Delorean Big Photo"
->
+    <ul class="auto1-ul" >
+        <li class="auto1-li">3 Cup Holders</li>
+        <li class="auto1-li">Batman doors</li>
+        <li class="auto1-li">Fuzzy dice!</li>
+    </ul>
 
+    <button class="auto1-button" >Own Today</button>
+</div>
+
+<div class="delorean-photo">
+    <img
+        class="auto1-img"
+        src="/phpmotors/images/vehicles/delorean.png"
+        alt="Delorean Big Photo"
+    >
+</div>
 
 <div class="review">
     <h2 class="review1-title">DMC Delorean Reviews</h2>

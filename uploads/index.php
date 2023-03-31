@@ -115,7 +115,7 @@
             // echo "<script>alert('Uploads Controller: Swap Primary action');</script>";
             // Get the image name and id
             $imgName = filter_input(INPUT_GET, 'imgName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+            $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_STRING);
             // echo "<script>alert('filename = $imgName, InvId = $invId ');</script>";
             // Make primary image
             // call the model setPrimaryImage

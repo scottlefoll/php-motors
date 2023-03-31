@@ -9,7 +9,26 @@
     }
 
     function checkPrice($invPrice){
-        $value = filter_var($invPrice, FILTER_VALIDATE_INT, array("options" => array("min_range"=>100, "max_range"=>2000000)));
+        $value = filter_var($invPrice, FILTER_VALIDATE_FLOAT, array("options" => array("min_range"=>100, "max_range"=>2000000)));
+        return $value;
+    }
+
+    function checkYear($invYear){
+        $value = filter_var($invYear, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1900, "max_range"=>2100)));
+        return $value;
+    }
+
+    function checkInvId($invId){
+        $pattern = "^[A-Za-z0-9]{3,20}$^";
+        if (preg_match($pattern, $invId)){
+            return $invId;
+        } else {
+            return "";
+        }
+    }
+
+    function checkMiles($invMiles){
+        $value = filter_var($invMiles, FILTER_VALIDATE_INT, array("options" => array("min_range"=>0, "max_range"=>1000000)));
         return $value;
     }
 
@@ -17,11 +36,6 @@
         $value = filter_var($classificationId, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99)));
         return $value;
     }
-
-    // function checkStock($invStock){
-    //     $value = filter_var($invStock, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99)));
-    //     return $value;
-    // }
 
     function checkImageFilename($ImageFilename){
         $pattern = "^([0-9a-zA-Z\\.\/:_-]+.(png|PNG|gif|GIF|jp[e]?g|JP[E]?G))$^";
@@ -89,12 +103,11 @@
         $dv .= '<ul id="inv-display">';
         foreach ($vehicles as $vehicle) {
             $dv .= '<li>';
-            if ($vehicle['imgTnPath'] == null){
-                $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><img src='..$vehicle[invThumbnail]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'></a>";
-            } else {
-                $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><img src='../..$vehicle[imgTnPath]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'></a>";
-            }
-            // $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><img src='$vehicle[invThumbnail]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'></a>";
+            // if ($vehicle['imgTnPath'] == null){
+            //     $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><img src='..$vehicle[invThumbnail]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'></a>";
+            // } else {}
+            $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><img src='../..$vehicle[imgPath]' alt='Image of $vehicle[invMake] $vehicle[invModel] on phpmotors.com'></a>";
+
             $dv .= '<hr>';
             $dv .= "<a href='/phpmotors/vehicles?action=view_vehicle&invId={$vehicle['invId']}'><h2>$vehicle[invMake] $vehicle[invModel]</h2></a>";
             $usd = "$" . number_format($vehicle['invPrice'], 0, ".", ",");
@@ -107,15 +120,17 @@
     }
 
     function buildInvItemDisplay($invInfo, $invImages){
-        setlocale(LC_MONETARY,"en_US");
+        $price = number_format($invInfo['invPrice'], 2);
         $dv = "<div id='inv-detail-box'>";
         $dv .= "<div id='inv-fieldset-div'>";
         $dv .= "<fieldset id='inv-fieldset'><legend>Vehicle Information</legend>";
+        $dv .= "<label class='top-detail' for='invId'>VIN <input type='text' name='invId' id='invId' value='$invInfo[invId]'></label><br>";
         $dv .= "<label class='top-detail' for='invMake'>Make <input type='text' name='invMake' id='invMake' value='$invInfo[invMake]'></label><br>";
         $dv .= "<label class='top-detail' for='invModel'>Model <input type='text' name='invModel' id='invModel' value='$invInfo[invModel]'></label><br>";
-        $dv .= "<label class='top-detail' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='$invInfo[invPrice]'></label><br>";
-        // $dv .= "<label class='top' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='cho money_format(%i, $invInfo[invPrice])'></label><br>";
-        // $dv .= "<label class='top-detail' for='invStock'>Stock <input type='text' name='invStock' id='invStock' value='$invInfo[invStock]'></label><br>";
+        $dv .= "<label class='top-detail' for='invPrice'>Price $<input type='text' name='invPrice' id='invPrice' value='$price'></label><br>";
+        // $dv .= "<label class='top-detail' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='$invInfo[invPrice]'></label><br>";
+        $dv .= "<label class='top-detail' for='invYear'>Year <input type='number' name='invYear' id='invYear' value='$invInfo[invYear]'></label><br>";
+        $dv .= "<label class='top-detail' for='invMiles'>Miles <input type='number' name='invMiles' id='invMiles' value='$invInfo[invMiles]'></label><br>";
         $dv .= "<label class='top-detail' for='invColor'>Color <input type='text' name='invColor' id='invColor' value='$invInfo[invColor]'></label><br>";
         $dv .= "<label class='top-detail' for='invDescription'>Description </label><textarea name='invDescription' id='inv-textarea' rows='5' cols='40'
                 disabled>$invInfo[invDescription]</textarea><br>";
@@ -287,4 +302,68 @@
         imagedestroy($old_image);
    } // ends resizeImage function
 
+    /*************************
+     * Search Result Functions
+     ************************/
+
+    function buildSearchResults($sResults)
+    {
+        $sd = '<div class="resultsDisplay">';
+        foreach ($sResults as $item) {
+            $sd .= '<h2><a href="/phpmotors/vehicles?action=view_vehicle&invId=' . $item['invId'] . '" title="View the ' . $item['invYear'] . ' ' . $item['invMake'] . ' ' . $item['invModel'] . '">' . $item['invYear'] . ' ' . $item['invMake'] . ' ' . $item['invModel'] . '</a></h2>';
+            // $sd .= "<h2><a href='/phpmotors/vehicles?action=view_vehicle&invId={$item['invId']}'><h2>$item[invMake] $item[invModel]</h2></a></h2>";
+            $sd .= '<p>' . $item['invDescription'] . '</p>';
+        }
+        $sd .= '</div>';
+        return $sd;
+    }
+
+
+    function pagination($totalPages, $page, $queryString) {
+        // Check if there are more than one page
+        if ($totalPages > 1) {
+            // Set the number of links to show 
+            $numLinks = 2;
+            // Find the start and end links for the bar
+            $startLink = max(1, $page - $numLinks);
+            $endLink = min($totalPages, $page + $numLinks);
+
+            // Start building the bar
+            $pagination = '<div class="pagination-div">';
+            $pagination .= '<ul class="pagination-ul">';
+
+            // Add First link
+            if ($page > 1) {
+                $pagination .= '<li><a href="' . $_SERVER['PHP_SELF'] . '?action=search&search=' . $queryString . '&page=1">First</a></li>';
+            } else {
+                $pagination .= '<li><span>First</span></li>';
+            }
+
+            // Add numbered links
+            for($p = 1; $p <= $totalPages; $p++) {
+                // Check if current page is same as link being generated
+                if($page == $p) {
+                    $pagination .= '<li class="active"><span>' . $p . '</span></li>';
+                } else {
+                    $pagination .= '<li><a href="' . $_SERVER['PHP_SELF'] . '?action=search&search=' . $queryString . '&page=' . $p . '">' . $p . '</a></li>';
+                }
+            }
+
+            // Add Last link
+            if ($page < $totalPages) {
+                $pagination .= '<li><a href="' . $_SERVER['PHP_SELF'] . '?action=search&search=' . $queryString . '&page=' . $totalPages . '">Last</a></li>';
+            } else {
+                $pagination .= '<li><span>Last</span></li>';
+            }
+            $pagination .= '</ul>';
+            $pagination .= '</div>';
+
+            // Return the pagination bar
+            return $pagination;
+        }
+    }
+
+
 ?>
+
+
