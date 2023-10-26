@@ -10,10 +10,11 @@
             if($_SESSION['clientData']['clientLevel'] > 1){
                 echo '<a href="/phpmotors/index.php?action=admin_view" class="account-link" >Admin</a>';
                 echo '<a href="/phpmotors/uploads/index.php?" class="account-link" >Images</a>';
-                echo '<a href="/phpmotors/accounts/index.php?action=logout" class="account-link" >Logout</a>';
+                // echo '<a href="/phpmotors/accounts/index.php?action=logout" class="account-link" >Logout</a>';
             }
             if(isset($cookieFirstname)) {
                 echo "<span class='account-link' >Welcome $cookieFirstname</span>";
+                echo '<a href="/phpmotors/accounts/index.php?action=logout" class="account-link" >Logout</a>';
             }
             echo '<a href="/phpmotors/search" title="Search PHP Motors" class="account-link">Search &#x1F50D;</a>';
         } else {

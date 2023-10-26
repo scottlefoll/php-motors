@@ -47,9 +47,9 @@
 
                 <form method="post" action= '/phpmotors/accounts/' >
                     <fieldset>
-                        <legend>Login Information</legend>                                                                                                                      
+                        <legend>Login Information</legend>
                         <label class="top" for="email">Email* <input type="email" id="email" name="clientEmail" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?>  maxlength="40" pattern="^.+@[^\.].*\.[a-z]{2,}$"  required></label>
-                        <label class="top" for="password">Password*  
+                        <label class="top" for="password">Password*
                         <span>(Passwords must be at least 8 characters and contain at least <br> 1 number,  1 capital letter and 1 special character)</span>
                         <input type="password" id="password" name="clientPassword" value="" maxlength="255" pattern="^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required></label>
                     </fieldset>

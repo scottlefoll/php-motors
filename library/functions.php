@@ -77,6 +77,7 @@
     // Check the password for a minimum of 8 characters,
     // at least one 1 capital letter, at least 1 number and
     // at least 1 special character
+    
     function checkPassword($clientPassword){
         $pattern = '/^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/';
         if (preg_match($pattern, $clientPassword)){
@@ -124,16 +125,25 @@
         $dv = "<div id='inv-detail-box'>";
         $dv .= "<div id='inv-fieldset-div'>";
         $dv .= "<fieldset id='inv-fieldset'><legend>Vehicle Information</legend>";
-        $dv .= "<label class='top-detail' for='invId'>VIN <input type='text' name='invId' id='invId' value='$invInfo[invId]'></label><br>";
-        $dv .= "<label class='top-detail' for='invMake'>Make <input type='text' name='invMake' id='invMake' value='$invInfo[invMake]'></label><br>";
-        $dv .= "<label class='top-detail' for='invModel'>Model <input type='text' name='invModel' id='invModel' value='$invInfo[invModel]'></label><br>";
-        $dv .= "<label class='top-detail' for='invPrice'>Price $<input type='text' name='invPrice' id='invPrice' value='$price'></label><br>";
+        $dv .= "<label class='top-detail' for='invId'>VIN <input type='text' name='invId' id='invId' value='$invInfo[invId]' readonly></label><br>";
+
+        // Initialize the readonly string
+        $readonly = "readonly";
+
+        // Check if user is logged in AND if user's client level is > 1
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] > 1) {
+            $readonly = "";
+        }
+
+        $dv .= "<label class='top-detail' for='invMake'>Make <input type='text' name='invMake' id='invMake' value='$invInfo[invMake]' " . $readonly  ."></label><br>";
+        $dv .= "<label class='top-detail' for='invModel'>Model <input type='text' name='invModel' id='invModel' value='$invInfo[invModel]' " . $readonly ."></label><br>";
+        $dv .= "<label class='top-detail' for='invPrice'>Price $<input type='text' name='invPrice' id='invPrice' value='$price' " . $readonly ."></label><br>";
         // $dv .= "<label class='top-detail' for='invPrice'>Price <input type='text' name='invPrice' id='invPrice' value='$invInfo[invPrice]'></label><br>";
-        $dv .= "<label class='top-detail' for='invYear'>Year <input type='number' name='invYear' id='invYear' value='$invInfo[invYear]'></label><br>";
-        $dv .= "<label class='top-detail' for='invMiles'>Miles <input type='number' name='invMiles' id='invMiles' value='$invInfo[invMiles]'></label><br>";
-        $dv .= "<label class='top-detail' for='invColor'>Color <input type='text' name='invColor' id='invColor' value='$invInfo[invColor]'></label><br>";
+        $dv .= "<label class='top-detail' for='invYear'>Year <input type='number' name='invYear' id='invYear' value='$invInfo[invYear]' " . $readonly ."></label><br>";
+        $dv .= "<label class='top-detail' for='invMiles'>Miles <input type='number' name='invMiles' id='invMiles' value='$invInfo[invMiles]' " . $readonly ."></label><br>";
+        $dv .= "<label class='top-detail' for='invColor'>Color <input type='text' name='invColor' id='invColor' value='$invInfo[invColor]' " . $readonly ."></label><br>";
         $dv .= "<label class='top-detail' for='invDescription'>Description </label><textarea name='invDescription' id='inv-textarea' rows='5' cols='40'
-                disabled>$invInfo[invDescription]</textarea><br>";
+        " . $readonly .">$invInfo[invDescription]</textarea><br>";
         $dv .= "</fieldset></div>";
 
         if ($_SESSION["invImages"] = "" || $_SESSION["invImages"] = null){

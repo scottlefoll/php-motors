@@ -45,27 +45,27 @@
                     <fieldset>
                         <legend>Change Password</legend>
                         <label class="top" for="password">New Password* <br><br>
-                        <span>(Passwords must be at least 8 characters and contain at least <br> 1 number,  1 capital letter and 1 special character)</span>
-                        <input type="password" id="password" name="clientPassword" value="" maxlength="255" pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required></label>
+                        <span>(Passwords must be at least 8 characters and contain at least <br> 1 number,  1 capital letter, 1 lower case letter and 1 special character)</span>
+                        <input type="password" id="password" name="clientPassword" value="" minlength = "8" maxlength="255" pattern="^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" minlength="8" maxlength="255" required></label>
                         <label class="top" for="password">Confirm New Password* <br><br>
-                        <input type="password" id="password" name="clientPasswordConfirm" value="" maxlength="255" pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required></label>
+                        <input type="password" id="passwordConfirm" name="clientPasswordConfirm" value="" minlength = "8" maxlength="255" pattern="^(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" minlength="8" maxlength="255" required></label>
                     </fieldset>
                     <input type="submit" name="submit" id="regbtn" value="Update Password"  class="submitBtn">
                     <input type="hidden" name="action" value="update_password"  class="hidden">
                     <input type="hidden" name="clientId" value="
                         <?php
-                            if(isset($_SESSION['clientData']['clientId'])){
-                                echo "{$_SESSION['clientData']['clientId']};";
-                            } elseif(isset($clientId)){
-                                echo $clientId;
-                            }
+                                if(isset($_SESSION['clientData']['clientId'])){
+                                    echo "{$_SESSION['clientData']['clientId']};";
+                                } elseif(isset($clientId)){
+                                    echo $clientId;
+                                }
                         ?>
                     ">
                 </form>
             </main>
 
             <!-- Footer -->
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?> 
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/snippets/footer.php'; ?>
         </div>
     </body>
 </html>
